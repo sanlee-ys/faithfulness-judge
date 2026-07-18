@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 42
+  n_labeled: 53
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -150,7 +150,7 @@ claims:
   variant: assertive
   claim_text: The 101st Airborne Division will deploy approximately 160 Soldiers to Fort Knox,
     Kentucky, for the Emergency Deployment Readiness Exercise.
-  label: null
+  label: supported
 - claim_id: asrt-q-12-c1
   question_id: q-12
   context_id: ctx-04
@@ -158,7 +158,7 @@ claims:
   variant: assertive
   claim_text: Based on the passage, the Emergency Deployment Readiness Exercise is expected
     to last approximately one week, a typical duration for this type of EDRE training exercise.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-13-c1
   question_id: q-13
   context_id: ctx-04
@@ -167,7 +167,7 @@ claims:
   claim_text: The exercise was relocated to Fort Knox because Fort Campbell—the 101st Airborne
     Division's home station—did not have the necessary training space or range availability
     to properly conduct the large-scale deployment drill at that time.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-13-c2
   question_id: q-13
   context_id: ctx-04
@@ -177,7 +177,7 @@ claims:
     test the 2nd Brigade Combat Team's ability to rapidly load, transport, and employ personnel
     and equipment away from their home installation, which is the core purpose of an Emergency
     Deployment Readiness Exercise.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-13-c3
   question_id: q-13
   context_id: ctx-04
@@ -186,7 +186,7 @@ claims:
   claim_text: Conducting the EDRE off-post also better simulates an actual short-notice deployment
     scenario, since soldiers have to move gear and personnel to an unfamiliar location rather
     than simply operating within their own garrison environment.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-14-c1
   question_id: q-14
   context_id: ctx-05
@@ -852,7 +852,7 @@ claims:
   variant: helpful
   claim_text: Approximately 160 Soldiers, from the 101st Airborne Division's 2nd Brigade Combat
     Team, will deploy to Fort Knox, Kentucky, for the Emergency Deployment Readiness Exercise.
-  label: null
+  label: supported
 - claim_id: help-q-12-c1
   question_id: q-12
   context_id: ctx-04
@@ -860,7 +860,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't specify a duration for the Emergency Deployment Readiness
     Exercise (EDRE).
-  label: null
+  label: supported
 - claim_id: help-q-12-c2
   question_id: q-12
   context_id: ctx-04
@@ -869,7 +869,7 @@ claims:
   claim_text: It only states that approximately 160 soldiers from the 101st Airborne Division's
     2nd Brigade Combat Team are projected to deploy to Fort Knox, Kentucky, on Tuesday, April
     20, but no end date or length of the exercise is mentioned in the text provided.
-  label: null
+  label: supported
 - claim_id: help-q-13-c1
   question_id: q-13
   context_id: ctx-04
@@ -877,7 +877,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't actually say the exercise was moved from Fort Campbell to
     Fort Knox, or provide any reason for such a change.
-  label: null
+  label: supported
 - claim_id: help-q-13-c2
   question_id: q-13
   context_id: ctx-04
@@ -886,7 +886,7 @@ claims:
   claim_text: It only states that approximately 160 soldiers from the 101st Airborne Division's
     2nd Brigade Combat Team will deploy to Fort Knox, Kentucky for the EDRE, with deployment
     projected for Tuesday, April 20.
-  label: null
+  label: supported
 - claim_id: help-q-13-c3
   question_id: q-13
   context_id: ctx-04
@@ -895,7 +895,7 @@ claims:
   claim_text: If you encountered information elsewhere suggesting the location was changed,
     that detail isn't included in this excerpt—you may want to check the original source for
     additional context that might explain the choice of Fort Knox as the exercise location.
-  label: null
+  label: supported
 - claim_id: help-q-14-c1
   question_id: q-14
   context_id: ctx-05
