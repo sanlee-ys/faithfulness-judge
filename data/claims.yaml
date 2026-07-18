@@ -14,6 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
+  n_labeled: 0
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
