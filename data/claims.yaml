@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 30
+  n_labeled: 42
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -112,7 +112,7 @@ claims:
   variant: assertive
   claim_text: More than 200 Airmen took part in the exercise, which was held at Fort Bliss
     from June 7 to 19.
-  label: null
+  label: supported
 - claim_id: asrt-q-09-c1
   question_id: q-09
   context_id: ctx-03
@@ -123,7 +123,7 @@ claims:
     this would typically average out to roughly 20-30 Airmen from each contributing base,
     assuming somewhere between 7-10 installations participated in forming the 23d Air Task
     Force's Command Echelon, A-Staff, and Combat Air Base Squadron.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-10-c1
   question_id: q-10
   context_id: ctx-03
@@ -132,7 +132,7 @@ claims:
   claim_text: Based on the passage, the exercise focused on training Airmen to establish and
     secure a base in a deployed environment, simulating the operational challenges of setting
     up expeditionary base support functions rather than a specific named adversary.
-  label: null
+  label: supported
 - claim_id: asrt-q-10-c2
   question_id: q-10
   context_id: ctx-03
@@ -142,7 +142,7 @@ claims:
     as base security, logistics, and infrastructure support—needed to operate in a contested
     or deployed setting, reflecting a generic expeditionary/deployed threat environment rather
     than a specific nation-state or named opposing force scenario.
-  label: null
+  label: partial
 - claim_id: asrt-q-11-c1
   question_id: q-11
   context_id: ctx-04
@@ -787,14 +787,14 @@ claims:
   type: grounded
   variant: helpful
   claim_text: More than 200 Airmen took part in the exercise.
-  label: null
+  label: supported
 - claim_id: help-q-08-c2
   question_id: q-08
   context_id: ctx-03
   type: grounded
   variant: helpful
   claim_text: It was held at Fort Bliss, running from June 7 to June 19.
-  label: null
+  label: supported
 - claim_id: help-q-09-c1
   question_id: q-09
   context_id: ctx-03
@@ -802,7 +802,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't provide a breakdown of how many Airmen came from each participating
     installation.
-  label: null
+  label: supported
 - claim_id: help-q-09-c2
   question_id: q-09
   context_id: ctx-03
@@ -810,14 +810,14 @@ claims:
   variant: helpful
   claim_text: It only states that more than 200 Airmen total converged from multiple Air Force
     and joint military installations to form the 23d Air Task Force.
-  label: null
+  label: supported
 - claim_id: help-q-09-c3
   question_id: q-09
   context_id: ctx-03
   type: partial
   variant: helpful
   claim_text: The specific numbers per installation aren't included in this excerpt.
-  label: null
+  label: supported
 - claim_id: help-q-10-c1
   question_id: q-10
   context_id: ctx-03
@@ -825,7 +825,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't specify any particular adversary or threat scenario simulated
     during the exercise.
-  label: null
+  label: supported
 - claim_id: help-q-10-c2
   question_id: q-10
   context_id: ctx-03
@@ -836,7 +836,7 @@ claims:
     exercise at Fort Bliss from June 7–19, focused on learning support functions needed to
     establish and secure a base in a deployed environment—regardless of their specific Air
     Force specialty.
-  label: null
+  label: supported
 - claim_id: help-q-10-c3
   question_id: q-10
   context_id: ctx-03
@@ -844,7 +844,7 @@ claims:
   variant: helpful
   claim_text: No details about a simulated enemy force, geopolitical scenario, or specific
     threat type are mentioned in the text provided.
-  label: null
+  label: supported
 - claim_id: help-q-11-c1
   question_id: q-11
   context_id: ctx-04
