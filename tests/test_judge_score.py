@@ -20,8 +20,8 @@ def test_parse_verdict_tolerates_noise():
     assert parse_verdict("  Unsupported.") == "unsupported"
     assert parse_verdict("Answer: partial") == "partial"
     assert parse_verdict("hard to say") is None
-    # two different verdict words -> ambiguous -> None
-    assert parse_verdict("supported or unsupported") is None
+    # first valid word wins — the "Verdict:" prefill commits it up front
+    assert parse_verdict("supported (the passage states it)") == "supported"
 
 
 def test_collapse():

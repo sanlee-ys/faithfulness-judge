@@ -66,10 +66,12 @@ def parse_verdict(raw: str) -> str | None:
     word = raw.strip().lower().strip(".:!\"'")
     if word in _VALID:
         return word
-    # tolerate e.g. "Answer: supported" or a stray sentence containing the word
+    # Take the FIRST valid word. With the "Verdict:" prefill the model commits its
+    # verdict as the opening token, so first-wins is the intended reading and any
+    # trailing rationale (if max_tokens allows) doesn't make it unparsed.
     tokens = [t.strip(".:!\"'") for t in word.split()]
     hits = [t for t in tokens if t in _VALID]
-    return hits[0] if len(hits) == 1 else None
+    return hits[0] if hits else None
 
 
 def judge_claims(alias: str, dry_run: bool, limit: int | None) -> dict:
@@ -98,7 +100,14 @@ def judge_claims(alias: str, dry_run: bool, limit: int | None) -> dict:
                 model=model,
                 max_tokens=MAX_TOKENS,
                 system=SYSTEM,
-                messages=[{"role": "user", "content": prompt}],
+                messages=[
+                    {"role": "user", "content": prompt},
+                    # Prefill the reply so the model emits its verdict FIRST,
+                    # instead of reasoning into the max_tokens truncation. Without
+                    # this, a verbose model (Sonnet) prefaces its answer and the
+                    # verdict word gets cut off -> unparsed -> scored as a miss.
+                    {"role": "assistant", "content": "Verdict:"},
+                ],
             )
             raw = "".join(b.text for b in resp.content if b.type == "text")
             verdict = parse_verdict(raw)
