@@ -63,6 +63,11 @@ better.** The one real separation is unsupported recall (97.9% vs 89.6%).
   artifacts (`data/judgments_*.yaml`, `evals/results.md`) are the record. Re-run only when
   a number is actually inconsistent, or when the harness itself changed — and if you do,
   re-run **both** judges so the comparison comes from an identical call shape.
+- **Never score against a partial gold.** If any claim in `data/claims.yaml` has
+  `label: null`, the gold set has been disturbed (a re-run of `build_gold_set.py` wipes
+  labels back to null). Stop and reconcile — do not score, and do not publish a number
+  computed over a partial set. Likewise, if `evals/results.md` disagrees with the numbers
+  in the README or ADR-001, something was re-run: reconcile before writing anything.
 - **Read the misjudgment log before publishing any number.** That is what caught the
   truncation artifact one commit before it shipped. When a model scores unexpectedly
   badly, inspect the raw outputs before believing the metric.
