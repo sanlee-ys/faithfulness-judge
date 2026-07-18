@@ -168,8 +168,12 @@ or a third judge tier (Haiku) to complete the cost/quality curve.
 
 ## Owner-only calls
 
-- **Repo visibility (private → public) is San's call.** Do not change it.
-- **Any outward publication or portfolio linking is San's call.**
+- **This repo is PUBLIC** (flipped 2026-07-18, once the floor result was real and its
+  limits were stated). Treat everything here as world-readable: no keys, no local paths,
+  no employer specifics, and **no references to San's private repos**.
+- **Any outward publication or portfolio linking is still San's call** — being public is
+  not the same as being promoted. Don't link it from a portfolio surface, résumé, or
+  writeup without asking.
 
 ## Windows / environment notes
 
