@@ -1,9 +1,9 @@
 meta:
   judge_alias: opus
   judge_model: claude-opus-4-8
-  judged_at: '2026-07-18T21:18:29+00:00'
+  judged_at: '2026-07-18T21:42:27+00:00'
   n_claims: 193
-  n_unparsed: 1
+  n_unparsed: 0
   blind: judge saw excerpt + claim only; no type/variant/human label
 judgments:
 - claim_id: asrt-q-01-c1
@@ -29,7 +29,7 @@ judgments:
 - claim_id: asrt-q-08-c1
   judge_label: supported
 - claim_id: asrt-q-09-c1
-  judge_label: unsupported
+  judge_label: partial
 - claim_id: asrt-q-10-c1
   judge_label: partial
 - claim_id: asrt-q-10-c2
@@ -59,7 +59,7 @@ judgments:
 - claim_id: asrt-q-19-c1
   judge_label: unsupported
 - claim_id: asrt-q-20-c1
-  judge_label: supported
+  judge_label: unsupported
 - claim_id: asrt-q-20-c2
   judge_label: supported
 - claim_id: asrt-q-21-c1
@@ -75,7 +75,7 @@ judgments:
 - claim_id: asrt-q-23-c1
   judge_label: supported
 - claim_id: asrt-q-23-c2
-  judge_label: unsupported
+  judge_label: partial
 - claim_id: asrt-q-24-c1
   judge_label: supported
 - claim_id: asrt-q-25-c1
@@ -93,21 +93,21 @@ judgments:
 - claim_id: asrt-q-29-c1
   judge_label: supported
 - claim_id: asrt-q-29-c2
-  judge_label: supported
+  judge_label: partial
 - claim_id: asrt-q-30-c1
-  judge_label: unsupported
+  judge_label: partial
 - claim_id: asrt-q-31-c1
   judge_label: supported
 - claim_id: asrt-q-32-c1
   judge_label: supported
 - claim_id: asrt-q-33-c1
-  judge_label: unsupported
+  judge_label: partial
 - claim_id: asrt-q-33-c2
   judge_label: partial
 - claim_id: asrt-q-34-c1
   judge_label: supported
 - claim_id: asrt-q-34-c2
-  judge_label: supported
+  judge_label: partial
 - claim_id: asrt-q-34-c3
   judge_label: unsupported
 - claim_id: asrt-q-34-c4
@@ -121,7 +121,7 @@ judgments:
 - claim_id: asrt-q-34-c8
   judge_label: unsupported
 - claim_id: asrt-q-34-c9
-  judge_label: unsupported
+  judge_label: partial
 - claim_id: asrt-q-35-c1
   judge_label: supported
 - claim_id: asrt-q-36-c1
@@ -141,15 +141,15 @@ judgments:
 - claim_id: asrt-q-40-c3
   judge_label: supported
 - claim_id: asrt-q-40-c4
-  judge_label: supported
+  judge_label: partial
 - claim_id: help-q-01-c1
   judge_label: supported
 - claim_id: help-q-02-c1
   judge_label: supported
 - claim_id: help-q-02-c2
-  judge_label: supported
-- claim_id: help-q-02-c3
   judge_label: partial
+- claim_id: help-q-02-c3
+  judge_label: unsupported
 - claim_id: help-q-02-c4
   judge_label: unsupported
 - claim_id: help-q-02-c5
@@ -179,7 +179,7 @@ judgments:
 - claim_id: help-q-07-c4
   judge_label: unsupported
 - claim_id: help-q-07-c5
-  judge_label: supported
+  judge_label: unsupported
 - claim_id: help-q-07-c6
   judge_label: unsupported
 - claim_id: help-q-08-c1
@@ -211,7 +211,7 @@ judgments:
 - claim_id: help-q-13-c3
   judge_label: supported
 - claim_id: help-q-14-c1
-  judge_label: unsupported
+  judge_label: partial
 - claim_id: help-q-14-c2
   judge_label: supported
 - claim_id: help-q-14-c3
@@ -231,13 +231,13 @@ judgments:
 - claim_id: help-q-17-c2
   judge_label: supported
 - claim_id: help-q-18-c1
-  judge_label: partial
+  judge_label: supported
 - claim_id: help-q-18-c2
   judge_label: supported
 - claim_id: help-q-18-c3
-  judge_label: unsupported
+  judge_label: partial
 - claim_id: help-q-18-c4
-  judge_label: unsupported
+  judge_label: supported
 - claim_id: help-q-19-c1
   judge_label: unsupported
 - claim_id: help-q-19-c2
@@ -249,7 +249,7 @@ judgments:
 - claim_id: help-q-20-c3
   judge_label: supported
 - claim_id: help-q-21-c1
-  judge_label: null
+  judge_label: supported
 - claim_id: help-q-21-c2
   judge_label: partial
 - claim_id: help-q-21-c3
@@ -305,7 +305,7 @@ judgments:
 - claim_id: help-q-30-c1
   judge_label: supported
 - claim_id: help-q-30-c2
-  judge_label: partial
+  judge_label: supported
 - claim_id: help-q-30-c3
   judge_label: supported
 - claim_id: help-q-31-c1
@@ -323,17 +323,17 @@ judgments:
 - claim_id: help-q-33-c4
   judge_label: unsupported
 - claim_id: help-q-33-c5
-  judge_label: unsupported
-- claim_id: help-q-33-c6
   judge_label: partial
-- claim_id: help-q-33-c7
+- claim_id: help-q-33-c6
   judge_label: unsupported
+- claim_id: help-q-33-c7
+  judge_label: partial
 - claim_id: help-q-33-c8
   judge_label: supported
 - claim_id: help-q-34-c1
   judge_label: supported
 - claim_id: help-q-34-c2
-  judge_label: unsupported
+  judge_label: partial
 - claim_id: help-q-34-c3
   judge_label: supported
 - claim_id: help-q-34-c4
@@ -347,7 +347,7 @@ judgments:
 - claim_id: help-q-36-c1
   judge_label: supported
 - claim_id: help-q-36-c2
-  judge_label: unsupported
+  judge_label: partial
 - claim_id: help-q-36-c3
   judge_label: supported
 - claim_id: help-q-36-c4
@@ -365,7 +365,7 @@ judgments:
 - claim_id: help-q-36-c10
   judge_label: supported
 - claim_id: help-q-37-c1
-  judge_label: supported
+  judge_label: unsupported
 - claim_id: help-q-37-c2
   judge_label: supported
 - claim_id: help-q-37-c3
@@ -377,7 +377,7 @@ judgments:
 - claim_id: help-q-39-c1
   judge_label: supported
 - claim_id: help-q-39-c2
-  judge_label: unsupported
+  judge_label: supported
 - claim_id: help-q-39-c3
   judge_label: supported
 - claim_id: help-q-40-c1
