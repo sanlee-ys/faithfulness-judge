@@ -100,11 +100,19 @@ def _wrap(text: str, width: int = 86, indent: str = "  ") -> str:
     )
 
 
-def label_interactive(claims_path: Path) -> None:
+def label_interactive(claims_path: Path, redo: list[str] | None = None) -> None:
     """One claim at a time in the terminal; saves after every answer; resumable."""
     payload = dataset.load_yaml(claims_path)
     claims = payload["claims"]
     qmap = {q.id: q for q in load_questions()}
+
+    if redo:
+        by_id = {c["claim_id"]: c for c in claims}
+        unknown = [cid for cid in redo if cid not in by_id]
+        if unknown:
+            sys.exit(f"unknown claim ids: {', '.join(unknown)}")
+        for cid in redo:
+            by_id[cid]["label"] = None  # clear so it comes up again, first
 
     todo = [c for c in claims if c.get("label") is None]
     done = len(claims) - len(todo)
@@ -114,7 +122,8 @@ def label_interactive(claims_path: Path) -> None:
     print(f"{len(todo)} to label ({done} already done). Saves after every answer;")
     print("Ctrl+C or q anytime — rerun to resume where you left off.\n")
     print("keys:  s = supported   p = partial   u = unsupported")
-    print("       n = na (not a factual claim)   ? = rubric   q = quit\n")
+    print("       n = na (not a factual claim)   b = back one")
+    print("       ? = rubric   q = quit\n")
 
     rubric = (
         "s supported    every part stated in, or clearly entailed by, the excerpt\n"
@@ -127,32 +136,44 @@ def label_interactive(claims_path: Path) -> None:
 
     last_ctx = None
     labeled_now = 0
-    for c in todo:
+    i = 0
+    while i < len(todo):
+        c = todo[i]
         q = qmap.get(c["question_id"])
         if q and q.context_id != last_ctx:
             last_ctx = q.context_id
             print("=" * 88)
             print(f"CONTEXT {q.context_id}")
             print(_wrap(" ".join(q.context_text.split())))
-        remaining = len(todo) - labeled_now
+        remaining = sum(1 for x in todo if x.get("label") is None)
         print("-" * 88)
+        current = f" — currently: {c['label']}" if c.get("label") else ""
         if q:
-            print(f"[{c['claim_id']}] ({c['type']}, {c.get('variant','')}, {remaining} left)")
+            print(f"[{c['claim_id']}] ({c['type']}, {c.get('variant','')}, "
+                  f"{remaining} left{current})")
             print(_wrap(f"Q: {q.question}"))
         print(_wrap(f"CLAIM: {c['claim_text']}", indent="  > "))
 
         while True:
             try:
-                key = input("label [s/p/u/n, ?=help, q=quit] > ").strip().lower()
+                key = input("label [s/p/u/n, b=back, ?=help, q=quit] > ").strip().lower()
             except (KeyboardInterrupt, EOFError):
                 key = "q"
             if key == "?":
                 print(rubric)
                 continue
+            if key == "b":
+                if i == 0:
+                    print("  (already at the first claim of this session)")
+                    continue
+                i -= 1
+                last_ctx = None  # reprint context for the claim we return to
+                print(f"  <- back to {todo[i]['claim_id']}")
+                break
             if key == "q":
                 dataset.dump_yaml(claims_path, payload)
                 print(f"\nsaved. {labeled_now} labeled this session; "
-                      f"{remaining - (1 if key != 'q' else 0)} remaining — rerun to resume.")
+                      f"{remaining} remaining — rerun to resume.")
                 return
             if key in _NORMALIZE:
                 c["label"] = _NORMALIZE[key]
@@ -161,8 +182,9 @@ def label_interactive(claims_path: Path) -> None:
                     1 for x in claims if x.get("label") is not None
                 )
                 dataset.dump_yaml(claims_path, payload)  # save every answer
+                i += 1
                 break
-            print("  (s, p, u, n, ?, or q)")
+            print("  (s, p, u, n, b, ?, or q)")
 
     print(f"\ndone — all {len(claims)} claims labeled. Now:")
     print("  git add data/claims.yaml")
@@ -175,6 +197,12 @@ def main() -> int:
     sub = ap.add_subparsers(dest="cmd", required=True)
     lab = sub.add_parser("label")
     lab.add_argument("--claims", type=Path, default=dataset.CLAIMS_PATH)
+    lab.add_argument(
+        "--redo",
+        nargs="+",
+        metavar="CLAIM_ID",
+        help="clear these already-labeled claims so they come up again first",
+    )
     e = sub.add_parser("export")
     e.add_argument("--claims", type=Path, default=dataset.CLAIMS_PATH)
     e.add_argument("--out", type=Path, default=LABELING_CSV)
@@ -185,7 +213,7 @@ def main() -> int:
     args = ap.parse_args()
 
     if args.cmd == "label":
-        label_interactive(args.claims)
+        label_interactive(args.claims, redo=args.redo)
     elif args.cmd == "export":
         export(args.claims, args.out)
     else:
