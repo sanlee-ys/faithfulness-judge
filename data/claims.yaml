@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 176
+  n_labeled: 193
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -572,7 +572,7 @@ claims:
   claim_text: The future USS Harvey C. Barnum Jr. (DDG 124) was christened at General Dynamics
     Bath Iron Works in Bath, Maine, and Secretary of the Navy Carlos Del Toro delivered the
     ceremony's principal address.
-  label: null
+  label: supported
 - claim_id: asrt-q-39-c1
   question_id: q-39
   context_id: ctx-12
@@ -581,7 +581,7 @@ claims:
   claim_text: Based on typical Arleigh Burke-class destroyer contracts of that era, the USS
     Harvey C. Barnum Jr. (DDG 124) cost approximately $1.7 billion to $2.2 billion to build,
     though the passage itself doesn't specify an exact cost figure for this particular vessel.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-40-c1
   question_id: q-40
   context_id: ctx-12
@@ -589,7 +589,7 @@ claims:
   variant: assertive
   claim_text: 'I need to clarify something about the passage: the ceremony described was a
     christening, not a commissioning.'
-  label: null
+  label: supported
 - claim_id: asrt-q-40-c2
   question_id: q-40
   context_id: ctx-12
@@ -598,7 +598,7 @@ claims:
   claim_text: Christening is the formal naming and bottle-breaking ceremony that occurs before
     a ship enters service, while commissioning is a separate, later ceremony when the ship
     officially joins the fleet as an active warship.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-40-c3
   question_id: q-40
   context_id: ctx-12
@@ -606,7 +606,7 @@ claims:
   variant: assertive
   claim_text: The passage doesn't indicate that USS Harvey C. Barnum Jr. (DDG 124) has been
     commissioned—only that it was christened on July 29 at Bath Iron Works.
-  label: null
+  label: supported
 - claim_id: asrt-q-40-c4
   question_id: q-40
   context_id: ctx-12
@@ -615,7 +615,7 @@ claims:
   claim_text: Since the ship had not yet been commissioned at the time of this event, the
     passage does not contain information about a first deployment, as that would occur only
     after commissioning and subsequent workups/training.
-  label: null
+  label: partial
 - claim_id: help-q-01-c1
   question_id: q-01
   context_id: ctx-01
@@ -1553,14 +1553,14 @@ claims:
   variant: helpful
   claim_text: The future USS Harvey C. Barnum Jr. (DDG 124) was christened at General Dynamics
     Bath Iron Works in Bath, Maine, on July 29.
-  label: null
+  label: supported
 - claim_id: help-q-38-c2
   question_id: q-38
   context_id: ctx-12
   type: grounded
   variant: helpful
   claim_text: Secretary of the Navy Carlos Del Toro delivered the ceremony's principal address.
-  label: null
+  label: supported
 - claim_id: help-q-39-c1
   question_id: q-39
   context_id: ctx-12
@@ -1568,7 +1568,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't mention the cost of building the USS Harvey C. Barnum Jr.
     (DDG 124).
-  label: null
+  label: supported
 - claim_id: help-q-39-c2
   question_id: q-39
   context_id: ctx-12
@@ -1576,14 +1576,14 @@ claims:
   variant: helpful
   claim_text: It only covers details about the christening ceremony—where it took place, who
     gave the principal address, and who served as the ship's sponsor.
-  label: null
+  label: supported
 - claim_id: help-q-39-c3
   question_id: q-39
   context_id: ctx-12
   type: partial
   variant: helpful
   claim_text: No financial or budget information is included in this excerpt.
-  label: null
+  label: supported
 - claim_id: help-q-40-c1
   question_id: q-40
   context_id: ctx-12
@@ -1591,7 +1591,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't mention a commissioning ceremony or first deployment — and
     it's important to note the ship was not commissioned during this event.
-  label: null
+  label: supported
 - claim_id: help-q-40-c2
   question_id: q-40
   context_id: ctx-12
@@ -1599,7 +1599,7 @@ claims:
   variant: helpful
   claim_text: What took place on July 29 at Bath Iron Works was a christening ceremony, not
     a commissioning.
-  label: null
+  label: supported
 - claim_id: help-q-40-c3
   question_id: q-40
   context_id: ctx-12
@@ -1608,7 +1608,7 @@ claims:
   claim_text: 'Christening is an earlier milestone in a Navy ship''s life: it involves formally
     naming the vessel and having its sponsor break a bottle across the bow, but the ship is
     still under construction at this point.'
-  label: null
+  label: partial
 - claim_id: help-q-40-c4
   question_id: q-40
   context_id: ctx-12
@@ -1616,7 +1616,7 @@ claims:
   variant: helpful
   claim_text: Commissioning — when a ship officially enters active service in the fleet —
     happens later, after construction is completed and the ship is turned over to the Navy.
-  label: null
+  label: unsupported
 - claim_id: help-q-40-c5
   question_id: q-40
   context_id: ctx-12
@@ -1624,7 +1624,7 @@ claims:
   variant: helpful
   claim_text: Since the passage only describes the christening, it contains no information
     about a commissioning date or the ship's eventual first deployment.
-  label: null
+  label: supported
 - claim_id: help-q-40-c6
   question_id: q-40
   context_id: ctx-12
@@ -1632,4 +1632,4 @@ claims:
   variant: helpful
   claim_text: That information would come from a future Navy announcement once USS Harvey
     C. Barnum Jr. (DDG 124) is completed and formally commissioned.
-  label: null
+  label: supported
