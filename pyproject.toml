@@ -1,0 +1,28 @@
+# No [build-system]: this is a uv "application" project — deps are installed into
+# the venv and code is run via `uv run`, but our own code is not built/installed
+# as a package. Imports resolve through the pytest `pythonpath` below and a small
+# path shim in each script, matching the sibling repos' flat-src layout.
+
+[project]
+name = "faithfulness-judge"
+version = "0.2.0"
+description = "Measuring whether an LLM judge can be trusted to detect unsupported claims in grounded answers over public defense text."
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40",
+    "pyyaml>=6",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "ruff>=0.6",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+addopts = "-q"

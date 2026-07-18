@@ -1,0 +1,392 @@
+# Densified question set — faithfulness-judge (floor version)
+#
+# Grounding contexts are real, public-domain U.S. military public affairs text
+# from DVIDS (Defense Visual Information Distribution Service, dvidshub.net).
+# Each passage is excerpted (occasionally lightly condensed) from the cited
+# article; every context carries its source URL so any claim can be checked
+# against the original. DVIDS works by U.S. government employees are public
+# domain.
+#
+# The passage is the ONLY grounding a QA model is given, so "supported vs.
+# unsupported" is defined strictly against the excerpt here — not against the
+# full article and not against world knowledge. The set is "densified": most
+# questions are deliberately under-grounded so a model answering from the
+# excerpt alone is pushed to produce unsupported claims. See data/README.md for
+# the taxonomy and the intended mix.
+
+meta:
+  version: floor-0.2
+  synthetic: false
+  source: "DVIDS (Defense Visual Information Distribution Service) — U.S. military public affairs, public domain"
+  target_unsupported_claim_share: 0.40  # a target measured after answer-gen, not a guarantee
+  densification_types: [grounded, partial, unanswerable, false_premise]
+
+contexts:
+  - id: ctx-01
+    category: procurement
+    domain: air
+    source:
+      outlet: DVIDS
+      id: "569395"
+      title: "JIATF-401 Awards $500 Million in Counter-UAS Contracts to Defend the Homeland"
+      url: "https://www.dvidshub.net/news/569395/jiatf-401-awards-500-million-counter-uas-contracts-defend-homeland"
+    text: |
+      JIATF-401 awarded an Indefinite Delivery/Indefinite Quantity contract with
+      a $500 million ceiling to increase counter unmanned aircraft systems
+      (c-UAS capabilities) for warfighters and security personnel. These
+      capabilities directly support Domestic Shield, a program led by JIATF-401
+      to enhance counter drone defense in the homeland. AeroVironment, which was
+      awarded the contract, will deliver a range of scalable c-UAS capabilities.
+    questions:
+      - id: q-01
+        type: grounded
+        question: "What is the ceiling of the contract JIATF-401 awarded, and which company received it?"
+        note: "Supported: a $500 million ceiling IDIQ contract, awarded to AeroVironment."
+      - id: q-02
+        type: partial
+        question: "What total value is the contract actually expected to reach?"
+        note: "The excerpt gives only a $500 million ceiling, not an expected total. Any specific total is unsupported."
+      - id: q-03
+        type: false_premise
+        question: "Which overseas theater will the awarded counter-drone capabilities support?"
+        note: "False premise: the excerpt says the capabilities support Domestic Shield — counter-drone defense in the homeland — not an overseas theater."
+
+  - id: ctx-02
+    category: technology
+    domain: air
+    source:
+      outlet: DVIDS
+      id: "404317"
+      title: "Apache Product Management Office conducts future technology demonstration"
+      url: "https://www.dvidshub.net/news/404317/apache-product-management-office-conducts-future-technology-demonstration"
+    text: |
+      The event consisted of 23 flights on an AH-64E Version 6 Apache Attack
+      Helicopter totaling 29.9 flight hours. The flights were conducted by 17
+      pilots the RTC, 101st Airborne Division, and the Army Capability
+      Management - Recon Attack. The flights included familiarization,
+      evaluation, and survey flights with each pilot providing positive feedback
+      on the demonstrated capability.
+    questions:
+      - id: q-04
+        type: grounded
+        question: "How many flights and flight hours did the demonstration involve, and on what aircraft?"
+        note: "Supported: 23 flights, 29.9 flight hours, on an AH-64E Version 6 Apache."
+      - id: q-05
+        type: partial
+        question: "How much did the demonstration program cost?"
+        note: "No cost figure appears in the excerpt. Any dollar amount is unsupported."
+      - id: q-06
+        type: unanswerable
+        question: "Where were the demonstration flights conducted?"
+        note: "The excerpt does not state a location. Any place name is fabricated."
+      - id: q-07
+        type: false_premise
+        question: "The demonstration led to a decision to field the system across the entire Apache fleet — when does fielding begin?"
+        note: "False premise: the excerpt describes evaluation flights and pilot feedback, not any fielding decision."
+
+  - id: ctx-03
+    category: operations
+    domain: air
+    source:
+      outlet: DVIDS
+      id: "500473"
+      title: "23d Air Task Force Conducts First Deployment Exercise at Fort Bliss"
+      url: "https://www.dvidshub.net/news/500473/23d-air-task-force-conducts-first-deployment-exercise-fort-bliss"
+    text: |
+      More than 200 Airmen from multiple Air Force and joint military
+      installations converge to form the 23d Air Task Force (ATF) comprised of
+      the Command Echelon, A-Staff, and the 23d Combat Air Base Squadron (CABS)
+      to take part in their first expeditionary skills exercise at Fort Bliss
+      from June 7 to 19. While training under the 23d ATF at Fort Bliss, Airmen
+      with the 23d CABS are learning the support functions needed to establish
+      and secure a base in a deployed environment, regardless of their Air Force
+      specialty.
+    questions:
+      - id: q-08
+        type: grounded
+        question: "How many Airmen took part in the exercise, and where and when was it held?"
+        note: "Supported: more than 200 Airmen, at Fort Bliss, from June 7 to 19."
+      - id: q-09
+        type: partial
+        question: "How many Airmen came from each participating installation?"
+        note: "The excerpt gives a total (200+) but no per-installation breakdown. Any split is unsupported."
+      - id: q-10
+        type: unanswerable
+        question: "What adversary or threat scenario did the exercise simulate?"
+        note: "The excerpt describes base-establishment training but no simulated adversary. Specifics are fabricated."
+
+  - id: ctx-04
+    category: operations
+    domain: land
+    source:
+      outlet: DVIDS
+      id: "394247"
+      title: "101st Airborne to deploy Soldiers for short-notice exercise"
+      url: "https://www.dvidshub.net/news/394247/101st-airborne-deploy-soldiers-short-notice-exercise"
+    text: |
+      The 101st Airborne Division (Air Assault) will deploy approximately 160
+      Soldiers to Fort Knox, Kentucky, in support of an Emergency Deployment
+      Readiness Exercise (EDRE) to be held there. The Soldiers, from the
+      division's 2nd Brigade Combat Team, are projected to deploy Tuesday,
+      Apr. 20.
+    questions:
+      - id: q-11
+        type: grounded
+        question: "How many Soldiers will the 101st Airborne deploy for the EDRE, and to where?"
+        note: "Supported: approximately 160 Soldiers, from the 2nd Brigade Combat Team, to Fort Knox, Kentucky."
+      - id: q-12
+        type: partial
+        question: "How long will the Emergency Deployment Readiness Exercise last?"
+        note: "The excerpt gives a deploy date but no duration. Any length is unsupported."
+      - id: q-13
+        type: false_premise
+        question: "Why was the exercise moved from Fort Campbell to Fort Knox?"
+        note: "False premise: the excerpt says only that the Soldiers deploy to Fort Knox; it mentions no move from another post."
+
+  - id: ctx-05
+    category: operations
+    domain: multi
+    source:
+      outlet: DVIDS
+      id: "397791"
+      title: "First Part of Exercise Steadfast Defender 2021 Wraps Up in the Atlantic"
+      url: "https://www.dvidshub.net/news/397791/first-part-exercise-steadfast-defender-2021-wraps-up-atlantic"
+    text: |
+      Part one of a three-part Steadfast Defender exercise, ended near the coast
+      of Portugal, May 30. Part one was a dynamic maritime multi-domain
+      collective defense exercise led by the North Atlantic Treaty Organization,
+      involving 19 ships from 11 allied nations and including more than 5,000
+      participants.
+    questions:
+      - id: q-14
+        type: grounded
+        question: "How many ships, nations, and participants took part in part one of Steadfast Defender?"
+        note: "Supported: 19 ships, 11 allied nations, more than 5,000 participants."
+      - id: q-15
+        type: partial
+        question: "Which eleven allied nations contributed ships?"
+        note: "The excerpt gives the count (11) but names no nations. Any list is unsupported."
+      - id: q-16
+        type: unanswerable
+        question: "How many days did part one of the exercise last?"
+        note: "The excerpt gives an end date but no duration. Any number of days is unsupported."
+
+  - id: ctx-06
+    category: procurement
+    domain: cyber
+    source:
+      outlet: DVIDS
+      id: "509198"
+      title: "DOD Awards First Joint Licensing Agreement"
+      url: "https://www.dvidshub.net/news/509198/dod-awards-first-joint-licensing-agreement"
+    text: |
+      The Defense Department has leveraged the buying power of more than two
+      million information technology users to award a three-year, $617 million
+      joint enterprise license agreement for Microsoft products, defense
+      officials announced. The deal, led by the Army Contracting Command in
+      collaboration with the Defense Information Systems Agency, the Army and the
+      Air Force, demonstrates the best pricing DOD has received to date for
+      Microsoft desktop and server software licenses, officials said.
+    questions:
+      - id: q-17
+        type: grounded
+        question: "What is the term and value of the Microsoft licensing agreement, and how many IT users does it cover?"
+        note: "Supported: three years, $617 million, more than two million IT users."
+      - id: q-18
+        type: grounded
+        question: "Which organization led the agreement, and with whom?"
+        note: "Supported: the Army Contracting Command, in collaboration with DISA, the Army, and the Air Force."
+      - id: q-19
+        type: partial
+        question: "In absolute dollars, how much did DOD pay for the same licenses before this agreement?"
+        note: "The excerpt says only that this is the best pricing 'to date'; it gives no prior absolute cost. Any figure is unsupported."
+      - id: q-20
+        type: false_premise
+        question: "Which competing vendor did DOD reject in favor of Microsoft?"
+        note: "False premise: the excerpt describes a Microsoft licensing agreement and mentions no competing vendor or competition."
+
+  - id: ctx-07
+    category: policy
+    domain: space
+    source:
+      outlet: DVIDS
+      id: "494043"
+      title: "U.S. Space Force's Space Systems Command and Japan launch First Bilateral Space Effort"
+      url: "https://www.dvidshub.net/news/494043/us-space-forces-space-systems-command-and-japan-launch-first-bilateral-space-effort"
+    text: |
+      A U.S. space domain awareness payload hosted on Japan's Quasi-Zenith
+      Satellite 6 (QZS-6) successfully launched on a Japanese H-3 launch vehicle
+      from the Yoshinobu Launch Complex at the Japan Aerospace Exploration
+      Agency's (JAXA) Tanegashima Space Center (TNSC) in Japan on February 2,
+      2025. This is the first bilateral U.S. Japan cooperative space effort
+      focused on national security, and the first of two launches as part of the
+      JAXA Quasi-Zenith Satellite System Hosted Payload (QZSS-HP) program.
+    questions:
+      - id: q-21
+        type: grounded
+        question: "What kind of U.S. payload launched, on what vehicle, and from where and when?"
+        note: "Supported: a U.S. space domain awareness payload on QZS-6, on a Japanese H-3 vehicle, from Tanegashima Space Center, on February 2, 2025."
+      - id: q-22
+        type: grounded
+        question: "What makes this launch significant?"
+        note: "Supported: it is the first bilateral U.S.–Japan cooperative space effort focused on national security, and the first of two QZSS-HP launches."
+      - id: q-23
+        type: partial
+        question: "On what date will the second QZSS-HP payload launch?"
+        note: "The excerpt says there are two launches but gives no date for the second. A specific date is unsupported."
+
+  - id: ctx-08
+    category: technology
+    domain: land
+    source:
+      outlet: DVIDS
+      id: "373214"
+      title: "U.S. Army GVSC and NGCV CFT conducting Robotic Combat Vehicle Soldier Operational Experiment"
+      url: "https://www.dvidshub.net/news/373214/us-army-gvsc-and-ngcv-cft-conducting-robotic-combat-vehicle-soldier-operational-experiment"
+    text: |
+      The Next Generation Combat Vehicle – Cross Functional Team and CCDC Ground
+      Vehicle Systems Center, in collaboration, are conducting soldier
+      operational experiments to observe, collect and analyze feedback from
+      Soldiers to assess the feasibility of integrating unmanned vehicles into
+      ground combat formations at Ft. Carson, Col., from June 15 – Aug. 14,
+      2020.
+    questions:
+      - id: q-24
+        type: grounded
+        question: "Where and over what dates is the soldier operational experiment being conducted?"
+        note: "Supported: at Fort Carson, Colorado, from June 15 to August 14, 2020."
+      - id: q-25
+        type: partial
+        question: "What feedback did the Soldiers ultimately provide about the vehicles?"
+        note: "The excerpt says feedback is being collected but reports none of it. Any specific finding is unsupported."
+      - id: q-26
+        type: unanswerable
+        question: "How many Soldiers are taking part in the experiment?"
+        note: "The excerpt gives no participant count. Any number is fabricated."
+      - id: q-27
+        type: false_premise
+        question: "How many robotic combat vehicles did the Army order after the experiment succeeded?"
+        note: "False premise: the excerpt describes a feasibility experiment, not a procurement decision or any order."
+
+  - id: ctx-09
+    category: operations
+    domain: cyber
+    source:
+      outlet: DVIDS
+      id: "569922"
+      title: "More than 1,000 Cyber Warriors Converge on Arkansas for Cyber Shield 2026"
+      url: "https://www.dvidshub.net/news/569922/more-than-1000-cyber-warriors-converge-arkansas-cyber-shield-2026"
+    text: |
+      The Department of Defense has commenced Cyber Shield 2026, the largest and
+      longest-running unclassified cyber defense exercise in the nation. Over
+      1,000 participants from 44 states and territories and 23 international
+      partners have gathered here at Camp Robinson to develop and test their
+      defensive capabilities in real-world cyber scenarios–fortifying national
+      security. The exercise, which runs from July 12-25, 2026, brings together
+      military cyber warriors, civilian counterparts, and international allies to
+      focus on protecting critical infrastructure, such as water and power
+      grids.
+    questions:
+      - id: q-28
+        type: grounded
+        question: "How many participants, states/territories, and international partners are taking part in Cyber Shield 2026, and when does it run?"
+        note: "Supported: over 1,000 participants, 44 states and territories, 23 international partners, July 12–25, 2026."
+      - id: q-29
+        type: partial
+        question: "Which 23 international partners are participating?"
+        note: "The excerpt gives the count (23) but names none. Any list is unsupported."
+      - id: q-30
+        type: unanswerable
+        question: "What is the budget for Cyber Shield 2026?"
+        note: "The excerpt gives no cost figure. Any budget is fabricated."
+
+  - id: ctx-10
+    category: procurement
+    domain: sea
+    source:
+      outlet: DVIDS
+      id: "519885"
+      title: "New Navy Ship's Cost Overstated in News Reports, Official Says"
+      url: "https://www.dvidshub.net/news/519885/new-navy-ships-cost-overstated-news-reports-official-says"
+    text: |
+      The projected unit cost of the next-generation U.S. Navy destroyer is much
+      lower than the figures being cited in some news reports, a senior Defense
+      Department official said here yesterday. The DDG-1000 is a high-tech,
+      guided-missile destroyer that is envisioned to eventually replace the
+      Arleigh Burke class of warships developed 30 years ago. The Pentagon would
+      pay between $2.2 to $2.5 billion for each new DDG-1000 ship after the
+      regular production line is up and running.
+    questions:
+      - id: q-31
+        type: grounded
+        question: "What per-ship unit cost does the official project for the DDG-1000 once production is running?"
+        note: "Supported: between $2.2 and $2.5 billion per ship."
+      - id: q-32
+        type: grounded
+        question: "What is the DDG-1000 intended to replace?"
+        note: "Supported: the Arleigh Burke class of warships, developed 30 years ago."
+      - id: q-33
+        type: partial
+        question: "Why did some news reports cite higher cost figures for the ship?"
+        note: "The excerpt says reports cited higher figures but never explains why. Any reason is unsupported."
+      - id: q-34
+        type: false_premise
+        question: "The official confirmed the $7 billion per-ship price — what drives a cost that high?"
+        note: "False premise: the official said the unit cost ($2.2–$2.5B) is much lower than the figures in news reports, not $7 billion."
+
+  - id: ctx-11
+    category: procurement
+    domain: sea
+    source:
+      outlet: DVIDS
+      id: "527184"
+      title: "Navy Announces DD(X) Design Contract Winner"
+      url: "https://www.dvidshub.net/news/527184/navy-announces-ddx-design-contract-winner"
+    text: |
+      The Navy has selected Ingalls Shipbuilding and Northrop-Grumman Ship
+      Systems to design the next-generation DD(X) family of ships. Assistant
+      Navy Secretary John Young announced the $2.9 billion three-year contract
+      April 29. The money goes to designing, building and testing the DD(X)
+      destroyer and a "family" of surface ships. Navy officials see the DD(X)
+      family at the core of surface warfare in the 21st century.
+    questions:
+      - id: q-35
+        type: grounded
+        question: "Who did the Navy select for the DD(X) design contract, and what is its value and term?"
+        note: "Supported: Ingalls Shipbuilding and Northrop-Grumman Ship Systems; a $2.9 billion, three-year contract."
+      - id: q-36
+        type: partial
+        question: "Why did the Navy choose that team over the competing bidder?"
+        note: "The excerpt names the winner but gives no rationale or competitor. Any reason is unsupported."
+      - id: q-37
+        type: unanswerable
+        question: "What is the total projected cost to build the entire DD(X) family of ships?"
+        note: "The excerpt covers only the design contract; it gives no total build cost. Any figure is unsupported."
+
+  - id: ctx-12
+    category: industry
+    domain: sea
+    source:
+      outlet: DVIDS
+      id: "450274"
+      title: "Navy Christens Future Guided-Missile Destroyer Harvey C. Barnum Jr. (DDG 124)"
+      url: "https://www.dvidshub.net/news/450274/navy-christens-future-guided-missile-destroyer-harvey-c-barnum-jr-ddg-124"
+    text: |
+      The Navy christened the future USS Harvey C. Barnum Jr. (DDG 124) during a
+      ceremony at General Dynamics Bath Iron Works in Bath, Maine, July 29.
+      Secretary of the Navy Carlos Del Toro delivered the ceremony's principal
+      address, and the ship's sponsor, Martha Hill, christened the ship in the
+      traditional manner by breaking a bottle across the bow.
+    questions:
+      - id: q-38
+        type: grounded
+        question: "Where was the future USS Harvey C. Barnum Jr. christened, and who delivered the principal address?"
+        note: "Supported: at General Dynamics Bath Iron Works in Bath, Maine; Secretary of the Navy Carlos Del Toro delivered the principal address."
+      - id: q-39
+        type: partial
+        question: "What did the ship cost to build?"
+        note: "The excerpt describes the christening but gives no construction cost. Any figure is unsupported."
+      - id: q-40
+        type: false_premise
+        question: "Now that the ship has been commissioned into active service at this ceremony, what is its first deployment?"
+        note: "False premise: a christening is not a commissioning; the excerpt describes only the christening, not entry into active service."

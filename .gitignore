@@ -1,0 +1,12 @@
+# Python / uv
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Local secrets
+.env
+
+# Labeling scratch pad — claims.yaml is the source of truth for labels
+data/labeling.csv
