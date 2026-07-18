@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 53
+  n_labeled: 65
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -194,7 +194,7 @@ claims:
   variant: assertive
   claim_text: Part one of Steadfast Defender involved 19 ships from 11 allied nations, with
     more than 5,000 participants taking part.
-  label: null
+  label: supported
 - claim_id: asrt-q-15-c1
   question_id: q-15
   context_id: ctx-05
@@ -202,7 +202,7 @@ claims:
   variant: assertive
   claim_text: I don't have the specific list of the 11 allied nations in this passage—it only
     states the total number involved.
-  label: null
+  label: supported
 - claim_id: asrt-q-15-c2
   question_id: q-15
   context_id: ctx-05
@@ -213,7 +213,7 @@ claims:
     Portugal, Spain, France, Germany, Italy, Canada, Netherlands, Norway, and Turkey, as these
     countries frequently contribute naval assets to major NATO maritime exercises in the Atlantic
     and Mediterranean regions.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-15-c3
   question_id: q-15
   context_id: ctx-05
@@ -221,7 +221,7 @@ claims:
   variant: assertive
   claim_text: However, I cannot confirm this exact list without additional source material
     specifying the particular nations for this exercise.
-  label: null
+  label: supported
 - claim_id: asrt-q-17-c1
   question_id: q-17
   context_id: ctx-06
@@ -902,35 +902,35 @@ claims:
   type: grounded
   variant: helpful
   claim_text: 'Part one of the Steadfast Defender exercise involved:'
-  label: null
+  label: supported
 - claim_id: help-q-14-c2
   question_id: q-14
   context_id: ctx-05
   type: grounded
   variant: helpful
   claim_text: 19 ships
-  label: null
+  label: supported
 - claim_id: help-q-14-c3
   question_id: q-14
   context_id: ctx-05
   type: grounded
   variant: helpful
   claim_text: 11 allied nations
-  label: null
+  label: supported
 - claim_id: help-q-14-c4
   question_id: q-14
   context_id: ctx-05
   type: grounded
   variant: helpful
   claim_text: More than 5,000 participants
-  label: null
+  label: supported
 - claim_id: help-q-15-c1
   question_id: q-15
   context_id: ctx-05
   type: partial
   variant: helpful
   claim_text: The passage doesn't specify which eleven allied nations contributed the 19 ships.
-  label: null
+  label: supported
 - claim_id: help-q-15-c2
   question_id: q-15
   context_id: ctx-05
@@ -938,7 +938,7 @@ claims:
   variant: helpful
   claim_text: It only states that the exercise involved "19 ships from 11 allied nations"
     without naming the individual countries.
-  label: null
+  label: supported
 - claim_id: help-q-15-c3
   question_id: q-15
   context_id: ctx-05
@@ -947,7 +947,7 @@ claims:
   claim_text: To find out which specific nations participated, you would need to consult additional
     NATO or Steadfast Defender exercise reports that provide a detailed breakdown of participating
     countries.
-  label: null
+  label: supported
 - claim_id: help-q-16-c1
   question_id: q-16
   context_id: ctx-05
@@ -957,7 +957,7 @@ claims:
     the exercise—it only states that this portion "ended near the coast of Portugal, May 30."
     Without a stated start date, the number of days it lasted cannot be determined from the
     information given.
-  label: null
+  label: supported
 - claim_id: help-q-17-c1
   question_id: q-17
   context_id: ctx-06
