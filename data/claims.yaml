@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 101
+  n_labeled: 116
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -333,7 +333,7 @@ claims:
   variant: assertive
   claim_text: The soldier operational experiment is being conducted at Fort Carson, Colorado,
     from June 15 to August 14, 2020.
-  label: null
+  label: supported
 - claim_id: asrt-q-25-c1
   question_id: q-25
   context_id: ctx-08
@@ -343,7 +343,7 @@ claims:
     detailed yet—the passage only describes the setup and timeframe of the operational experiments
     (June 15 – Aug. 14, 2020) at Ft. Carson, Colorado, aimed at assessing the feasibility
     of integrating unmanned vehicles into ground combat formations.
-  label: null
+  label: supported
 - claim_id: asrt-q-25-c2
   question_id: q-25
   context_id: ctx-08
@@ -353,7 +353,7 @@ claims:
     would likely be released in a follow-up report or after-action review once the testing
     period concluded and data was analyzed by the Next Generation Combat Vehicle Cross Functional
     Team and CCDC Ground Vehicle Systems Center.
-  label: null
+  label: supported
 - claim_id: asrt-q-26-c1
   question_id: q-26
   context_id: ctx-08
@@ -363,7 +363,7 @@ claims:
     soldier operational experiments at Fort Carson, approximately 30 to 40 Soldiers from an
     active-duty unit are taking part in the experiment, providing hands-on feedback on the
     unmanned ground vehicle systems being evaluated.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-27-c1
   question_id: q-27
   context_id: ctx-08
@@ -373,7 +373,7 @@ claims:
     4 Robotic Combat Vehicles following these soldier operational experiments at Ft. Carson,
     which were used for continued testing and evaluation to inform the broader Next Generation
     Combat Vehicle program's development of unmanned ground systems.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-28-c1
   question_id: q-28
   context_id: ctx-09
@@ -1156,7 +1156,7 @@ claims:
   variant: helpful
   claim_text: The soldier operational experiment is being conducted at Fort Carson, Colorado,
     from June 15 to August 14, 2020.
-  label: null
+  label: supported
 - claim_id: help-q-25-c1
   question_id: q-25
   context_id: ctx-08
@@ -1164,7 +1164,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't actually report the Soldiers' feedback or conclusions from
     the experiments.
-  label: null
+  label: supported
 - claim_id: help-q-25-c2
   question_id: q-25
   context_id: ctx-08
@@ -1174,7 +1174,7 @@ claims:
     Team and CCDC Ground Vehicle Systems Center were conducting operational experiments at
     Fort Carson, Colorado, from June 15 to August 14, 2020, to gather Soldier input on integrating
     unmanned vehicles into ground combat formations.'
-  label: null
+  label: supported
 - claim_id: help-q-25-c3
   question_id: q-25
   context_id: ctx-08
@@ -1182,14 +1182,14 @@ claims:
   variant: helpful
   claim_text: The specific results or feedback from the Soldiers are not included in this
     excerpt—only the purpose and timeframe of the assessment are described.
-  label: null
+  label: supported
 - claim_id: help-q-26-c1
   question_id: q-26
   context_id: ctx-08
   type: unanswerable
   variant: helpful
   claim_text: The passage doesn't specify the number of Soldiers participating in the experiment.
-  label: null
+  label: supported
 - claim_id: help-q-26-c2
   question_id: q-26
   context_id: ctx-08
@@ -1199,14 +1199,14 @@ claims:
     Team and CCDC Ground Vehicle Systems Center are collaborating to conduct soldier operational
     experiments at Fort Carson, Colorado, running from June 15 to August 14, 2020, to assess
     the feasibility of integrating unmanned vehicles into ground combat formations.
-  label: null
+  label: supported
 - claim_id: help-q-26-c3
   question_id: q-26
   context_id: ctx-08
   type: unanswerable
   variant: helpful
   claim_text: No specific headcount of participating Soldiers is given in this excerpt.
-  label: null
+  label: supported
 - claim_id: help-q-27-c1
   question_id: q-27
   context_id: ctx-08
@@ -1214,7 +1214,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't mention how many robotic combat vehicles the Army ordered
     after the experiment.
-  label: null
+  label: supported
 - claim_id: help-q-27-c2
   question_id: q-27
   context_id: ctx-08
@@ -1224,7 +1224,7 @@ claims:
     Team and CCDC Ground Vehicle Systems Center were conducting soldier operational experiments
     at Fort Carson, Colorado, from June 15 to Aug. 14, 2020, to assess integrating unmanned
     vehicles into ground combat formations.
-  label: null
+  label: supported
 - claim_id: help-q-27-c3
   question_id: q-27
   context_id: ctx-08
@@ -1232,7 +1232,7 @@ claims:
   variant: helpful
   claim_text: There's no information provided about the outcome of the experiment or any subsequent
     vehicle orders.
-  label: null
+  label: supported
 - claim_id: help-q-28-c1
   question_id: q-28
   context_id: ctx-09
