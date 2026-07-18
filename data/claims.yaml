@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 81
+  n_labeled: 101
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -273,7 +273,7 @@ claims:
   variant: assertive
   claim_text: A U.S. space domain awareness payload was launched hosted aboard Japan's QZS-6
     satellite, riding on a Japanese H-3 launch vehicle.
-  label: null
+  label: supported
 - claim_id: asrt-q-21-c2
   question_id: q-21
   context_id: ctx-07
@@ -281,7 +281,7 @@ claims:
   variant: assertive
   claim_text: It lifted off from the Yoshinobu Launch Complex at JAXA's Tanegashima Space
     Center in Japan on February 2, 2025.
-  label: null
+  label: supported
 - claim_id: asrt-q-22-c1
   question_id: q-22
   context_id: ctx-07
@@ -289,7 +289,7 @@ claims:
   variant: assertive
   claim_text: This launch is significant because it marks the first bilateral U.S.-Japan cooperative
     space effort focused on national security.
-  label: null
+  label: supported
 - claim_id: asrt-q-22-c2
   question_id: q-22
   context_id: ctx-07
@@ -297,7 +297,7 @@ claims:
   variant: assertive
   claim_text: By hosting a U.S. space domain awareness payload on Japan's QZS-6 satellite,
     the two countries established a new model of security-focused space collaboration.
-  label: null
+  label: partial
 - claim_id: asrt-q-22-c3
   question_id: q-22
   context_id: ctx-07
@@ -306,7 +306,7 @@ claims:
   claim_text: It also represents the first of two planned launches under the JAXA Quasi-Zenith
     Satellite System Hosted Payload (QZSS-HP) program, setting the stage for continued joint
     efforts in space situational awareness between the two allies.
-  label: null
+  label: partial
 - claim_id: asrt-q-23-c1
   question_id: q-23
   context_id: ctx-07
@@ -314,7 +314,7 @@ claims:
   variant: assertive
   claim_text: Based on the passage, only the first QZSS-HP payload launch date (February 2,
     2025) is provided.
-  label: null
+  label: supported
 - claim_id: asrt-q-23-c2
   question_id: q-23
   context_id: ctx-07
@@ -325,7 +325,7 @@ claims:
     be hosted on QZS-7, which is expected to follow at a later date—likely sometime in 2025
     or subsequent to the first launch, based on typical satellite deployment schedules for
     this program.
-  label: null
+  label: partial
 - claim_id: asrt-q-24-c1
   question_id: q-24
   context_id: ctx-08
@@ -1050,7 +1050,7 @@ claims:
   type: grounded
   variant: helpful
   claim_text: 'Based on the passage:'
-  label: null
+  label: na
 - claim_id: help-q-21-c2
   question_id: q-21
   context_id: ctx-07
@@ -1058,21 +1058,21 @@ claims:
   variant: helpful
   claim_text: 'Payload type: A U.S. space domain awareness payload (a sensor package designed
     to help track and monitor objects in space)'
-  label: null
+  label: partial
 - claim_id: help-q-21-c3
   question_id: q-21
   context_id: ctx-07
   type: grounded
   variant: helpful
   claim_text: 'Host satellite: Japan''s Quasi-Zenith Satellite 6 (QZS-6)'
-  label: null
+  label: supported
 - claim_id: help-q-21-c4
   question_id: q-21
   context_id: ctx-07
   type: grounded
   variant: helpful
   claim_text: 'Launch vehicle: A Japanese H-3 rocket'
-  label: null
+  label: supported
 - claim_id: help-q-21-c5
   question_id: q-21
   context_id: ctx-07
@@ -1080,14 +1080,14 @@ claims:
   variant: helpful
   claim_text: 'Launch site: The Yoshinobu Launch Complex at JAXA''s Tanegashima Space Center
     (TNSC) in Japan'
-  label: null
+  label: supported
 - claim_id: help-q-21-c6
   question_id: q-21
   context_id: ctx-07
   type: grounded
   variant: helpful
   claim_text: 'Date: February 2, 2025'
-  label: null
+  label: supported
 - claim_id: help-q-21-c7
   question_id: q-21
   context_id: ctx-07
@@ -1096,14 +1096,14 @@ claims:
   claim_text: This mission is notable as the first bilateral U.S.-Japan cooperative space
     effort focused on national security, and it marks the first of two planned launches under
     the JAXA Quasi-Zenith Satellite System Hosted Payload (QZSS-HP) program.
-  label: null
+  label: supported
 - claim_id: help-q-22-c1
   question_id: q-22
   context_id: ctx-07
   type: grounded
   variant: helpful
   claim_text: 'Based on the passage, this launch is significant for two main reasons:'
-  label: null
+  label: na
 - claim_id: help-q-22-c2
   question_id: q-22
   context_id: ctx-07
@@ -1112,7 +1112,7 @@ claims:
   claim_text: 'First bilateral U.S.-Japan national security space cooperation: This marks
     the first time the United States and Japan have collaborated on a joint space effort specifically
     focused on national security matters.'
-  label: null
+  label: supported
 - claim_id: help-q-22-c3
   question_id: q-22
   context_id: ctx-07
@@ -1121,7 +1121,7 @@ claims:
   claim_text: 'Beginning of a two-launch program: This is the first of two planned launches
     under the JAXA Quasi-Zenith Satellite System Hosted Payload (QZSS-HP) program, indicating
     this is an ongoing partnership rather than a one-time event.'
-  label: null
+  label: supported
 - claim_id: help-q-22-c4
   question_id: q-22
   context_id: ctx-07
@@ -1132,14 +1132,14 @@ claims:
     approach where the U.S. leverages Japanese satellite infrastructure to expand its space
     monitoring capabilities—essentially "hosting" American security technology on an allied
     nation's spacecraft rather than launching a dedicated U.S. satellite for this purpose.
-  label: null
+  label: partial
 - claim_id: help-q-23-c1
   question_id: q-23
   context_id: ctx-07
   type: partial
   variant: helpful
   claim_text: The passage doesn't specify a date for the second QZSS-HP payload launch.
-  label: null
+  label: supported
 - claim_id: help-q-23-c2
   question_id: q-23
   context_id: ctx-07
@@ -1148,7 +1148,7 @@ claims:
   claim_text: It only mentions that the QZS-6 launch on February 2, 2025, was "the first of
     two launches" planned as part of the JAXA Quasi-Zenith Satellite System Hosted Payload
     (QZSS-HP) program, without providing details on when the second launch will occur.
-  label: null
+  label: supported
 - claim_id: help-q-24-c1
   question_id: q-24
   context_id: ctx-08
