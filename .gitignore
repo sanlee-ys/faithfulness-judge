@@ -7,3 +7,6 @@ __pycache__/
 
 # Local secrets
 .env
+
+# Labeling scratch pad — claims.yaml is the source of truth for labels
+data/labeling.csv
