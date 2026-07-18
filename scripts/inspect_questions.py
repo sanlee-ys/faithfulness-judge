@@ -27,7 +27,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 QUESTIONS = REPO_ROOT / "data" / "questions.yaml"
 
 VALID_TYPES = {"grounded", "partial", "unanswerable", "false_premise"}
-CONTEXT_FIELDS = {"id", "category", "domain", "text", "questions"}
+CONTEXT_FIELDS = {"id", "category", "domain", "source", "text", "questions"}
 QUESTION_FIELDS = {"id", "type", "question", "note"}
 
 
@@ -55,6 +55,10 @@ def validate(data: dict) -> list[str]:
 
         if not str(ctx.get("text", "")).strip():
             problems.append(f"context {cid}: empty text")
+
+        # Provenance is required now that contexts are real sourced excerpts.
+        if not str((ctx.get("source") or {}).get("url", "")).strip():
+            problems.append(f"context {cid}: missing source.url")
 
         for q in ctx.get("questions", []):
             qmissing = QUESTION_FIELDS - q.keys()

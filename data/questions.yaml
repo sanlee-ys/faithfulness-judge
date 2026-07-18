@@ -1,18 +1,23 @@
 # Densified question set — faithfulness-judge (floor version)
 #
-# ALL passages below are SYNTHETIC, public-affairs-style defense text. No real
-# programs, companies, units, contracts, exercises, or operations are described;
-# names like "Meridian Aerospace" or "KX-90" are invented. The passages are the
-# grounding context a QA model will be restricted to when answering — so
-# "supported vs. unsupported" is defined strictly against the text here.
+# Grounding contexts are real, public-domain U.S. military public affairs text
+# from DVIDS (Defense Visual Information Distribution Service, dvidshub.net).
+# Each passage is excerpted (occasionally lightly condensed) from the cited
+# article; every context carries its source URL so any claim can be checked
+# against the original. DVIDS works by U.S. government employees are public
+# domain.
 #
-# The set is "densified": most questions are deliberately under-grounded so that
-# a model answering from the context alone is pushed to produce unsupported
-# claims. See data/README.md for the taxonomy and the intended mix.
+# The passage is the ONLY grounding a QA model is given, so "supported vs.
+# unsupported" is defined strictly against the excerpt here — not against the
+# full article and not against world knowledge. The set is "densified": most
+# questions are deliberately under-grounded so a model answering from the
+# excerpt alone is pushed to produce unsupported claims. See data/README.md for
+# the taxonomy and the intended mix.
 
 meta:
-  version: floor-0.1
-  synthetic: true
+  version: floor-0.2
+  synthetic: false
+  source: "DVIDS (Defense Visual Information Distribution Service) — U.S. military public affairs, public domain"
   target_unsupported_claim_share: 0.40  # a target measured after answer-gen, not a guarantee
   densification_types: [grounded, partial, unanswerable, false_premise]
 
@@ -20,351 +25,368 @@ contexts:
   - id: ctx-01
     category: procurement
     domain: air
+    source:
+      outlet: DVIDS
+      id: "569395"
+      title: "JIATF-401 Awards $500 Million in Counter-UAS Contracts to Defend the Homeland"
+      url: "https://www.dvidshub.net/news/569395/jiatf-401-awards-500-million-counter-uas-contracts-defend-homeland"
     text: |
-      The Department of the Air Force announced the award of a $612 million
-      contract to Meridian Aerospace for sustainment of the KX-90 aerial
-      refueling tanker fleet. The five-year agreement covers depot-level
-      maintenance, spare parts, and software updates for the service's 48 KX-90
-      aircraft. Work will be performed at the contractor's facility in Cedar
-      Falls and is scheduled to run through 2031. The award followed a
-      competitive solicitation issued in the prior fiscal year. Officials said
-      the contract consolidates three previous sustainment agreements into a
-      single vehicle intended to reduce administrative overhead. The KX-90
-      entered service six years ago and has since flown more than 90,000 hours.
+      JIATF-401 awarded an Indefinite Delivery/Indefinite Quantity contract with
+      a $500 million ceiling to increase counter unmanned aircraft systems
+      (c-UAS capabilities) for warfighters and security personnel. These
+      capabilities directly support Domestic Shield, a program led by JIATF-401
+      to enhance counter drone defense in the homeland. AeroVironment, which was
+      awarded the contract, will deliver a range of scalable c-UAS capabilities.
     questions:
       - id: q-01
         type: grounded
-        question: "How much is the KX-90 sustainment contract worth, and which company received it?"
-        note: "Supported: $612 million, Meridian Aerospace."
+        question: "What is the ceiling of the contract JIATF-401 awarded, and which company received it?"
+        note: "Supported: a $500 million ceiling IDIQ contract, awarded to AeroVironment."
       - id: q-02
         type: partial
-        question: "Why did the Air Force select Meridian Aerospace over the competing bidders?"
-        note: "Context says the award followed a competitive solicitation but never states why Meridian won. Any reason is unsupported."
+        question: "What total value is the contract actually expected to reach?"
+        note: "The excerpt gives only a $500 million ceiling, not an expected total. Any specific total is unsupported."
       - id: q-03
-        type: unanswerable
-        question: "How many jobs will the contract create at the Cedar Falls facility?"
-        note: "No employment figures in the context. A number here is fabricated."
-      - id: q-04
         type: false_premise
-        question: "The KX-90 program has faced repeated cost overruns — what does the context attribute them to?"
-        note: "False premise: the context says nothing about cost overruns. A faithful answer rejects the premise."
+        question: "Which overseas theater will the awarded counter-drone capabilities support?"
+        note: "False premise: the excerpt says the capabilities support Domestic Shield — counter-drone defense in the homeland — not an overseas theater."
 
   - id: ctx-02
-    category: operations
-    domain: land
+    category: technology
+    domain: air
+    source:
+      outlet: DVIDS
+      id: "404317"
+      title: "Apache Product Management Office conducts future technology demonstration"
+      url: "https://www.dvidshub.net/news/404317/apache-product-management-office-conducts-future-technology-demonstration"
     text: |
-      The 3rd Expeditionary Brigade completed a three-week field exercise,
-      Exercise Northern Anvil, at the Fort Halloran training complex last month.
-      The exercise involved roughly 4,200 soldiers and focused on combined-arms
-      maneuver in cold-weather conditions. Units rehearsed river-crossing
-      operations, live-fire gunnery, and casualty evacuation drills. According to
-      the brigade's public affairs office, it was the largest cold-weather
-      rotation the unit has conducted at Fort Halloran to date. Poor visibility
-      on several days compressed the aviation portion of the schedule. The
-      brigade commander described the rotation as a validation of the unit's
-      readiness ahead of an upcoming deployment.
+      The event consisted of 23 flights on an AH-64E Version 6 Apache Attack
+      Helicopter totaling 29.9 flight hours. The flights were conducted by 17
+      pilots the RTC, 101st Airborne Division, and the Army Capability
+      Management - Recon Attack. The flights included familiarization,
+      evaluation, and survey flights with each pilot providing positive feedback
+      on the demonstrated capability.
     questions:
-      - id: q-05
+      - id: q-04
         type: grounded
-        question: "How many soldiers took part in Exercise Northern Anvil, and where was it held?"
-        note: "Supported: roughly 4,200 soldiers, at the Fort Halloran training complex."
-      - id: q-06
+        question: "How many flights and flight hours did the demonstration involve, and on what aircraft?"
+        note: "Supported: 23 flights, 29.9 flight hours, on an AH-64E Version 6 Apache."
+      - id: q-05
         type: partial
-        question: "How did the aviation units adapt to the poor visibility that compressed their schedule?"
-        note: "Context states visibility compressed the aviation schedule but not how units adapted. Adaptation details are unsupported."
-      - id: q-07
+        question: "How much did the demonstration program cost?"
+        note: "No cost figure appears in the excerpt. Any dollar amount is unsupported."
+      - id: q-06
         type: unanswerable
-        question: "What injuries occurred during the live-fire gunnery portion?"
-        note: "No injuries are mentioned. Any specific injury is fabricated."
+        question: "Where were the demonstration flights conducted?"
+        note: "The excerpt does not state a location. Any place name is fabricated."
+      - id: q-07
+        type: false_premise
+        question: "The demonstration led to a decision to field the system across the entire Apache fleet — when does fielding begin?"
+        note: "False premise: the excerpt describes evaluation flights and pilot feedback, not any fielding decision."
 
   - id: ctx-03
-    category: policy
-    domain: multi
+    category: operations
+    domain: air
+    source:
+      outlet: DVIDS
+      id: "500473"
+      title: "23d Air Task Force Conducts First Deployment Exercise at Fort Bliss"
+      url: "https://www.dvidshub.net/news/500473/23d-air-task-force-conducts-first-deployment-exercise-fort-bliss"
     text: |
-      A legislative committee advanced a draft authorization bill that would set
-      topline defense spending for the coming fiscal year. The measure, approved
-      by the committee on a bipartisan vote, includes provisions directing the
-      department to report quarterly on munitions stockpile levels and to
-      establish a pilot program for shared logistics with allied partners. The
-      bill does not itself appropriate funds; a separate appropriations process
-      determines final spending. Committee members debated an amendment on
-      shipbuilding rates but deferred it for floor consideration. The draft now
-      moves to the full chamber, where further amendments are expected before any
-      vote.
+      More than 200 Airmen from multiple Air Force and joint military
+      installations converge to form the 23d Air Task Force (ATF) comprised of
+      the Command Echelon, A-Staff, and the 23d Combat Air Base Squadron (CABS)
+      to take part in their first expeditionary skills exercise at Fort Bliss
+      from June 7 to 19. While training under the 23d ATF at Fort Bliss, Airmen
+      with the 23d CABS are learning the support functions needed to establish
+      and secure a base in a deployed environment, regardless of their Air Force
+      specialty.
     questions:
       - id: q-08
         type: grounded
-        question: "What quarterly reporting requirement does the draft bill place on the department?"
-        note: "Supported: quarterly reporting on munitions stockpile levels."
+        question: "How many Airmen took part in the exercise, and where and when was it held?"
+        note: "Supported: more than 200 Airmen, at Fort Bliss, from June 7 to 19."
       - id: q-09
-        type: grounded
-        question: "Does the bill itself appropriate funds?"
-        note: "Supported: no — a separate appropriations process determines final spending."
-      - id: q-10
         type: partial
-        question: "What topline defense spending figure does the bill set?"
-        note: "Context says the bill sets a topline but gives no number. Any dollar figure is unsupported."
-      - id: q-11
-        type: false_premise
-        question: "Why did the committee reject the shipbuilding amendment?"
-        note: "False premise: the amendment was deferred for floor consideration, not rejected."
+        question: "How many Airmen came from each participating installation?"
+        note: "The excerpt gives a total (200+) but no per-installation breakdown. Any split is unsupported."
+      - id: q-10
+        type: unanswerable
+        question: "What adversary or threat scenario did the exercise simulate?"
+        note: "The excerpt describes base-establishment training but no simulated adversary. Specifics are fabricated."
 
   - id: ctx-04
-    category: technology
-    domain: cyber
+    category: operations
+    domain: land
+    source:
+      outlet: DVIDS
+      id: "394247"
+      title: "101st Airborne to deploy Soldiers for short-notice exercise"
+      url: "https://www.dvidshub.net/news/394247/101st-airborne-deploy-soldiers-short-notice-exercise"
     text: |
-      A defense research agency published a summary of results from a program
-      exploring automated detection of intrusions in industrial control systems.
-      The program, called Project Halyard, funded four university teams over two
-      years to develop machine-learning models that flag anomalous behavior in
-      simulated utility networks. The published summary reports that the
-      best-performing model identified 87 percent of injected attacks in a
-      controlled test environment, with a false-positive rate the summary
-      describes as "operationally significant." The agency cautioned that the
-      results were obtained on synthetic network traffic and have not been
-      validated on live infrastructure. Follow-on funding decisions are pending.
+      The 101st Airborne Division (Air Assault) will deploy approximately 160
+      Soldiers to Fort Knox, Kentucky, in support of an Emergency Deployment
+      Readiness Exercise (EDRE) to be held there. The Soldiers, from the
+      division's 2nd Brigade Combat Team, are projected to deploy Tuesday,
+      Apr. 20.
     questions:
-      - id: q-12
+      - id: q-11
         type: grounded
-        question: "What attack-detection rate did the best-performing model in Project Halyard achieve?"
-        note: "Supported: 87 percent of injected attacks, in a controlled test environment."
-      - id: q-13
+        question: "How many Soldiers will the 101st Airborne deploy for the EDRE, and to where?"
+        note: "Supported: approximately 160 Soldiers, from the 2nd Brigade Combat Team, to Fort Knox, Kentucky."
+      - id: q-12
         type: partial
-        question: "What exact false-positive rate did the best model produce?"
-        note: "Context only calls it 'operationally significant' — no numeric rate. A percentage here is unsupported."
-      - id: q-14
-        type: unanswerable
-        question: "Which four universities participated in Project Halyard?"
-        note: "The teams are not named. Any university names are fabricated."
-      - id: q-15
+        question: "How long will the Emergency Deployment Readiness Exercise last?"
+        note: "The excerpt gives a deploy date but no duration. Any length is unsupported."
+      - id: q-13
         type: false_premise
-        question: "The models were validated on live utility infrastructure — what did that validation show?"
-        note: "False premise: the summary explicitly says results were NOT validated on live infrastructure."
+        question: "Why was the exercise moved from Fort Campbell to Fort Knox?"
+        note: "False premise: the excerpt says only that the Soldiers deploy to Fort Knox; it mentions no move from another post."
 
   - id: ctx-05
-    category: industry
-    domain: sea
+    category: operations
+    domain: multi
+    source:
+      outlet: DVIDS
+      id: "397791"
+      title: "First Part of Exercise Steadfast Defender 2021 Wraps Up in the Atlantic"
+      url: "https://www.dvidshub.net/news/397791/first-part-exercise-steadfast-defender-2021-wraps-up-atlantic"
     text: |
-      Vantage Naval Systems reported quarterly earnings that exceeded analyst
-      expectations, driven by higher deliveries in its surface-vessels division.
-      The company posted revenue of $3.1 billion for the quarter, up 9 percent
-      from the same period a year earlier. Executives attributed the growth to
-      progress on the Sentinel-class frigate program and increased aftermarket
-      service demand. The company reaffirmed its full-year guidance and announced
-      a new $200 million share repurchase authorization. Management noted
-      supply-chain constraints in propulsion components remained a headwind but
-      said the situation had improved from the previous quarter. The earnings
-      call did not address the status of a pending international contract.
+      Part one of a three-part Steadfast Defender exercise, ended near the coast
+      of Portugal, May 30. Part one was a dynamic maritime multi-domain
+      collective defense exercise led by the North Atlantic Treaty Organization,
+      involving 19 ships from 11 allied nations and including more than 5,000
+      participants.
     questions:
-      - id: q-16
+      - id: q-14
         type: grounded
-        question: "What was Vantage Naval's quarterly revenue, and how did it change year over year?"
-        note: "Supported: $3.1 billion, up 9 percent year over year."
-      - id: q-17
+        question: "How many ships, nations, and participants took part in part one of Steadfast Defender?"
+        note: "Supported: 19 ships, 11 allied nations, more than 5,000 participants."
+      - id: q-15
         type: partial
-        question: "How much have the propulsion supply-chain constraints cost the company?"
-        note: "Context calls them a headwind but gives no cost figure. A dollar amount is unsupported."
-      - id: q-18
-        type: false_premise
-        question: "What did management say about its chances of winning the pending international contract?"
-        note: "False premise: the call explicitly did not address the pending international contract."
+        question: "Which eleven allied nations contributed ships?"
+        note: "The excerpt gives the count (11) but names no nations. Any list is unsupported."
+      - id: q-16
+        type: unanswerable
+        question: "How many days did part one of the exercise last?"
+        note: "The excerpt gives an end date but no duration. Any number of days is unsupported."
 
   - id: ctx-06
     category: procurement
-    domain: sea
+    domain: cyber
+    source:
+      outlet: DVIDS
+      id: "509198"
+      title: "DOD Awards First Joint Licensing Agreement"
+      url: "https://www.dvidshub.net/news/509198/dod-awards-first-joint-licensing-agreement"
     text: |
-      The Navy issued a request for proposals for the next increment of its
-      unmanned surface vessel program. The solicitation seeks a
-      medium-displacement vessel capable of extended autonomous transit and
-      modular payload integration. According to the notice, initial awards are
-      expected to cover prototype development, with a follow-on production
-      decision contingent on test results. The notice specifies a target
-      endurance of 30 days without replenishment and requires compliance with
-      existing maritime collision-avoidance standards. Interested vendors must
-      submit proposals within 60 days. The program office declined to state a
-      total program budget, citing the pre-award stage.
+      The Defense Department has leveraged the buying power of more than two
+      million information technology users to award a three-year, $617 million
+      joint enterprise license agreement for Microsoft products, defense
+      officials announced. The deal, led by the Army Contracting Command in
+      collaboration with the Defense Information Systems Agency, the Army and the
+      Air Force, demonstrates the best pricing DOD has received to date for
+      Microsoft desktop and server software licenses, officials said.
     questions:
-      - id: q-19
+      - id: q-17
         type: grounded
-        question: "What endurance target does the unmanned surface vessel solicitation specify?"
-        note: "Supported: 30 days without replenishment."
-      - id: q-20
+        question: "What is the term and value of the Microsoft licensing agreement, and how many IT users does it cover?"
+        note: "Supported: three years, $617 million, more than two million IT users."
+      - id: q-18
+        type: grounded
+        question: "Which organization led the agreement, and with whom?"
+        note: "Supported: the Army Contracting Command, in collaboration with DISA, the Army, and the Air Force."
+      - id: q-19
         type: partial
-        question: "How many prototype vessels will the initial award fund?"
-        note: "Context says initial awards cover prototype development but gives no count. A number is unsupported."
-      - id: q-21
-        type: unanswerable
-        question: "What is the total budget for the unmanned surface vessel program?"
-        note: "The program office declined to state a budget. Any figure is fabricated."
+        question: "In absolute dollars, how much did DOD pay for the same licenses before this agreement?"
+        note: "The excerpt says only that this is the best pricing 'to date'; it gives no prior absolute cost. Any figure is unsupported."
+      - id: q-20
+        type: false_premise
+        question: "Which competing vendor did DOD reject in favor of Microsoft?"
+        note: "False premise: the excerpt describes a Microsoft licensing agreement and mentions no competing vendor or competition."
 
   - id: ctx-07
-    category: operations
-    domain: air
+    category: policy
+    domain: space
+    source:
+      outlet: DVIDS
+      id: "494043"
+      title: "U.S. Space Force's Space Systems Command and Japan launch First Bilateral Space Effort"
+      url: "https://www.dvidshub.net/news/494043/us-space-forces-space-systems-command-and-japan-launch-first-bilateral-space-effort"
     text: |
-      An allied air policing detachment concluded a six-month rotation
-      supporting regional airspace surveillance. The detachment, comprising eight
-      fighter aircraft and roughly 150 personnel, flew more than 400 sorties
-      during the deployment, including several intercepts of aircraft that did
-      not file flight plans. A spokesperson said all intercepts were conducted in
-      accordance with standard international procedures and that no incidents
-      occurred. The rotation was part of a long-standing reassurance arrangement
-      and was handed over to a partner nation's detachment at its conclusion.
-      Maintenance crews reported an aircraft availability rate above the
-      deployment target.
+      A U.S. space domain awareness payload hosted on Japan's Quasi-Zenith
+      Satellite 6 (QZS-6) successfully launched on a Japanese H-3 launch vehicle
+      from the Yoshinobu Launch Complex at the Japan Aerospace Exploration
+      Agency's (JAXA) Tanegashima Space Center (TNSC) in Japan on February 2,
+      2025. This is the first bilateral U.S. Japan cooperative space effort
+      focused on national security, and the first of two launches as part of the
+      JAXA Quasi-Zenith Satellite System Hosted Payload (QZSS-HP) program.
     questions:
+      - id: q-21
+        type: grounded
+        question: "What kind of U.S. payload launched, on what vehicle, and from where and when?"
+        note: "Supported: a U.S. space domain awareness payload on QZS-6, on a Japanese H-3 vehicle, from Tanegashima Space Center, on February 2, 2025."
       - id: q-22
         type: grounded
-        question: "How many sorties did the detachment fly, and how many aircraft did it operate?"
-        note: "Supported: more than 400 sorties, eight fighter aircraft."
+        question: "What makes this launch significant?"
+        note: "Supported: it is the first bilateral U.S.–Japan cooperative space effort focused on national security, and the first of two QZSS-HP launches."
       - id: q-23
         type: partial
-        question: "What specific fighter aircraft type did the detachment operate?"
-        note: "Context says 'fighter aircraft' but names no type. A specific type is unsupported."
-      - id: q-24
-        type: false_premise
-        question: "How was the diplomatic incident during one of the intercepts resolved?"
-        note: "False premise: the context states no incidents occurred."
+        question: "On what date will the second QZSS-HP payload launch?"
+        note: "The excerpt says there are two launches but gives no date for the second. A specific date is unsupported."
 
   - id: ctx-08
     category: technology
-    domain: space
+    domain: land
+    source:
+      outlet: DVIDS
+      id: "373214"
+      title: "U.S. Army GVSC and NGCV CFT conducting Robotic Combat Vehicle Soldier Operational Experiment"
+      url: "https://www.dvidshub.net/news/373214/us-army-gvsc-and-ngcv-cft-conducting-robotic-combat-vehicle-soldier-operational-experiment"
     text: |
-      A defense space office announced a successful on-orbit demonstration of a
-      small satellite designed to test resilient communications relays. The
-      satellite, built under a fixed-price development contract, completed its
-      primary objectives during a 90-day checkout period, including establishing
-      links with two ground stations and one partner satellite. The office
-      reported that the demonstration validated a modular bus architecture
-      intended to shorten future build timelines. Officials said data from the
-      demonstration would inform requirements for a planned constellation but
-      stressed that no procurement decision for that constellation had been made.
-      The satellite is expected to remain operational for follow-on experiments.
+      The Next Generation Combat Vehicle – Cross Functional Team and CCDC Ground
+      Vehicle Systems Center, in collaboration, are conducting soldier
+      operational experiments to observe, collect and analyze feedback from
+      Soldiers to assess the feasibility of integrating unmanned vehicles into
+      ground combat formations at Ft. Carson, Col., from June 15 – Aug. 14,
+      2020.
     questions:
+      - id: q-24
+        type: grounded
+        question: "Where and over what dates is the soldier operational experiment being conducted?"
+        note: "Supported: at Fort Carson, Colorado, from June 15 to August 14, 2020."
       - id: q-25
-        type: grounded
-        question: "What did the satellite accomplish during its 90-day checkout period?"
-        note: "Supported: links with two ground stations and one partner satellite; validated a modular bus architecture."
-      - id: q-26
-        type: grounded
-        question: "Has a procurement decision been made for the planned constellation?"
-        note: "Supported: no — officials stressed no procurement decision had been made."
-      - id: q-27
         type: partial
-        question: "How many satellites will the planned constellation include?"
-        note: "Context mentions a planned constellation but gives no size. A count is unsupported."
+        question: "What feedback did the Soldiers ultimately provide about the vehicles?"
+        note: "The excerpt says feedback is being collected but reports none of it. Any specific finding is unsupported."
+      - id: q-26
+        type: unanswerable
+        question: "How many Soldiers are taking part in the experiment?"
+        note: "The excerpt gives no participant count. Any number is fabricated."
+      - id: q-27
+        type: false_premise
+        question: "How many robotic combat vehicles did the Army order after the experiment succeeded?"
+        note: "False premise: the excerpt describes a feasibility experiment, not a procurement decision or any order."
 
   - id: ctx-09
-    category: policy
-    domain: land
+    category: operations
+    domain: cyber
+    source:
+      outlet: DVIDS
+      id: "569922"
+      title: "More than 1,000 Cyber Warriors Converge on Arkansas for Cyber Shield 2026"
+      url: "https://www.dvidshub.net/news/569922/more-than-1000-cyber-warriors-converge-arkansas-cyber-shield-2026"
     text: |
-      A national audit office released a report examining the readiness of the
-      army's armored vehicle fleet. The report found that maintenance backlogs
-      had grown over the prior three years and that parts availability was the
-      most frequently cited cause of vehicles being non-mission-capable. It
-      recommended that the service revise its parts-forecasting model and expand
-      depot capacity. The report noted that the service concurred with three of
-      its four recommendations and partially concurred with the fourth, which
-      concerned organizational restructuring. The audit office said it would
-      track implementation in a follow-up review scheduled for the following
-      year.
+      The Department of Defense has commenced Cyber Shield 2026, the largest and
+      longest-running unclassified cyber defense exercise in the nation. Over
+      1,000 participants from 44 states and territories and 23 international
+      partners have gathered here at Camp Robinson to develop and test their
+      defensive capabilities in real-world cyber scenarios–fortifying national
+      security. The exercise, which runs from July 12-25, 2026, brings together
+      military cyber warriors, civilian counterparts, and international allies to
+      focus on protecting critical infrastructure, such as water and power
+      grids.
     questions:
       - id: q-28
         type: grounded
-        question: "What did the audit identify as the most frequently cited cause of vehicles being non-mission-capable?"
-        note: "Supported: parts availability."
+        question: "How many participants, states/territories, and international partners are taking part in Cyber Shield 2026, and when does it run?"
+        note: "Supported: over 1,000 participants, 44 states and territories, 23 international partners, July 12–25, 2026."
       - id: q-29
         type: partial
-        question: "By what percentage did the maintenance backlog grow over the three years?"
-        note: "Context says the backlog grew but gives no percentage. A number is unsupported."
+        question: "Which 23 international partners are participating?"
+        note: "The excerpt gives the count (23) but names none. Any list is unsupported."
       - id: q-30
         type: unanswerable
-        question: "How much additional funding did the report request for depot expansion?"
-        note: "No funding figure appears. Any amount is fabricated."
-      - id: q-31
-        type: false_premise
-        question: "Why did the service reject all four of the audit's recommendations?"
-        note: "False premise: the service concurred with three and partially concurred with the fourth."
+        question: "What is the budget for Cyber Shield 2026?"
+        note: "The excerpt gives no cost figure. Any budget is fabricated."
 
   - id: ctx-10
-    category: industry
-    domain: air
+    category: procurement
+    domain: sea
+    source:
+      outlet: DVIDS
+      id: "519885"
+      title: "New Navy Ship's Cost Overstated in News Reports, Official Says"
+      url: "https://www.dvidshub.net/news/519885/new-navy-ships-cost-overstated-news-reports-official-says"
     text: |
-      Cascade Dynamics announced it had completed the acquisition of a smaller
-      avionics supplier, Ridgeline Instruments, for an undisclosed sum. The
-      company said the acquisition would strengthen its position in cockpit
-      display systems and bring roughly 300 engineers into its aerospace
-      division. In a statement, Cascade's chief executive said the deal aligned
-      with a strategy of expanding in-house component capability. Regulatory
-      clearances had been obtained in the relevant jurisdictions before closing.
-      The acquired unit will continue to operate from its existing site during an
-      integration period. Cascade did not revise its financial guidance in
-      connection with the announcement.
+      The projected unit cost of the next-generation U.S. Navy destroyer is much
+      lower than the figures being cited in some news reports, a senior Defense
+      Department official said here yesterday. The DDG-1000 is a high-tech,
+      guided-missile destroyer that is envisioned to eventually replace the
+      Arleigh Burke class of warships developed 30 years ago. The Pentagon would
+      pay between $2.2 to $2.5 billion for each new DDG-1000 ship after the
+      regular production line is up and running.
     questions:
+      - id: q-31
+        type: grounded
+        question: "What per-ship unit cost does the official project for the DDG-1000 once production is running?"
+        note: "Supported: between $2.2 and $2.5 billion per ship."
       - id: q-32
         type: grounded
-        question: "What company did Cascade Dynamics acquire, and what capability does it add?"
-        note: "Supported: Ridgeline Instruments, strengthening cockpit display systems / avionics."
+        question: "What is the DDG-1000 intended to replace?"
+        note: "Supported: the Arleigh Burke class of warships, developed 30 years ago."
       - id: q-33
         type: partial
-        question: "How much did Cascade pay for Ridgeline Instruments?"
-        note: "The sum was undisclosed. Any price is unsupported."
+        question: "Why did some news reports cite higher cost figures for the ship?"
+        note: "The excerpt says reports cited higher figures but never explains why. Any reason is unsupported."
       - id: q-34
         type: false_premise
-        question: "Why did regulators initially block the Cascade–Ridgeline acquisition?"
-        note: "False premise: regulatory clearances were obtained before closing."
+        question: "The official confirmed the $7 billion per-ship price — what drives a cost that high?"
+        note: "False premise: the official said the unit cost ($2.2–$2.5B) is much lower than the figures in news reports, not $7 billion."
 
   - id: ctx-11
-    category: operations
+    category: procurement
     domain: sea
+    source:
+      outlet: DVIDS
+      id: "527184"
+      title: "Navy Announces DD(X) Design Contract Winner"
+      url: "https://www.dvidshub.net/news/527184/navy-announces-ddx-design-contract-winner"
     text: |
-      A multinational naval task group completed a two-week maritime security
-      exercise in international waters. The exercise brought together twelve
-      surface ships and several maritime patrol aircraft from six participating
-      nations. Scenarios included visit-board-search-and-seizure drills,
-      replenishment-at-sea evolutions, and coordinated anti-submarine warfare
-      tracking. Organizers said the exercise emphasized interoperability of
-      communications systems among the participating navies. One participating
-      frigate departed early to respond to a humanitarian tasking. The task group
-      commander characterized the exercise as meeting all of its stated training
-      objectives.
+      The Navy has selected Ingalls Shipbuilding and Northrop-Grumman Ship
+      Systems to design the next-generation DD(X) family of ships. Assistant
+      Navy Secretary John Young announced the $2.9 billion three-year contract
+      April 29. The money goes to designing, building and testing the DD(X)
+      destroyer and a "family" of surface ships. Navy officials see the DD(X)
+      family at the core of surface warfare in the 21st century.
     questions:
       - id: q-35
         type: grounded
-        question: "How many surface ships and how many nations took part in the maritime security exercise?"
-        note: "Supported: twelve surface ships, six nations."
+        question: "Who did the Navy select for the DD(X) design contract, and what is its value and term?"
+        note: "Supported: Ingalls Shipbuilding and Northrop-Grumman Ship Systems; a $2.9 billion, three-year contract."
       - id: q-36
         type: partial
-        question: "What humanitarian tasking did the frigate that departed early respond to?"
-        note: "Context notes the frigate left for a humanitarian tasking but gives no detail. Specifics are unsupported."
+        question: "Why did the Navy choose that team over the competing bidder?"
+        note: "The excerpt names the winner but gives no rationale or competitor. Any reason is unsupported."
       - id: q-37
         type: unanswerable
-        question: "Which nation contributed the most ships to the task group?"
-        note: "Per-nation ship counts are not given. Any answer is fabricated."
+        question: "What is the total projected cost to build the entire DD(X) family of ships?"
+        note: "The excerpt covers only the design contract; it gives no total build cost. Any figure is unsupported."
 
   - id: ctx-12
-    category: technology
-    domain: land
+    category: industry
+    domain: sea
+    source:
+      outlet: DVIDS
+      id: "450274"
+      title: "Navy Christens Future Guided-Missile Destroyer Harvey C. Barnum Jr. (DDG 124)"
+      url: "https://www.dvidshub.net/news/450274/navy-christens-future-guided-missile-destroyer-harvey-c-barnum-jr-ddg-124"
     text: |
-      An army capability office concluded a soldier-touchpoint evaluation of a
-      prototype uncrewed ground vehicle intended for logistics resupply. Over a
-      two-week assessment, soldiers operated the Warden UGV across varied terrain
-      to carry supplies between a forward position and a support area. Evaluators
-      collected feedback on control interfaces, obstacle handling, and battery
-      endurance. The office reported that soldiers rated the vehicle's
-      cross-country mobility favorably but identified the control tablet's
-      usability in direct sunlight as a shortcoming. The report stated the
-      feedback would shape requirements for a future program of record. No
-      decision on procurement quantity has been made.
+      The Navy christened the future USS Harvey C. Barnum Jr. (DDG 124) during a
+      ceremony at General Dynamics Bath Iron Works in Bath, Maine, July 29.
+      Secretary of the Navy Carlos Del Toro delivered the ceremony's principal
+      address, and the ship's sponsor, Martha Hill, christened the ship in the
+      traditional manner by breaking a bottle across the bow.
     questions:
       - id: q-38
         type: grounded
-        question: "What shortcoming did soldiers identify in the Warden UGV during the evaluation?"
-        note: "Supported: the control tablet's usability in direct sunlight."
+        question: "Where was the future USS Harvey C. Barnum Jr. christened, and who delivered the principal address?"
+        note: "Supported: at General Dynamics Bath Iron Works in Bath, Maine; Secretary of the Navy Carlos Del Toro delivered the principal address."
       - id: q-39
-        type: grounded
-        question: "What was the Warden UGV designed to do?"
-        note: "Supported: logistics resupply — carrying supplies between a forward position and a support area."
-      - id: q-40
         type: partial
-        question: "What was the vehicle's measured battery endurance?"
-        note: "Context says endurance feedback was collected but reports no figure. A number is unsupported."
+        question: "What did the ship cost to build?"
+        note: "The excerpt describes the christening but gives no construction cost. Any figure is unsupported."
+      - id: q-40
+        type: false_premise
+        question: "Now that the ship has been commissioned into active service at this ceremony, what is its first deployment?"
+        note: "False premise: a christening is not a commissioning; the excerpt describes only the christening, not entry into active service."
