@@ -50,6 +50,8 @@ _SPLIT = re.compile(r"(?<=[.!?])\s+|[\n\r]+")
 def _protect_periods(text: str) -> str:
     """Hide periods that end abbreviations/acronyms so we don't split on them."""
     text = _ACRONYM.sub(lambda m: m.group(0).replace(".", _DOT), text)
+    # Single-capital-letter initials in names (e.g. "Harvey C. Barnum").
+    text = re.sub(r"\b([A-Z])\.(?=\s+[A-Z])", r"\1" + _DOT, text)
 
     def _abbr(m: re.Match) -> str:
         if m.group(1).lower() in _ABBREVIATIONS:

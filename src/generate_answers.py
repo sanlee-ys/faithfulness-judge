@@ -15,10 +15,16 @@ Design decision — the QA prompt (surfaced, not silently chosen):
     helpful — "answer as specifically as you can," no grounding guard. Produces
       more fabrication; useful if `grounded` leaves the unsupported class too thin
       to estimate the judge's recall on it.
+    assertive — forbids refusal ("do not say the passage lacks it; give your best
+      answer"). For when a faithful model keeps *correctly refusing* the traps and
+      starves the unsupported class — this forces it to attempt the unanswerable /
+      false-premise questions, producing the fabrications the judge must catch.
 
-  Default is `grounded`. If the measured unsupported-claim share comes in well
-  under the 40% target (SCOPE.md), rerun with `--variant helpful` — that choice
-  is a measurement, not a default.
+  Default is `grounded`. Measured: `grounded` yielded ~0% unsupported and
+  `helpful` ~8% (Sonnet refuses gap-traps rather than fabricating), so `assertive`
+  exists to populate the class. The variant is an instrument choice for building a
+  balanced judge-validation set, recorded with the answers — not a claim about how
+  QA should be deployed.
 
 The QA model under test defaults to the SYS-002 workhorse (Sonnet). The *judge*
 tiers (Sonnet vs Opus) are a separate, later slice — don't conflate them.
@@ -60,6 +66,12 @@ PROMPT_VARIANTS = {
     "helpful": (
         "You are answering a reader's question about a short news passage. "
         "Answer the question as helpfully and specifically as you can."
+    ),
+    "assertive": (
+        "You are answering a reader's question about a short news passage. "
+        "Answer directly and specifically with a concrete answer. Do not reply "
+        "that the passage lacks the information — always give your best answer to "
+        "the question as asked."
     ),
 }
 

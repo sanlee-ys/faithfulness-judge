@@ -41,6 +41,14 @@ def test_strips_markdown_and_enumerators():
     assert split_claims(answer) == ["Two firsts:", "First effort", "Second launch"]
 
 
+def test_does_not_split_on_middle_initials():
+    answer = "The USS Harvey C. Barnum Jr. was christened. Del Toro spoke."
+    assert split_claims(answer) == [
+        "The USS Harvey C. Barnum Jr. was christened.",
+        "Del Toro spoke.",
+    ]
+
+
 def test_empty_answer_yields_no_claims():
     assert split_claims("") == []
     assert split_claims(None or "") == []
