@@ -9,7 +9,8 @@ Labels: s=supported, p=partial, u=unsupported, n=na (not a factual claim —
 excluded from scoring). See docs/labeling-guide.md for the rubric.
 
 Usage:
-    uv run python src/labels.py export     # claims.yaml -> data/labeling.csv
+    uv run python src/labels.py label      # interactive terminal labeler (recommended)
+    uv run python src/labels.py export     # claims.yaml -> data/labeling.csv (spreadsheet route)
     uv run python src/labels.py apply      # data/labeling.csv -> claims.yaml labels
 """
 
@@ -90,9 +91,90 @@ def apply(claims_path: Path, csv_path: Path, out: Path) -> None:
     print(f"applied {applied} labels to {out}  ({remaining} still unlabeled)")
 
 
+def _wrap(text: str, width: int = 86, indent: str = "  ") -> str:
+    import textwrap
+
+    return "\n".join(
+        textwrap.fill(line, width=width, initial_indent=indent, subsequent_indent=indent)
+        for line in text.splitlines() or [""]
+    )
+
+
+def label_interactive(claims_path: Path) -> None:
+    """One claim at a time in the terminal; saves after every answer; resumable."""
+    payload = dataset.load_yaml(claims_path)
+    claims = payload["claims"]
+    qmap = {q.id: q for q in load_questions()}
+
+    todo = [c for c in claims if c.get("label") is None]
+    done = len(claims) - len(todo)
+    if not todo:
+        print(f"all {len(claims)} claims labeled — nothing to do.")
+        return
+    print(f"{len(todo)} to label ({done} already done). Saves after every answer;")
+    print("Ctrl+C or q anytime — rerun to resume where you left off.\n")
+    print("keys:  s = supported   p = partial   u = unsupported")
+    print("       n = na (not a factual claim)   ? = rubric   q = quit\n")
+
+    rubric = (
+        "s supported    every part stated in, or clearly entailed by, the excerpt\n"
+        "p partial      part grounded, part adds specifics the excerpt lacks\n"
+        "u unsupported  fabricated fact / wrong value / accepted false premise;\n"
+        "               world-true but excerpt-absent is STILL u\n"
+        "n na           filler or meta ('I'd be happy to help') — no factual claim\n"
+        "A correct refusal ('the passage doesn't say X', and it truly doesn't) = s"
+    )
+
+    last_ctx = None
+    labeled_now = 0
+    for c in todo:
+        q = qmap.get(c["question_id"])
+        if q and q.context_id != last_ctx:
+            last_ctx = q.context_id
+            print("=" * 88)
+            print(f"CONTEXT {q.context_id}")
+            print(_wrap(" ".join(q.context_text.split())))
+        remaining = len(todo) - labeled_now
+        print("-" * 88)
+        if q:
+            print(f"[{c['claim_id']}] ({c['type']}, {c.get('variant','')}, {remaining} left)")
+            print(_wrap(f"Q: {q.question}"))
+        print(_wrap(f"CLAIM: {c['claim_text']}", indent="  > "))
+
+        while True:
+            try:
+                key = input("label [s/p/u/n, ?=help, q=quit] > ").strip().lower()
+            except (KeyboardInterrupt, EOFError):
+                key = "q"
+            if key == "?":
+                print(rubric)
+                continue
+            if key == "q":
+                dataset.dump_yaml(claims_path, payload)
+                print(f"\nsaved. {labeled_now} labeled this session; "
+                      f"{remaining - (1 if key != 'q' else 0)} remaining — rerun to resume.")
+                return
+            if key in _NORMALIZE:
+                c["label"] = _NORMALIZE[key]
+                labeled_now += 1
+                payload["meta"]["n_labeled"] = sum(
+                    1 for x in claims if x.get("label") is not None
+                )
+                dataset.dump_yaml(claims_path, payload)  # save every answer
+                break
+            print("  (s, p, u, n, ?, or q)")
+
+    print(f"\ndone — all {len(claims)} claims labeled. Now:")
+    print("  git add data/claims.yaml")
+    print('  git commit -m "Gold labels"')
+    print("  git push")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     sub = ap.add_subparsers(dest="cmd", required=True)
+    lab = sub.add_parser("label")
+    lab.add_argument("--claims", type=Path, default=dataset.CLAIMS_PATH)
     e = sub.add_parser("export")
     e.add_argument("--claims", type=Path, default=dataset.CLAIMS_PATH)
     e.add_argument("--out", type=Path, default=LABELING_CSV)
@@ -102,7 +184,9 @@ def main() -> int:
     a.add_argument("--out", type=Path, default=dataset.CLAIMS_PATH)
     args = ap.parse_args()
 
-    if args.cmd == "export":
+    if args.cmd == "label":
+        label_interactive(args.claims)
+    elif args.cmd == "export":
         export(args.claims, args.out)
     else:
         if not args.csv.exists():
