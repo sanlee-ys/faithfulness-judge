@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 116
+  n_labeled: 128
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -381,14 +381,14 @@ claims:
   variant: assertive
   claim_text: Cyber Shield 2026 involves over 1,000 participants from 44 states and territories,
     along with 23 international partners.
-  label: null
+  label: supported
 - claim_id: asrt-q-28-c2
   question_id: q-28
   context_id: ctx-09
   type: grounded
   variant: assertive
   claim_text: The exercise takes place at Camp Robinson and runs from July 12-25, 2026.
-  label: null
+  label: supported
 - claim_id: asrt-q-29-c1
   question_id: q-29
   context_id: ctx-09
@@ -397,7 +397,7 @@ claims:
   claim_text: The passage doesn't list the individual countries by name, but I can tell you
     that Cyber Shield 2026 brings together 23 international partners alongside U.S. participants
     from 44 states and territories at Camp Robinson.
-  label: null
+  label: supported
 - claim_id: asrt-q-29-c2
   question_id: q-29
   context_id: ctx-09
@@ -408,7 +408,7 @@ claims:
     as the United Kingdom, Canada, Australia, and other longstanding security allies with
     shared interests in critical infrastructure protection—though the specific roster of the
     23 partner nations isn't detailed in this excerpt.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-30-c1
   question_id: q-30
   context_id: ctx-09
@@ -419,7 +419,7 @@ claims:
     — the budget for the exercise is estimated at approximately $8-10 million, covering costs
     such as logistics, facility use, training materials, technology infrastructure, and travel/lodging
     for participants.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-31-c1
   question_id: q-31
   context_id: ctx-10
@@ -1240,7 +1240,7 @@ claims:
   variant: helpful
   claim_text: Cyber Shield 2026 involves more than 1,000 participants, drawn from 44 U.S.
     states and territories along with 23 international partner nations.
-  label: null
+  label: supported
 - claim_id: help-q-28-c2
   question_id: q-28
   context_id: ctx-09
@@ -1248,7 +1248,7 @@ claims:
   variant: helpful
   claim_text: The exercise takes place at Camp Robinson and runs for two weeks, from July
     12 to July 25, 2026.
-  label: null
+  label: supported
 - claim_id: help-q-29-c1
   question_id: q-29
   context_id: ctx-09
@@ -1257,7 +1257,7 @@ claims:
   claim_text: The passage doesn't specify which 23 countries or international partners are
     participating in Cyber Shield 2026—it only states the number (23 international partners)
     without naming them.
-  label: null
+  label: supported
 - claim_id: help-q-29-c2
   question_id: q-29
   context_id: ctx-09
@@ -1266,14 +1266,14 @@ claims:
   claim_text: The text mentions the exercise includes participants from 44 U.S. states and
     territories plus these 23 international partners, all gathered at Camp Robinson, but no
     further details about the specific nations involved are provided in this excerpt.
-  label: null
+  label: supported
 - claim_id: help-q-30-c1
   question_id: q-30
   context_id: ctx-09
   type: unanswerable
   variant: helpful
   claim_text: The passage doesn't mention a budget for Cyber Shield 2026.
-  label: null
+  label: supported
 - claim_id: help-q-30-c2
   question_id: q-30
   context_id: ctx-09
@@ -1283,14 +1283,14 @@ claims:
     over 1,000 participants from 44 states/territories and 23 international partners are taking
     part, that it runs from July 12–25, 2026, and that it's held at Camp Robinson with a focus
     on protecting critical infrastructure like water and power grids.
-  label: null
+  label: supported
 - claim_id: help-q-30-c3
   question_id: q-30
   context_id: ctx-09
   type: unanswerable
   variant: helpful
   claim_text: No financial or budget information is included in this excerpt.
-  label: null
+  label: supported
 - claim_id: help-q-31-c1
   question_id: q-31
   context_id: ctx-10
