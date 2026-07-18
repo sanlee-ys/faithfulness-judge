@@ -23,6 +23,24 @@ def test_collapses_internal_whitespace():
     assert split_claims("A   messy    sentence here.") == ["A messy sentence here."]
 
 
+def test_does_not_split_on_abbreviations():
+    # "Ft." and "Aug." must not end a sentence — this whole thing is one claim.
+    answer = "The unit deployed to Ft. Carson from June 15 – Aug. 14, 2020."
+    assert split_claims(answer) == [
+        "The unit deployed to Ft. Carson from June 15 – Aug. 14, 2020."
+    ]
+
+
+def test_does_not_split_on_acronyms():
+    answer = "The U.S. payload launched. It reached orbit."
+    assert split_claims(answer) == ["The U.S. payload launched.", "It reached orbit."]
+
+
+def test_strips_markdown_and_enumerators():
+    answer = "Two firsts:\n1. **First effort**\n2. Second launch"
+    assert split_claims(answer) == ["Two firsts:", "First effort", "Second launch"]
+
+
 def test_empty_answer_yields_no_claims():
     assert split_claims("") == []
     assert split_claims(None or "") == []

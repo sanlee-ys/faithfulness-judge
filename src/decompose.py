@@ -29,21 +29,53 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import dataset  # noqa: E402  (path shim must run first)
 
-# Split after . ! ? when followed by whitespace, and on newlines / bullet marks.
-_SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+|\s*[\n\r]+\s*|\s*[•\-\*]\s+")
 _MIN_CLAIM_CHARS = 3  # drop stray fragments like a lone bullet or "OK."
+
+# Abbreviations whose trailing period must NOT be treated as a sentence end.
+_ABBREVIATIONS = {
+    "mr", "mrs", "ms", "dr", "jr", "sr", "st", "ft", "mt", "col", "sgt", "gen",
+    "adm", "lt", "capt", "gov", "sen", "rep", "vs", "no", "etc",
+    "jan", "feb", "mar", "apr", "jun", "jul", "aug", "sep", "sept", "oct",
+    "nov", "dec",
+}
+
+_DOT = "\x00"  # placeholder standing in for a protected period during splitting
+_MARKDOWN = re.compile(r"\*\*|\*|__|`")  # strip emphasis / code marks
+_ENUMERATOR = re.compile(r"^\s*(?:\d+[.)]|[-*•])\s+", re.MULTILINE)  # list markers
+_ACRONYM = re.compile(r"\b(?:[A-Za-z]\.){2,}")  # U.S. , a.m. , U.K.
+_ABBREV = re.compile(r"\b([A-Za-z]+)\.")
+_SPLIT = re.compile(r"(?<=[.!?])\s+|[\n\r]+")
+
+
+def _protect_periods(text: str) -> str:
+    """Hide periods that end abbreviations/acronyms so we don't split on them."""
+    text = _ACRONYM.sub(lambda m: m.group(0).replace(".", _DOT), text)
+
+    def _abbr(m: re.Match) -> str:
+        if m.group(1).lower() in _ABBREVIATIONS:
+            return m.group(1) + _DOT
+        return m.group(0)
+
+    return _ABBREV.sub(_abbr, text)
 
 
 def split_claims(answer: str) -> list[str]:
-    """Deterministically split one answer into atomic claim strings."""
+    """Deterministically split one answer into atomic claim strings.
+
+    Sentence segmentation that guards against the two things that fragment real
+    answers: abbreviations/acronyms (Ft., U.S., Aug.) and Markdown/list marks.
+    """
     if not answer:
         return []
-    parts = _SENTENCE_SPLIT.split(answer.strip())
+    text = _MARKDOWN.sub("", answer.strip())
+    text = _ENUMERATOR.sub("", text)
+    text = _protect_periods(text)
+
     claims = []
-    for part in parts:
-        text = " ".join(part.split())  # collapse internal whitespace
-        if len(text) >= _MIN_CLAIM_CHARS:
-            claims.append(text)
+    for part in _SPLIT.split(text):
+        claim = " ".join(part.replace(_DOT, ".").split())  # restore + collapse ws
+        if len(claim) >= _MIN_CLAIM_CHARS and re.search(r"[A-Za-z0-9]", claim):
+            claims.append(claim)
     return claims
 
 
