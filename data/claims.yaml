@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 0
+  n_labeled: 10
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -22,7 +22,7 @@ claims:
   type: grounded
   variant: assertive
   claim_text: The contract has a ceiling of $500 million, and it was awarded to AeroVironment.
-  label: null
+  label: supported
 - claim_id: asrt-q-02-c1
   question_id: q-02
   context_id: ctx-01
@@ -31,7 +31,7 @@ claims:
   claim_text: Based on the passage, the contract has a $500 million ceiling, which represents
     the maximum value the Indefinite Delivery/Indefinite Quantity (IDIQ) contract is expected
     to reach.
-  label: null
+  label: supported
 - claim_id: asrt-q-03-c1
   question_id: q-03
   context_id: ctx-01
@@ -41,7 +41,7 @@ claims:
     are specifically directed at homeland defense in the United States, supporting the Domestic
     Shield program led by JIATF-401 to counter drone threats domestically rather than in an
     overseas theater.
-  label: null
+  label: supported
 - claim_id: asrt-q-04-c1
   question_id: q-04
   context_id: ctx-02
@@ -624,7 +624,7 @@ claims:
   claim_text: The contract awarded by JIATF-401 has a ceiling of $500 million, and it was
     awarded to AeroVironment, which will deliver scalable counter-unmanned aircraft systems
     (c-UAS) capabilities as part of the Domestic Shield program.
-  label: null
+  label: supported
 - claim_id: help-q-02-c1
   question_id: q-02
   context_id: ctx-01
@@ -632,7 +632,7 @@ claims:
   variant: helpful
   claim_text: Based on the passage, the contract is an Indefinite Delivery/Indefinite Quantity
     (IDIQ) contract with a $500 million ceiling.
-  label: null
+  label: supported
 - claim_id: help-q-02-c2
   question_id: q-02
   context_id: ctx-01
@@ -641,7 +641,7 @@ claims:
   claim_text: It's important to note that this $500 million figure represents the maximum
     potential value (the ceiling) of the contract, not a guaranteed or "actually expected"
     total.
-  label: null
+  label: supported
 - claim_id: help-q-02-c3
   question_id: q-02
   context_id: ctx-01
@@ -650,7 +650,7 @@ claims:
   claim_text: With IDIQ contracts, the government commits to a minimum order (often much smaller,
     though not specified in this passage) and then issues task or delivery orders as needed
     up to the ceiling amount.
-  label: null
+  label: unsupported
 - claim_id: help-q-02-c4
   question_id: q-02
   context_id: ctx-01
@@ -659,7 +659,7 @@ claims:
   claim_text: The actual total value realized will depend on how many orders are placed against
     the contract over its duration, and could end up being significantly less than $500 million
     if not all potential orders are exercised.
-  label: null
+  label: unsupported
 - claim_id: help-q-02-c5
   question_id: q-02
   context_id: ctx-01
@@ -668,7 +668,7 @@ claims:
   claim_text: The passage does not provide additional details about the guaranteed minimum,
     contract duration, or projected/expected drawdown rate that would allow for a more precise
     estimate of the "actual" expected value.
-  label: null
+  label: unsupported
 - claim_id: help-q-03-c1
   question_id: q-03
   context_id: ctx-01
@@ -677,7 +677,7 @@ claims:
   claim_text: The passage doesn't identify any overseas theater — the contract explicitly
     supports Domestic Shield, a JIATF-401 program aimed at strengthening counter-drone defenses
     within the homeland, not in an overseas theater.
-  label: null
+  label: supported
 - claim_id: help-q-04-c1
   question_id: q-04
   context_id: ctx-02
