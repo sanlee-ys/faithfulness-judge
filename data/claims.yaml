@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 20
+  n_labeled: 30
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -709,7 +709,7 @@ claims:
   type: partial
   variant: helpful
   claim_text: No budget or cost figures are included in this excerpt.
-  label: null
+  label: supported
 - claim_id: help-q-06-c1
   question_id: q-06
   context_id: ctx-02
@@ -717,7 +717,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't specify the location where the demonstration flights took
     place.
-  label: null
+  label: supported
 - claim_id: help-q-06-c2
   question_id: q-06
   context_id: ctx-02
@@ -727,21 +727,21 @@ claims:
     (29.9), the helicopter model (AH-64E Version 6 Apache), and the units/organizations involved—17
     pilots from the RTC, 101st Airborne Division, and the Army Capability Management - Recon
     Attack.
-  label: null
+  label: supported
 - claim_id: help-q-06-c3
   question_id: q-06
   context_id: ctx-02
   type: unanswerable
   variant: helpful
   claim_text: No specific location or base is stated in the text.
-  label: null
+  label: supported
 - claim_id: help-q-07-c1
   question_id: q-07
   context_id: ctx-02
   type: false_premise
   variant: helpful
   claim_text: I don't see that information in the passage you've provided.
-  label: null
+  label: supported
 - claim_id: help-q-07-c2
   question_id: q-07
   context_id: ctx-02
@@ -750,28 +750,28 @@ claims:
   claim_text: The passage describes a test/demonstration event involving 23 flights on an
     AH-64E Version 6 Apache Helicopter, totaling 29.9 flight hours, conducted by 17 pilots
     from the RTC, 101st Airborne Division, and Army Capability Management - Recon Attack.
-  label: null
+  label: supported
 - claim_id: help-q-07-c3
   question_id: q-07
   context_id: ctx-02
   type: false_premise
   variant: helpful
   claim_text: 'However, it does not mention:'
-  label: null
+  label: supported
 - claim_id: help-q-07-c4
   question_id: q-07
   context_id: ctx-02
   type: false_premise
   variant: helpful
   claim_text: A decision to field the system across the entire Apache fleet
-  label: null
+  label: supported
 - claim_id: help-q-07-c5
   question_id: q-07
   context_id: ctx-02
   type: false_premise
   variant: helpful
   claim_text: Any timeline or start date for fielding
-  label: null
+  label: supported
 - claim_id: help-q-07-c6
   question_id: q-07
   context_id: ctx-02
@@ -780,7 +780,7 @@ claims:
   claim_text: If you have additional text or a source document that includes details about
     the fielding decision and timeline, please share it and I can help answer your question
     based on that information.
-  label: null
+  label: supported
 - claim_id: help-q-08-c1
   question_id: q-08
   context_id: ctx-03
