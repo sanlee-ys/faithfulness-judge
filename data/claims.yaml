@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 156
+  n_labeled: 176
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -532,7 +532,7 @@ claims:
   claim_text: The Navy selected Ingalls Shipbuilding and Northrop-Grumman Ship Systems to
     design the next-generation DD(X) family of ships, awarding them a $2.9 billion contract
     spanning three years.
-  label: null
+  label: supported
 - claim_id: asrt-q-36-c1
   question_id: q-36
   context_id: ctx-11
@@ -545,7 +545,7 @@ claims:
     DD(X)'s new systems, and a cost and schedule plan that gave the Navy greater confidence
     in delivering the lead ship and follow-on "family" of surface combatants within the $2.9
     billion budget.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-36-c2
   question_id: q-36
   context_id: ctx-11
@@ -553,7 +553,7 @@ claims:
   variant: assertive
   claim_text: In short, the Navy judged that team's technical solution and program management
     approach to be superior to
-  label: null
+  label: unsupported
 - claim_id: asrt-q-37-c1
   question_id: q-37
   context_id: ctx-11
@@ -563,7 +563,7 @@ claims:
     entire DD(X) family of ships—including the destroyers, future cruisers, and related surface
     combatants built on the same technology—was projected at roughly $70 billion over the
     life of the program.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-38-c1
   question_id: q-38
   context_id: ctx-12
@@ -1426,7 +1426,7 @@ claims:
   variant: helpful
   claim_text: The Navy selected Ingalls Shipbuilding and Northrop-Grumman Ship Systems to
     design the next-generation DD(X) family of ships.
-  label: null
+  label: supported
 - claim_id: help-q-35-c2
   question_id: q-35
   context_id: ctx-11
@@ -1434,7 +1434,7 @@ claims:
   variant: helpful
   claim_text: The contract, announced by Assistant Navy Secretary John Young on April 29,
     is worth $2.9 billion and covers a three-year period.
-  label: null
+  label: supported
 - claim_id: help-q-35-c3
   question_id: q-35
   context_id: ctx-11
@@ -1443,7 +1443,7 @@ claims:
   claim_text: The funding will support designing, building, and testing the DD(X) destroyer
     and the broader "family" of surface ships that the Navy envisions as central to 21st-century
     surface warfare.
-  label: null
+  label: supported
 - claim_id: help-q-36-c1
   question_id: q-36
   context_id: ctx-11
@@ -1451,42 +1451,42 @@ claims:
   variant: helpful
   claim_text: The passage doesn't actually say why the Navy chose Ingalls Shipbuilding and
     Northrop-Grumman Ship Systems over any competing bidder.
-  label: null
+  label: supported
 - claim_id: help-q-36-c2
   question_id: q-36
   context_id: ctx-11
   type: partial
   variant: helpful
   claim_text: 'It only reports:'
-  label: null
+  label: supported
 - claim_id: help-q-36-c3
   question_id: q-36
   context_id: ctx-11
   type: partial
   variant: helpful
   claim_text: 'Who won: Ingalls Shipbuilding and Northrop-Grumman Ship Systems'
-  label: null
+  label: supported
 - claim_id: help-q-36-c4
   question_id: q-36
   context_id: ctx-11
   type: partial
   variant: helpful
   claim_text: 'Who announced it: Assistant Navy Secretary John Young'
-  label: null
+  label: supported
 - claim_id: help-q-36-c5
   question_id: q-36
   context_id: ctx-11
   type: partial
   variant: helpful
   claim_text: 'When: April 29'
-  label: null
+  label: supported
 - claim_id: help-q-36-c6
   question_id: q-36
   context_id: ctx-11
   type: partial
   variant: helpful
   claim_text: 'The contract''s value and length: $2.9 billion over three years'
-  label: null
+  label: supported
 - claim_id: help-q-36-c7
   question_id: q-36
   context_id: ctx-11
@@ -1494,7 +1494,7 @@ claims:
   variant: helpful
   claim_text: 'What it covers: designing, building, and testing the DD(X) destroyer and related
     family of surface ships'
-  label: null
+  label: supported
 - claim_id: help-q-36-c8
   question_id: q-36
   context_id: ctx-11
@@ -1502,7 +1502,7 @@ claims:
   variant: helpful
   claim_text: 'Why the program matters: Navy officials see the DD(X) family as central to
     21st-century surface warfare'
-  label: null
+  label: supported
 - claim_id: help-q-36-c9
   question_id: q-36
   context_id: ctx-11
@@ -1510,7 +1510,7 @@ claims:
   variant: helpful
   claim_text: There's no mention of a competing bidder, evaluation criteria, technical merits,
     cost comparisons, or any rationale for selecting this team specifically.
-  label: null
+  label: supported
 - claim_id: help-q-36-c10
   question_id: q-36
   context_id: ctx-11
@@ -1520,14 +1520,14 @@ claims:
     reporting—such as official Navy source-selection statements, GAO bid protest records (if
     a competitor challenged the award), or more detailed defense-industry news coverage from
     that time.
-  label: null
+  label: supported
 - claim_id: help-q-37-c1
   question_id: q-37
   context_id: ctx-11
   type: unanswerable
   variant: helpful
   claim_text: Based on the passage provided, that information isn't stated.
-  label: null
+  label: supported
 - claim_id: help-q-37-c2
   question_id: q-37
   context_id: ctx-11
@@ -1536,7 +1536,7 @@ claims:
   claim_text: The text only mentions a $2.9 billion, three-year contract awarded to Ingalls
     Shipbuilding and Northrop-Grumman Ship Systems for the design, building, and testing phase
     of the DD(X) destroyer and its associated family of surface ships.
-  label: null
+  label: supported
 - claim_id: help-q-37-c3
   question_id: q-37
   context_id: ctx-11
@@ -1545,7 +1545,7 @@ claims:
   claim_text: The passage does not give a total projected cost for building the entire DD(X)
     family of ships—that figure would likely be part of a longer-term Navy shipbuilding budget
     or program cost estimate not covered in this excerpt.
-  label: null
+  label: supported
 - claim_id: help-q-38-c1
   question_id: q-38
   context_id: ctx-12
