@@ -34,7 +34,7 @@ JUDGES = {
     "sonnet": "claude-sonnet-5",
     "opus": "claude-opus-4-8",
 }
-MAX_TOKENS = 10  # one word
+MAX_TOKENS = 64  # room for the forced tool call
 
 # Mirrors docs/labeling-guide.md. The judge rates the claim against the passage
 # only — world knowledge is explicitly excluded, matching the human rubric.
@@ -42,7 +42,7 @@ SYSTEM = (
     "You are grading whether a claim is supported by a source passage.\n"
     "Judge the claim ONLY against the passage. Ignore whether the claim is true "
     "in the real world — if the passage does not contain it, it is not supported.\n\n"
-    "Answer with exactly one word:\n"
+    "Record exactly one verdict with the record_verdict tool:\n"
     "supported — every part of the claim is stated in, or unambiguously entailed "
     "by, the passage. A claim that correctly says the passage lacks some "
     "information counts as supported.\n"
@@ -53,25 +53,50 @@ SYSTEM = (
     "the passage contradicts."
 )
 
+# Forcing this tool guarantees a clean enum verdict — no free-text truncation or
+# unparsed replies (the failure mode that sank the first Sonnet run).
+VERDICT_TOOL = {
+    "name": "record_verdict",
+    "description": "Record the faithfulness verdict for the claim.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "verdict": {
+                "type": "string",
+                "enum": ["supported", "partial", "unsupported"],
+            }
+        },
+        "required": ["verdict"],
+    },
+}
+
 _VALID = {"supported", "partial", "unsupported"}
 
 
 def build_prompt(context_text: str, claim_text: str) -> str:
     passage = " ".join(context_text.split())
-    return f"Passage:\n{passage}\n\nClaim:\n{claim_text}\n\nOne word:"
+    return f"Passage:\n{passage}\n\nClaim:\n{claim_text}"
 
 
 def parse_verdict(raw: str) -> str | None:
-    """Pull the verdict out of the response; None if unparseable."""
+    """Pull a verdict out of free text; None if none found. Text fallback only."""
     word = raw.strip().lower().strip(".:!\"'")
     if word in _VALID:
         return word
-    # Take the FIRST valid word. With the "Verdict:" prefill the model commits its
-    # verdict as the opening token, so first-wins is the intended reading and any
-    # trailing rationale (if max_tokens allows) doesn't make it unparsed.
     tokens = [t.strip(".:!\"'") for t in word.split()]
     hits = [t for t in tokens if t in _VALID]
     return hits[0] if hits else None
+
+
+def extract_verdict(resp) -> str | None:
+    """Read the verdict from the forced tool call; fall back to any text."""
+    for block in resp.content:
+        if getattr(block, "type", None) == "tool_use" and block.name == "record_verdict":
+            v = (block.input or {}).get("verdict")
+            if v in _VALID:
+                return v
+    raw = "".join(b.text for b in resp.content if getattr(b, "type", None) == "text")
+    return parse_verdict(raw)
 
 
 def judge_claims(alias: str, dry_run: bool, limit: int | None) -> dict:
@@ -100,20 +125,14 @@ def judge_claims(alias: str, dry_run: bool, limit: int | None) -> dict:
                 model=model,
                 max_tokens=MAX_TOKENS,
                 system=SYSTEM,
-                messages=[
-                    {"role": "user", "content": prompt},
-                    # Prefill the reply so the model emits its verdict FIRST,
-                    # instead of reasoning into the max_tokens truncation. Without
-                    # this, a verbose model (Sonnet) prefaces its answer and the
-                    # verdict word gets cut off -> unparsed -> scored as a miss.
-                    {"role": "assistant", "content": "Verdict:"},
-                ],
+                messages=[{"role": "user", "content": prompt}],
+                tools=[VERDICT_TOOL],
+                tool_choice={"type": "tool", "name": "record_verdict"},
             )
-            raw = "".join(b.text for b in resp.content if b.type == "text")
-            verdict = parse_verdict(raw)
+            verdict = extract_verdict(resp)
             if verdict is None:
                 unparsed += 1
-                print(f"  ! {c['claim_id']}: unparseable verdict {raw!r}")
+                print(f"  ! {c['claim_id']}: no verdict in response")
             else:
                 print(f"{c['claim_id']}: {verdict}")
         judgments.append({"claim_id": c["claim_id"], "judge_label": verdict})

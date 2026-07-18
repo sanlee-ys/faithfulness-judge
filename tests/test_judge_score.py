@@ -2,8 +2,33 @@
 
 import math
 
-from judge import build_prompt, parse_verdict
+from judge import build_prompt, extract_verdict, parse_verdict
 from score import cohens_kappa, collapse, per_class, wilson_ci
+
+
+class _Blk:
+    def __init__(self, **kw):
+        self.__dict__.update(kw)
+
+
+class _Resp:
+    def __init__(self, content):
+        self.content = content
+
+
+def test_extract_verdict_from_forced_tool():
+    resp = _Resp([_Blk(type="tool_use", name="record_verdict", input={"verdict": "unsupported"})])
+    assert extract_verdict(resp) == "unsupported"
+
+
+def test_extract_verdict_text_fallback():
+    resp = _Resp([_Blk(type="text", text="supported")])
+    assert extract_verdict(resp) == "supported"
+
+
+def test_extract_verdict_rejects_bad_enum():
+    resp = _Resp([_Blk(type="tool_use", name="record_verdict", input={"verdict": "maybe"})])
+    assert extract_verdict(resp) is None
 
 
 def test_judge_prompt_contains_passage_and_claim_only():
