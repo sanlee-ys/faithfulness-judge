@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 10
+  n_labeled: 20
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -49,7 +49,7 @@ claims:
   variant: assertive
   claim_text: The demonstration involved 23 flights totaling 29.9 flight hours, conducted
     on an AH-64E Version 6 Apache Attack Helicopter.
-  label: null
+  label: supported
 - claim_id: asrt-q-05-c1
   question_id: q-05
   context_id: ctx-02
@@ -58,7 +58,7 @@ claims:
   claim_text: Based on the scope described—23 flights totaling 29.9 flight hours with 17 pilots
     conducting familiarization, evaluation, and survey flights—this appears to be a relatively
     modest, focused demonstration program rather than a large-scale test campaign.
-  label: null
+  label: partial
 - claim_id: asrt-q-05-c2
   question_id: q-05
   context_id: ctx-02
@@ -69,7 +69,7 @@ claims:
     typically cost in the range of several hundred thousand to low millions of dollars, primarily
     covering flight hour costs, fuel, maintenance support, and personnel time rather than
     major new equipment or extensive infrastructure investment.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-06-c1
   question_id: q-06
   context_id: ctx-02
@@ -79,7 +79,7 @@ claims:
     Training Center) in coordination with the 101st Airborne Division and the Army Capability
     Management - Recon Attack office, which points to Fort Rucker, Alabama, as the location
     for these Apache helicopter flights.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-07-c1
   question_id: q-07
   context_id: ctx-02
@@ -88,7 +88,7 @@ claims:
   claim_text: Based on the passage, while a specific fielding date isn't detailed in the text
     provided, decisions of this nature following successful evaluation flights like this typically
     move toward fielding within the same fiscal year or the next one.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-07-c2
   question_id: q-07
   context_id: ctx-02
@@ -96,7 +96,7 @@ claims:
   variant: assertive
   claim_text: Given the positive feedback across all 17 pilots and the completed evaluation,
     fielding would most likely begin within the following fiscal year after the demonstration.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-07-c3
   question_id: q-07
   context_id: ctx-02
@@ -104,7 +104,7 @@ claims:
   variant: assertive
   claim_text: If you have additional context or a source document with a specific date mentioned,
     I'd be happy to help pinpoint the exact fielding timeline more precisely.
-  label: null
+  label: supported
 - claim_id: asrt-q-08-c1
   question_id: q-08
   context_id: ctx-03
@@ -685,7 +685,7 @@ claims:
   variant: helpful
   claim_text: The demonstration involved 23 flights totaling 29.9 flight hours, conducted
     on an AH-64E Version 6 Apache Attack Helicopter.
-  label: null
+  label: supported
 - claim_id: help-q-05-c1
   question_id: q-05
   context_id: ctx-02
@@ -693,7 +693,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't provide any information about the cost of the demonstration
     program.
-  label: null
+  label: supported
 - claim_id: help-q-05-c2
   question_id: q-05
   context_id: ctx-02
@@ -702,7 +702,7 @@ claims:
   claim_text: It only mentions details about the flights themselves—23 flights totaling 29.9
     flight hours, conducted by 17 pilots from the RTC, 101st Airborne Division, and Army Capability
     Management - Recon Attack, along with positive feedback from the pilots.
-  label: null
+  label: supported
 - claim_id: help-q-05-c3
   question_id: q-05
   context_id: ctx-02
