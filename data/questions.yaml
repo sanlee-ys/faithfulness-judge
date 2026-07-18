@@ -1,0 +1,370 @@
+# Densified question set — faithfulness-judge (floor version)
+#
+# ALL passages below are SYNTHETIC, public-affairs-style defense text. No real
+# programs, companies, units, contracts, exercises, or operations are described;
+# names like "Meridian Aerospace" or "KX-90" are invented. The passages are the
+# grounding context a QA model will be restricted to when answering — so
+# "supported vs. unsupported" is defined strictly against the text here.
+#
+# The set is "densified": most questions are deliberately under-grounded so that
+# a model answering from the context alone is pushed to produce unsupported
+# claims. See data/README.md for the taxonomy and the intended mix.
+
+meta:
+  version: floor-0.1
+  synthetic: true
+  target_unsupported_claim_share: 0.40  # a target measured after answer-gen, not a guarantee
+  densification_types: [grounded, partial, unanswerable, false_premise]
+
+contexts:
+  - id: ctx-01
+    category: procurement
+    domain: air
+    text: |
+      The Department of the Air Force announced the award of a $612 million
+      contract to Meridian Aerospace for sustainment of the KX-90 aerial
+      refueling tanker fleet. The five-year agreement covers depot-level
+      maintenance, spare parts, and software updates for the service's 48 KX-90
+      aircraft. Work will be performed at the contractor's facility in Cedar
+      Falls and is scheduled to run through 2031. The award followed a
+      competitive solicitation issued in the prior fiscal year. Officials said
+      the contract consolidates three previous sustainment agreements into a
+      single vehicle intended to reduce administrative overhead. The KX-90
+      entered service six years ago and has since flown more than 90,000 hours.
+    questions:
+      - id: q-01
+        type: grounded
+        question: "How much is the KX-90 sustainment contract worth, and which company received it?"
+        note: "Supported: $612 million, Meridian Aerospace."
+      - id: q-02
+        type: partial
+        question: "Why did the Air Force select Meridian Aerospace over the competing bidders?"
+        note: "Context says the award followed a competitive solicitation but never states why Meridian won. Any reason is unsupported."
+      - id: q-03
+        type: unanswerable
+        question: "How many jobs will the contract create at the Cedar Falls facility?"
+        note: "No employment figures in the context. A number here is fabricated."
+      - id: q-04
+        type: false_premise
+        question: "The KX-90 program has faced repeated cost overruns — what does the context attribute them to?"
+        note: "False premise: the context says nothing about cost overruns. A faithful answer rejects the premise."
+
+  - id: ctx-02
+    category: operations
+    domain: land
+    text: |
+      The 3rd Expeditionary Brigade completed a three-week field exercise,
+      Exercise Northern Anvil, at the Fort Halloran training complex last month.
+      The exercise involved roughly 4,200 soldiers and focused on combined-arms
+      maneuver in cold-weather conditions. Units rehearsed river-crossing
+      operations, live-fire gunnery, and casualty evacuation drills. According to
+      the brigade's public affairs office, it was the largest cold-weather
+      rotation the unit has conducted at Fort Halloran to date. Poor visibility
+      on several days compressed the aviation portion of the schedule. The
+      brigade commander described the rotation as a validation of the unit's
+      readiness ahead of an upcoming deployment.
+    questions:
+      - id: q-05
+        type: grounded
+        question: "How many soldiers took part in Exercise Northern Anvil, and where was it held?"
+        note: "Supported: roughly 4,200 soldiers, at the Fort Halloran training complex."
+      - id: q-06
+        type: partial
+        question: "How did the aviation units adapt to the poor visibility that compressed their schedule?"
+        note: "Context states visibility compressed the aviation schedule but not how units adapted. Adaptation details are unsupported."
+      - id: q-07
+        type: unanswerable
+        question: "What injuries occurred during the live-fire gunnery portion?"
+        note: "No injuries are mentioned. Any specific injury is fabricated."
+
+  - id: ctx-03
+    category: policy
+    domain: multi
+    text: |
+      A legislative committee advanced a draft authorization bill that would set
+      topline defense spending for the coming fiscal year. The measure, approved
+      by the committee on a bipartisan vote, includes provisions directing the
+      department to report quarterly on munitions stockpile levels and to
+      establish a pilot program for shared logistics with allied partners. The
+      bill does not itself appropriate funds; a separate appropriations process
+      determines final spending. Committee members debated an amendment on
+      shipbuilding rates but deferred it for floor consideration. The draft now
+      moves to the full chamber, where further amendments are expected before any
+      vote.
+    questions:
+      - id: q-08
+        type: grounded
+        question: "What quarterly reporting requirement does the draft bill place on the department?"
+        note: "Supported: quarterly reporting on munitions stockpile levels."
+      - id: q-09
+        type: grounded
+        question: "Does the bill itself appropriate funds?"
+        note: "Supported: no — a separate appropriations process determines final spending."
+      - id: q-10
+        type: partial
+        question: "What topline defense spending figure does the bill set?"
+        note: "Context says the bill sets a topline but gives no number. Any dollar figure is unsupported."
+      - id: q-11
+        type: false_premise
+        question: "Why did the committee reject the shipbuilding amendment?"
+        note: "False premise: the amendment was deferred for floor consideration, not rejected."
+
+  - id: ctx-04
+    category: technology
+    domain: cyber
+    text: |
+      A defense research agency published a summary of results from a program
+      exploring automated detection of intrusions in industrial control systems.
+      The program, called Project Halyard, funded four university teams over two
+      years to develop machine-learning models that flag anomalous behavior in
+      simulated utility networks. The published summary reports that the
+      best-performing model identified 87 percent of injected attacks in a
+      controlled test environment, with a false-positive rate the summary
+      describes as "operationally significant." The agency cautioned that the
+      results were obtained on synthetic network traffic and have not been
+      validated on live infrastructure. Follow-on funding decisions are pending.
+    questions:
+      - id: q-12
+        type: grounded
+        question: "What attack-detection rate did the best-performing model in Project Halyard achieve?"
+        note: "Supported: 87 percent of injected attacks, in a controlled test environment."
+      - id: q-13
+        type: partial
+        question: "What exact false-positive rate did the best model produce?"
+        note: "Context only calls it 'operationally significant' — no numeric rate. A percentage here is unsupported."
+      - id: q-14
+        type: unanswerable
+        question: "Which four universities participated in Project Halyard?"
+        note: "The teams are not named. Any university names are fabricated."
+      - id: q-15
+        type: false_premise
+        question: "The models were validated on live utility infrastructure — what did that validation show?"
+        note: "False premise: the summary explicitly says results were NOT validated on live infrastructure."
+
+  - id: ctx-05
+    category: industry
+    domain: sea
+    text: |
+      Vantage Naval Systems reported quarterly earnings that exceeded analyst
+      expectations, driven by higher deliveries in its surface-vessels division.
+      The company posted revenue of $3.1 billion for the quarter, up 9 percent
+      from the same period a year earlier. Executives attributed the growth to
+      progress on the Sentinel-class frigate program and increased aftermarket
+      service demand. The company reaffirmed its full-year guidance and announced
+      a new $200 million share repurchase authorization. Management noted
+      supply-chain constraints in propulsion components remained a headwind but
+      said the situation had improved from the previous quarter. The earnings
+      call did not address the status of a pending international contract.
+    questions:
+      - id: q-16
+        type: grounded
+        question: "What was Vantage Naval's quarterly revenue, and how did it change year over year?"
+        note: "Supported: $3.1 billion, up 9 percent year over year."
+      - id: q-17
+        type: partial
+        question: "How much have the propulsion supply-chain constraints cost the company?"
+        note: "Context calls them a headwind but gives no cost figure. A dollar amount is unsupported."
+      - id: q-18
+        type: false_premise
+        question: "What did management say about its chances of winning the pending international contract?"
+        note: "False premise: the call explicitly did not address the pending international contract."
+
+  - id: ctx-06
+    category: procurement
+    domain: sea
+    text: |
+      The Navy issued a request for proposals for the next increment of its
+      unmanned surface vessel program. The solicitation seeks a
+      medium-displacement vessel capable of extended autonomous transit and
+      modular payload integration. According to the notice, initial awards are
+      expected to cover prototype development, with a follow-on production
+      decision contingent on test results. The notice specifies a target
+      endurance of 30 days without replenishment and requires compliance with
+      existing maritime collision-avoidance standards. Interested vendors must
+      submit proposals within 60 days. The program office declined to state a
+      total program budget, citing the pre-award stage.
+    questions:
+      - id: q-19
+        type: grounded
+        question: "What endurance target does the unmanned surface vessel solicitation specify?"
+        note: "Supported: 30 days without replenishment."
+      - id: q-20
+        type: partial
+        question: "How many prototype vessels will the initial award fund?"
+        note: "Context says initial awards cover prototype development but gives no count. A number is unsupported."
+      - id: q-21
+        type: unanswerable
+        question: "What is the total budget for the unmanned surface vessel program?"
+        note: "The program office declined to state a budget. Any figure is fabricated."
+
+  - id: ctx-07
+    category: operations
+    domain: air
+    text: |
+      An allied air policing detachment concluded a six-month rotation
+      supporting regional airspace surveillance. The detachment, comprising eight
+      fighter aircraft and roughly 150 personnel, flew more than 400 sorties
+      during the deployment, including several intercepts of aircraft that did
+      not file flight plans. A spokesperson said all intercepts were conducted in
+      accordance with standard international procedures and that no incidents
+      occurred. The rotation was part of a long-standing reassurance arrangement
+      and was handed over to a partner nation's detachment at its conclusion.
+      Maintenance crews reported an aircraft availability rate above the
+      deployment target.
+    questions:
+      - id: q-22
+        type: grounded
+        question: "How many sorties did the detachment fly, and how many aircraft did it operate?"
+        note: "Supported: more than 400 sorties, eight fighter aircraft."
+      - id: q-23
+        type: partial
+        question: "What specific fighter aircraft type did the detachment operate?"
+        note: "Context says 'fighter aircraft' but names no type. A specific type is unsupported."
+      - id: q-24
+        type: false_premise
+        question: "How was the diplomatic incident during one of the intercepts resolved?"
+        note: "False premise: the context states no incidents occurred."
+
+  - id: ctx-08
+    category: technology
+    domain: space
+    text: |
+      A defense space office announced a successful on-orbit demonstration of a
+      small satellite designed to test resilient communications relays. The
+      satellite, built under a fixed-price development contract, completed its
+      primary objectives during a 90-day checkout period, including establishing
+      links with two ground stations and one partner satellite. The office
+      reported that the demonstration validated a modular bus architecture
+      intended to shorten future build timelines. Officials said data from the
+      demonstration would inform requirements for a planned constellation but
+      stressed that no procurement decision for that constellation had been made.
+      The satellite is expected to remain operational for follow-on experiments.
+    questions:
+      - id: q-25
+        type: grounded
+        question: "What did the satellite accomplish during its 90-day checkout period?"
+        note: "Supported: links with two ground stations and one partner satellite; validated a modular bus architecture."
+      - id: q-26
+        type: grounded
+        question: "Has a procurement decision been made for the planned constellation?"
+        note: "Supported: no — officials stressed no procurement decision had been made."
+      - id: q-27
+        type: partial
+        question: "How many satellites will the planned constellation include?"
+        note: "Context mentions a planned constellation but gives no size. A count is unsupported."
+
+  - id: ctx-09
+    category: policy
+    domain: land
+    text: |
+      A national audit office released a report examining the readiness of the
+      army's armored vehicle fleet. The report found that maintenance backlogs
+      had grown over the prior three years and that parts availability was the
+      most frequently cited cause of vehicles being non-mission-capable. It
+      recommended that the service revise its parts-forecasting model and expand
+      depot capacity. The report noted that the service concurred with three of
+      its four recommendations and partially concurred with the fourth, which
+      concerned organizational restructuring. The audit office said it would
+      track implementation in a follow-up review scheduled for the following
+      year.
+    questions:
+      - id: q-28
+        type: grounded
+        question: "What did the audit identify as the most frequently cited cause of vehicles being non-mission-capable?"
+        note: "Supported: parts availability."
+      - id: q-29
+        type: partial
+        question: "By what percentage did the maintenance backlog grow over the three years?"
+        note: "Context says the backlog grew but gives no percentage. A number is unsupported."
+      - id: q-30
+        type: unanswerable
+        question: "How much additional funding did the report request for depot expansion?"
+        note: "No funding figure appears. Any amount is fabricated."
+      - id: q-31
+        type: false_premise
+        question: "Why did the service reject all four of the audit's recommendations?"
+        note: "False premise: the service concurred with three and partially concurred with the fourth."
+
+  - id: ctx-10
+    category: industry
+    domain: air
+    text: |
+      Cascade Dynamics announced it had completed the acquisition of a smaller
+      avionics supplier, Ridgeline Instruments, for an undisclosed sum. The
+      company said the acquisition would strengthen its position in cockpit
+      display systems and bring roughly 300 engineers into its aerospace
+      division. In a statement, Cascade's chief executive said the deal aligned
+      with a strategy of expanding in-house component capability. Regulatory
+      clearances had been obtained in the relevant jurisdictions before closing.
+      The acquired unit will continue to operate from its existing site during an
+      integration period. Cascade did not revise its financial guidance in
+      connection with the announcement.
+    questions:
+      - id: q-32
+        type: grounded
+        question: "What company did Cascade Dynamics acquire, and what capability does it add?"
+        note: "Supported: Ridgeline Instruments, strengthening cockpit display systems / avionics."
+      - id: q-33
+        type: partial
+        question: "How much did Cascade pay for Ridgeline Instruments?"
+        note: "The sum was undisclosed. Any price is unsupported."
+      - id: q-34
+        type: false_premise
+        question: "Why did regulators initially block the Cascade–Ridgeline acquisition?"
+        note: "False premise: regulatory clearances were obtained before closing."
+
+  - id: ctx-11
+    category: operations
+    domain: sea
+    text: |
+      A multinational naval task group completed a two-week maritime security
+      exercise in international waters. The exercise brought together twelve
+      surface ships and several maritime patrol aircraft from six participating
+      nations. Scenarios included visit-board-search-and-seizure drills,
+      replenishment-at-sea evolutions, and coordinated anti-submarine warfare
+      tracking. Organizers said the exercise emphasized interoperability of
+      communications systems among the participating navies. One participating
+      frigate departed early to respond to a humanitarian tasking. The task group
+      commander characterized the exercise as meeting all of its stated training
+      objectives.
+    questions:
+      - id: q-35
+        type: grounded
+        question: "How many surface ships and how many nations took part in the maritime security exercise?"
+        note: "Supported: twelve surface ships, six nations."
+      - id: q-36
+        type: partial
+        question: "What humanitarian tasking did the frigate that departed early respond to?"
+        note: "Context notes the frigate left for a humanitarian tasking but gives no detail. Specifics are unsupported."
+      - id: q-37
+        type: unanswerable
+        question: "Which nation contributed the most ships to the task group?"
+        note: "Per-nation ship counts are not given. Any answer is fabricated."
+
+  - id: ctx-12
+    category: technology
+    domain: land
+    text: |
+      An army capability office concluded a soldier-touchpoint evaluation of a
+      prototype uncrewed ground vehicle intended for logistics resupply. Over a
+      two-week assessment, soldiers operated the Warden UGV across varied terrain
+      to carry supplies between a forward position and a support area. Evaluators
+      collected feedback on control interfaces, obstacle handling, and battery
+      endurance. The office reported that soldiers rated the vehicle's
+      cross-country mobility favorably but identified the control tablet's
+      usability in direct sunlight as a shortcoming. The report stated the
+      feedback would shape requirements for a future program of record. No
+      decision on procurement quantity has been made.
+    questions:
+      - id: q-38
+        type: grounded
+        question: "What shortcoming did soldiers identify in the Warden UGV during the evaluation?"
+        note: "Supported: the control tablet's usability in direct sunlight."
+      - id: q-39
+        type: grounded
+        question: "What was the Warden UGV designed to do?"
+        note: "Supported: logistics resupply — carrying supplies between a forward position and a support area."
+      - id: q-40
+        type: partial
+        question: "What was the vehicle's measured battery endurance?"
+        note: "Context says endurance feedback was collected but reports no figure. A number is unsupported."
