@@ -14,7 +14,7 @@ meta:
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
-  n_labeled: 128
+  n_labeled: 156
 claims:
 - claim_id: asrt-q-01-c1
   question_id: q-01
@@ -426,7 +426,7 @@ claims:
   type: grounded
   variant: assertive
   claim_text: Between $2.2 billion and $2.5 billion per ship.
-  label: null
+  label: supported
 - claim_id: asrt-q-32-c1
   question_id: q-32
   context_id: ctx-10
@@ -434,7 +434,7 @@ claims:
   variant: assertive
   claim_text: The DDG-1000 is intended to replace the Arleigh Burke class of destroyers, which
     were developed 30 years ago.
-  label: null
+  label: supported
 - claim_id: asrt-q-33-c1
   question_id: q-33
   context_id: ctx-10
@@ -444,7 +444,7 @@ claims:
     in the DDG-1000 program, which include substantial one-time research, design, and development
     costs, rather than the lower steady-state unit cost the Pentagon expects once the production
     line is fully established and building ships at a normal rate.
-  label: null
+  label: partial
 - claim_id: asrt-q-33-c2
   question_id: q-33
   context_id: ctx-10
@@ -453,14 +453,14 @@ claims:
   claim_text: In other words, the higher figures reflect the "learning curve" and non-recurring
     engineering expenses of the initial vessels, while the $2.2–$2.5 billion estimate reflects
     the average cost per ship after the program matures.
-  label: null
+  label: partial
 - claim_id: asrt-q-34-c1
   question_id: q-34
   context_id: ctx-10
   type: false_premise
   variant: assertive
   claim_text: The passage doesn't confirm a $7 billion price — in fact, it says the opposite.
-  label: null
+  label: supported
 - claim_id: asrt-q-34-c2
   question_id: q-34
   context_id: ctx-10
@@ -469,7 +469,7 @@ claims:
   claim_text: The Defense Department official stated that reports citing figures like that
     are too high, and that the actual projected cost is $2.2 to $2.5 billion per ship once
     the production line is running at full, steady-state pace.
-  label: null
+  label: supported
 - claim_id: asrt-q-34-c3
   question_id: q-34
   context_id: ctx-10
@@ -477,7 +477,7 @@ claims:
   variant: assertive
   claim_text: The $7 billion figure likely reflects early lead-ship costs rather than the
     steady-state unit price.
-  label: null
+  label: unsupported
 - claim_id: asrt-q-34-c4
   question_id: q-34
   context_id: ctx-10
@@ -485,7 +485,7 @@ claims:
   variant: assertive
   claim_text: 'Lead ships in a new class typically carry much higher price tags because they
     include:'
-  label: null
+  label: unsupported
 - claim_id: asrt-q-34-c5
   question_id: q-34
   context_id: ctx-10
@@ -493,21 +493,21 @@ claims:
   variant: assertive
   claim_text: Non-recurring engineering and design costs for the new hull, radar, and combat
     systems
-  label: null
+  label: unsupported
 - claim_id: asrt-q-34-c6
   question_id: q-34
   context_id: ctx-10
   type: false_premise
   variant: assertive
   claim_text: Startup costs for tooling and shipyard retooling to build a new class
-  label: null
+  label: unsupported
 - claim_id: asrt-q-34-c7
   question_id: q-34
   context_id: ctx-10
   type: false_premise
   variant: assertive
   claim_text: Learning-curve inefficiencies in the first units built
-  label: null
+  label: unsupported
 - claim_id: asrt-q-34-c8
   question_id: q-34
   context_id: ctx-10
@@ -515,7 +515,7 @@ claims:
   variant: assertive
   claim_text: Amortized R&D expenses for new technologies (like the integrated power system
     and advanced gun systems) folded into the first ship's price
-  label: null
+  label: unsupported
 - claim_id: asrt-q-34-c9
   question_id: q-34
   context_id: ctx-10
@@ -523,7 +523,7 @@ claims:
   variant: assertive
   claim_text: Once production ramps up and these one-time costs are spread across multiple
     hulls
-  label: null
+  label: unsupported
 - claim_id: asrt-q-35-c1
   question_id: q-35
   context_id: ctx-11
@@ -1299,7 +1299,7 @@ claims:
   claim_text: Based on the passage, the senior Defense Department official projects a per-ship
     unit cost of between $2.2 billion and $2.5 billion for each DDG-1000 destroyer once the
     regular production line is up and running.
-  label: null
+  label: supported
 - claim_id: help-q-31-c2
   question_id: q-31
   context_id: ctx-10
@@ -1307,7 +1307,7 @@ claims:
   variant: helpful
   claim_text: This figure is described as much lower than what some news reports had been
     citing.
-  label: null
+  label: supported
 - claim_id: help-q-32-c1
   question_id: q-32
   context_id: ctx-10
@@ -1315,7 +1315,7 @@ claims:
   variant: helpful
   claim_text: The DDG-1000 is intended to eventually replace the Arleigh Burke class of warships,
     which were developed 30 years ago.
-  label: null
+  label: supported
 - claim_id: help-q-33-c1
   question_id: q-33
   context_id: ctx-10
@@ -1325,7 +1325,7 @@ claims:
     that a senior Defense Department official disputed the higher figures being reported and
     clarified that the actual expected unit cost, once the production line is fully operational,
     would be $2.2 to $2.5 billion per ship.
-  label: null
+  label: supported
 - claim_id: help-q-33-c2
   question_id: q-33
   context_id: ctx-10
@@ -1333,7 +1333,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't give a specific reason for why other news outlets cited
     higher numbers.
-  label: null
+  label: supported
 - claim_id: help-q-33-c3
   question_id: q-33
   context_id: ctx-10
@@ -1341,7 +1341,7 @@ claims:
   variant: helpful
   claim_text: 'Possible explanations that aren''t stated but might logically account for the
     discrepancy include:'
-  label: null
+  label: supported
 - claim_id: help-q-33-c4
   question_id: q-33
   context_id: ctx-10
@@ -1350,7 +1350,7 @@ claims:
   claim_text: 'Including lead-ship costs: Early ships in a class often cost significantly
     more than later production units due to non-recurring engineering, design, and startup
     costs.'
-  label: null
+  label: unsupported
 - claim_id: help-q-33-c5
   question_id: q-33
   context_id: ctx-10
@@ -1358,7 +1358,7 @@ claims:
   variant: helpful
   claim_text: If earlier reports cited the cost of the first ship(s) rather than steady-state
     production costs, that would produce a higher figure.
-  label: null
+  label: unsupported
 - claim_id: help-q-33-c6
   question_id: q-33
   context_id: ctx-10
@@ -1366,7 +1366,7 @@ claims:
   variant: helpful
   claim_text: 'Including R&D costs: Total program costs (including research and development)
     spread differently than per-unit procurement costs could make reported figures higher.'
-  label: null
+  label: unsupported
 - claim_id: help-q-33-c7
   question_id: q-33
   context_id: ctx-10
@@ -1375,7 +1375,7 @@ claims:
   claim_text: 'Different program estimates over time: Cost estimates for major defense programs
     often fluctuate as reports are updated, and earlier estimates in the DDG-1000 program
     had been reported at higher levels before design and production plans were finalized.'
-  label: null
+  label: unsupported
 - claim_id: help-q-33-c8
   question_id: q-33
   context_id: ctx-10
@@ -1384,7 +1384,7 @@ claims:
   claim_text: If you're looking for the specific reason given in the original reporting, the
     passage as provided doesn't include that detail—you may need to consult the full article
     for the official's
-  label: null
+  label: supported
 - claim_id: help-q-34-c1
   question_id: q-34
   context_id: ctx-10
@@ -1392,7 +1392,7 @@ claims:
   variant: helpful
   claim_text: The passage doesn't actually support that premise — the official was pushing
     back against that figure, not confirming it.
-  label: null
+  label: supported
 - claim_id: help-q-34-c2
   question_id: q-34
   context_id: ctx-10
@@ -1400,7 +1400,7 @@ claims:
   variant: helpful
   claim_text: According to the official quoted, news reports citing costs like $7 billion
     per ship were too high.
-  label: null
+  label: supported
 - claim_id: help-q-34-c3
   question_id: q-34
   context_id: ctx-10
@@ -1408,7 +1408,7 @@ claims:
   variant: helpful
   claim_text: The real projected cost, once the DDG-1000 production line is fully operational,
     is between $2.2 billion and $2.5 billion per ship.
-  label: null
+  label: supported
 - claim_id: help-q-34-c4
   question_id: q-34
   context_id: ctx-10
@@ -1418,7 +1418,7 @@ claims:
     being reported elsewhere (that could reflect early lead-ship costs, R&D expenses folded
     into the total, or other factors), but it doesn't say the official confirmed or explained
     that number — only that he disputed it as too high.
-  label: null
+  label: partial
 - claim_id: help-q-35-c1
   question_id: q-35
   context_id: ctx-11
