@@ -92,6 +92,29 @@ tunable hypothesis, and the measurement is what settles it. Claiming a
 by-construction 40% would be exactly the kind of soft number this project exists
 to avoid.
 
+## Pipeline: from questions to labelable claims
+
+```
+questions.yaml ──generate_answers.py──▶ answers.yaml ──decompose.py──▶ claims.yaml
+   (committed)      (needs a key)          (generated)     (offline)      (generated)
+```
+
+- **`src/generate_answers.py`** answers each question from its excerpt only
+  (excerpt-only grounding) and records the model, prompt variant, and temperature
+  alongside the answers. It calls the Anthropic API, so it needs
+  `ANTHROPIC_API_KEY`; `--dry-run` builds the prompts without any call. The QA
+  prompt is a surfaced decision — `grounded` (default, RAG-realistic) vs `helpful`
+  (more fabrication); rerun with `--variant helpful` if `grounded` leaves the
+  unsupported class too thin to measure.
+- **`src/decompose.py`** splits answers into atomic claims with a deterministic
+  sentence splitter and writes `claims.yaml`, each claim `label: null` for the
+  human gold pass. Runs offline. The split is **frozen** (SCOPE.md Decision 2) so
+  the judge later only *rates* claims, never re-splits them.
+
+`answers.yaml` and `claims.yaml` are generated artifacts committed once produced,
+so the gold labels travel with them. Until a key is available they don't exist
+yet — the harness and its offline tests are in place and green.
+
 ## File format
 
 ```yaml
