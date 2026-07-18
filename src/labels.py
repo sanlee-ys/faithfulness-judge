@@ -63,7 +63,8 @@ def export(claims_path: Path, out: Path) -> None:
 
 def apply(claims_path: Path, csv_path: Path, out: Path) -> None:
     labels, bad = {}, []
-    with csv_path.open(newline="", encoding="utf-8") as fh:
+    # utf-8-sig tolerates the BOM Excel prepends when saving as "CSV UTF-8"
+    with csv_path.open(newline="", encoding="utf-8-sig") as fh:
         for row in csv.DictReader(fh):
             raw = (row.get("label") or "").strip().lower()
             if not raw:
