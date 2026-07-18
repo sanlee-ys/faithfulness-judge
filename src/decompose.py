@@ -112,7 +112,7 @@ def decompose(answers_payload: dict) -> dict:
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--answers", type=Path, default=dataset.ANSWERS_PATH)
+    ap.add_argument("--answers", type=Path, default=dataset.answers_path("assertive"))
     ap.add_argument("--out", type=Path, default=dataset.CLAIMS_PATH)
     args = ap.parse_args()
 

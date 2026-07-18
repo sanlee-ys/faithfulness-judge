@@ -16,8 +16,12 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data"
 
 QUESTIONS_PATH = DATA_DIR / "questions.yaml"
-ANSWERS_PATH = DATA_DIR / "answers.yaml"
 CLAIMS_PATH = DATA_DIR / "claims.yaml"
+
+
+def answers_path(variant: str) -> Path:
+    """Per-variant answer file, so runs from different prompts don't overwrite."""
+    return DATA_DIR / f"answers_{variant}.yaml"
 
 # Labels a human applies to each claim during the gold pass. `partial` collapses
 # to `unsupported` for the headline binary kappa (SCOPE.md, Decision 1).

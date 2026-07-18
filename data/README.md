@@ -95,25 +95,41 @@ to avoid.
 ## Pipeline: from questions to labelable claims
 
 ```
-questions.yaml ──generate_answers.py──▶ answers.yaml ──decompose.py──▶ claims.yaml
-   (committed)      (needs a key)          (generated)     (offline)      (generated)
+questions.yaml ─generate_answers.py─▶ answers_<variant>.yaml ─build_gold_set.py─▶ claims.yaml
+   (committed)      (needs a key)          (per variant)          (offline)        (labelable)
 ```
 
 - **`src/generate_answers.py`** answers each question from its excerpt only
-  (excerpt-only grounding) and records the model, prompt variant, and temperature
-  alongside the answers. It calls the Anthropic API, so it needs
-  `ANTHROPIC_API_KEY`; `--dry-run` builds the prompts without any call. The QA
-  prompt is a surfaced decision — `grounded` (default, RAG-realistic) vs `helpful`
-  (more fabrication); rerun with `--variant helpful` if `grounded` leaves the
-  unsupported class too thin to measure.
-- **`src/decompose.py`** splits answers into atomic claims with a deterministic
-  sentence splitter and writes `claims.yaml`, each claim `label: null` for the
-  human gold pass. Runs offline. The split is **frozen** (SCOPE.md Decision 2) so
-  the judge later only *rates* claims, never re-splits them.
+  (excerpt-only grounding), recording model + prompt variant, and writes
+  `answers_<variant>.yaml`. Needs `ANTHROPIC_API_KEY`; `--dry-run` builds prompts
+  with no call.
+- **`src/build_gold_set.py`** decomposes one or more answer runs into atomic
+  claims (via the frozen splitter in `decompose.py`), tags each claim with its
+  variant, and writes `claims.yaml` — each claim `label: null` for the human gold
+  pass. Runs offline. The split is **frozen** (SCOPE.md Decision 2): the judge
+  later only *rates* claims, never re-splits.
 
-`answers.yaml` and `claims.yaml` are generated artifacts committed once produced,
-so the gold labels travel with them. Until a key is available they don't exist
-yet — the harness and its offline tests are in place and green.
+### Why three variants, and why the gold set combines two
+
+The QA prompt controls how much the model fabricates — a surfaced, measured
+decision, not a default:
+
+| Variant | Prompt stance | Measured unsupported share\* |
+| --- | --- | --- |
+| `grounded` | "use only the passage; if absent, say so" | ~0% — refuses every trap |
+| `helpful`  | "answer as specifically as you can" | ~8% — subtle ungrounded elaboration |
+| `assertive`| "do not say it's absent; give your best answer" | ~46% — confident fabrications |
+
+\* *provisional LLM-graded density check, not the human gold number.*
+
+A well-prompted frontier model over short passages is faithful enough that you
+have to actively force it to hallucinate. So the gold set **combines `assertive`
+(blatant fabrication) with `helpful` (subtle ungrounded elaboration)** — 193
+claims — to validate the judge against both failure modes. `grounded` is kept as
+the record of that finding, not labeled.
+
+`answers_*.yaml` and `claims.yaml` are generated artifacts, committed so the
+answers and gold labels travel together.
 
 ## File format
 

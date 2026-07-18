@@ -179,8 +179,10 @@ def main() -> int:
         print(f"[dry-run] built {payload['meta']['n_questions']} prompts, wrote nothing.")
         return 0
 
-    dataset.dump_yaml(dataset.ANSWERS_PATH, payload)
-    print(f"wrote {len(payload['answers'])} answers to {dataset.ANSWERS_PATH}")
+    out = dataset.answers_path(args.variant)
+    dataset.dump_yaml(out, payload)
+    print(f"wrote {len(payload['answers'])} answers to {out}")
+    print("next: uv run python src/build_gold_set.py")
     return 0
 
 

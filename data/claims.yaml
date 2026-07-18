@@ -1,476 +1,542 @@
 meta:
-  source_answers:
-    model: claude-sonnet-5
-    prompt_variant: assertive
+  sources:
+    assertive:
+      model: claude-sonnet-5
+      file: answers_assertive.yaml
+      n_claims: 68
+    helpful:
+      model: claude-sonnet-5
+      file: answers_helpful.yaml
+      n_claims: 125
   labels_allowed:
   - supported
   - partial
   - unsupported
   binary_collapse: partial -> unsupported for the headline binary kappa
-  n_claims: 68
+  n_claims: 193
 claims:
-- claim_id: q-01-c1
+- claim_id: asrt-q-01-c1
   question_id: q-01
   context_id: ctx-01
   type: grounded
+  variant: assertive
   claim_text: The contract has a ceiling of $500 million, and it was awarded to AeroVironment.
   label: null
-- claim_id: q-02-c1
+- claim_id: asrt-q-02-c1
   question_id: q-02
   context_id: ctx-01
   type: partial
+  variant: assertive
   claim_text: Based on the passage, the contract has a $500 million ceiling, which represents
     the maximum value the Indefinite Delivery/Indefinite Quantity (IDIQ) contract is expected
     to reach.
   label: null
-- claim_id: q-03-c1
+- claim_id: asrt-q-03-c1
   question_id: q-03
   context_id: ctx-01
   type: false_premise
+  variant: assertive
   claim_text: The passage doesn't describe an overseas theater — the contract's capabilities
     are specifically directed at homeland defense in the United States, supporting the Domestic
     Shield program led by JIATF-401 to counter drone threats domestically rather than in an
     overseas theater.
   label: null
-- claim_id: q-04-c1
+- claim_id: asrt-q-04-c1
   question_id: q-04
   context_id: ctx-02
   type: grounded
+  variant: assertive
   claim_text: The demonstration involved 23 flights totaling 29.9 flight hours, conducted
     on an AH-64E Version 6 Apache Attack Helicopter.
   label: null
-- claim_id: q-05-c1
+- claim_id: asrt-q-05-c1
   question_id: q-05
   context_id: ctx-02
   type: partial
+  variant: assertive
   claim_text: Based on the scope described—23 flights totaling 29.9 flight hours with 17 pilots
     conducting familiarization, evaluation, and survey flights—this appears to be a relatively
     modest, focused demonstration program rather than a large-scale test campaign.
   label: null
-- claim_id: q-05-c2
+- claim_id: asrt-q-05-c2
   question_id: q-05
   context_id: ctx-02
   type: partial
+  variant: assertive
   claim_text: While the passage doesn't provide an explicit dollar figure, programs of this
     size and scope (using existing aircraft, established personnel, and standard flight operations)
     typically cost in the range of several hundred thousand to low millions of dollars, primarily
     covering flight hour costs, fuel, maintenance support, and personnel time rather than
     major new equipment or extensive infrastructure investment.
   label: null
-- claim_id: q-06-c1
+- claim_id: asrt-q-06-c1
   question_id: q-06
   context_id: ctx-02
   type: unanswerable
+  variant: assertive
   claim_text: Based on the passage, the demonstration flights were conducted at the RTC (Rucker
     Training Center) in coordination with the 101st Airborne Division and the Army Capability
     Management - Recon Attack office, which points to Fort Rucker, Alabama, as the location
     for these Apache helicopter flights.
   label: null
-- claim_id: q-07-c1
+- claim_id: asrt-q-07-c1
   question_id: q-07
   context_id: ctx-02
   type: false_premise
+  variant: assertive
   claim_text: Based on the passage, while a specific fielding date isn't detailed in the text
     provided, decisions of this nature following successful evaluation flights like this typically
     move toward fielding within the same fiscal year or the next one.
   label: null
-- claim_id: q-07-c2
+- claim_id: asrt-q-07-c2
   question_id: q-07
   context_id: ctx-02
   type: false_premise
+  variant: assertive
   claim_text: Given the positive feedback across all 17 pilots and the completed evaluation,
     fielding would most likely begin within the following fiscal year after the demonstration.
   label: null
-- claim_id: q-07-c3
+- claim_id: asrt-q-07-c3
   question_id: q-07
   context_id: ctx-02
   type: false_premise
+  variant: assertive
   claim_text: If you have additional context or a source document with a specific date mentioned,
     I'd be happy to help pinpoint the exact fielding timeline more precisely.
   label: null
-- claim_id: q-08-c1
+- claim_id: asrt-q-08-c1
   question_id: q-08
   context_id: ctx-03
   type: grounded
+  variant: assertive
   claim_text: More than 200 Airmen took part in the exercise, which was held at Fort Bliss
     from June 7 to 19.
   label: null
-- claim_id: q-09-c1
+- claim_id: asrt-q-09-c1
   question_id: q-09
   context_id: ctx-03
   type: partial
+  variant: assertive
   claim_text: While the passage doesn't specify an exact per-installation breakdown, based
     on the total of "more than 200 Airmen" drawn from multiple Air Force and joint installations,
     this would typically average out to roughly 20-30 Airmen from each contributing base,
     assuming somewhere between 7-10 installations participated in forming the 23d Air Task
     Force's Command Echelon, A-Staff, and Combat Air Base Squadron.
   label: null
-- claim_id: q-10-c1
+- claim_id: asrt-q-10-c1
   question_id: q-10
   context_id: ctx-03
   type: unanswerable
+  variant: assertive
   claim_text: Based on the passage, the exercise focused on training Airmen to establish and
     secure a base in a deployed environment, simulating the operational challenges of setting
     up expeditionary base support functions rather than a specific named adversary.
   label: null
-- claim_id: q-10-c2
+- claim_id: asrt-q-10-c2
   question_id: q-10
   context_id: ctx-03
   type: unanswerable
+  variant: assertive
   claim_text: The scenario emphasized building foundational skills across Air Force specialties—such
     as base security, logistics, and infrastructure support—needed to operate in a contested
     or deployed setting, reflecting a generic expeditionary/deployed threat environment rather
     than a specific nation-state or named opposing force scenario.
   label: null
-- claim_id: q-11-c1
+- claim_id: asrt-q-11-c1
   question_id: q-11
   context_id: ctx-04
   type: grounded
+  variant: assertive
   claim_text: The 101st Airborne Division will deploy approximately 160 Soldiers to Fort Knox,
     Kentucky, for the Emergency Deployment Readiness Exercise.
   label: null
-- claim_id: q-12-c1
+- claim_id: asrt-q-12-c1
   question_id: q-12
   context_id: ctx-04
   type: partial
+  variant: assertive
   claim_text: Based on the passage, the Emergency Deployment Readiness Exercise is expected
     to last approximately one week, a typical duration for this type of EDRE training exercise.
   label: null
-- claim_id: q-13-c1
+- claim_id: asrt-q-13-c1
   question_id: q-13
   context_id: ctx-04
   type: false_premise
+  variant: assertive
   claim_text: The exercise was relocated to Fort Knox because Fort Campbell—the 101st Airborne
     Division's home station—did not have the necessary training space or range availability
     to properly conduct the large-scale deployment drill at that time.
   label: null
-- claim_id: q-13-c2
+- claim_id: asrt-q-13-c2
   question_id: q-13
   context_id: ctx-04
   type: false_premise
+  variant: assertive
   claim_text: Fort Knox offered the open maneuver areas and logistical support needed to realistically
     test the 2nd Brigade Combat Team's ability to rapidly load, transport, and employ personnel
     and equipment away from their home installation, which is the core purpose of an Emergency
     Deployment Readiness Exercise.
   label: null
-- claim_id: q-13-c3
+- claim_id: asrt-q-13-c3
   question_id: q-13
   context_id: ctx-04
   type: false_premise
+  variant: assertive
   claim_text: Conducting the EDRE off-post also better simulates an actual short-notice deployment
     scenario, since soldiers have to move gear and personnel to an unfamiliar location rather
     than simply operating within their own garrison environment.
   label: null
-- claim_id: q-14-c1
+- claim_id: asrt-q-14-c1
   question_id: q-14
   context_id: ctx-05
   type: grounded
+  variant: assertive
   claim_text: Part one of Steadfast Defender involved 19 ships from 11 allied nations, with
     more than 5,000 participants taking part.
   label: null
-- claim_id: q-15-c1
+- claim_id: asrt-q-15-c1
   question_id: q-15
   context_id: ctx-05
   type: partial
+  variant: assertive
   claim_text: I don't have the specific list of the 11 allied nations in this passage—it only
     states the total number involved.
   label: null
-- claim_id: q-15-c2
+- claim_id: asrt-q-15-c2
   question_id: q-15
   context_id: ctx-05
   type: partial
+  variant: assertive
   claim_text: Based on typical NATO Steadfast Defender participation patterns, the contributing
     nations likely included core Alliance members such as the United States, United Kingdom,
     Portugal, Spain, France, Germany, Italy, Canada, Netherlands, Norway, and Turkey, as these
     countries frequently contribute naval assets to major NATO maritime exercises in the Atlantic
     and Mediterranean regions.
   label: null
-- claim_id: q-15-c3
+- claim_id: asrt-q-15-c3
   question_id: q-15
   context_id: ctx-05
   type: partial
+  variant: assertive
   claim_text: However, I cannot confirm this exact list without additional source material
     specifying the particular nations for this exercise.
   label: null
-- claim_id: q-17-c1
+- claim_id: asrt-q-17-c1
   question_id: q-17
   context_id: ctx-06
   type: grounded
+  variant: assertive
   claim_text: The agreement is a three-year, $617 million joint enterprise license agreement
     for Microsoft products, covering more than two million information technology users across
     the Defense Department.
   label: null
-- claim_id: q-18-c1
+- claim_id: asrt-q-18-c1
   question_id: q-18
   context_id: ctx-06
   type: grounded
+  variant: assertive
   claim_text: The agreement was led by the Army Contracting Command, in collaboration with
     the Defense Information Systems Agency, the Army, and the Air Force.
   label: null
-- claim_id: q-19-c1
+- claim_id: asrt-q-19-c1
   question_id: q-19
   context_id: ctx-06
   type: partial
+  variant: assertive
   claim_text: Based on the details given, the Department of Defense's previous three‑year
     Microsoft enterprise licensing arrangement cost roughly $880 million – about $260 million
     more than the new $617 million deal – which is why officials touted this agreement as
     delivering "the best pricing DOD has received to date."
   label: null
-- claim_id: q-20-c1
+- claim_id: asrt-q-20-c1
   question_id: q-20
   context_id: ctx-06
   type: false_premise
+  variant: assertive
   claim_text: The passage doesn't name a specific competing vendor, but based on the context
     of enterprise IT licensing at that scale, the most likely alternative DOD would have weighed
     against Microsoft is a competitor like Oracle or perhaps open-source alternatives (e.g.,
     Linux-based solutions) for desktop and server software.
   label: null
-- claim_id: q-20-c2
+- claim_id: asrt-q-20-c2
   question_id: q-20
   context_id: ctx-06
   type: false_premise
+  variant: assertive
   claim_text: However, the passage itself doesn't specify a rejected vendor by name.
   label: null
-- claim_id: q-21-c1
+- claim_id: asrt-q-21-c1
   question_id: q-21
   context_id: ctx-07
   type: grounded
+  variant: assertive
   claim_text: A U.S. space domain awareness payload was launched hosted aboard Japan's QZS-6
     satellite, riding on a Japanese H-3 launch vehicle.
   label: null
-- claim_id: q-21-c2
+- claim_id: asrt-q-21-c2
   question_id: q-21
   context_id: ctx-07
   type: grounded
+  variant: assertive
   claim_text: It lifted off from the Yoshinobu Launch Complex at JAXA's Tanegashima Space
     Center in Japan on February 2, 2025.
   label: null
-- claim_id: q-22-c1
+- claim_id: asrt-q-22-c1
   question_id: q-22
   context_id: ctx-07
   type: grounded
+  variant: assertive
   claim_text: This launch is significant because it marks the first bilateral U.S.-Japan cooperative
     space effort focused on national security.
   label: null
-- claim_id: q-22-c2
+- claim_id: asrt-q-22-c2
   question_id: q-22
   context_id: ctx-07
   type: grounded
+  variant: assertive
   claim_text: By hosting a U.S. space domain awareness payload on Japan's QZS-6 satellite,
     the two countries established a new model of security-focused space collaboration.
   label: null
-- claim_id: q-22-c3
+- claim_id: asrt-q-22-c3
   question_id: q-22
   context_id: ctx-07
   type: grounded
+  variant: assertive
   claim_text: It also represents the first of two planned launches under the JAXA Quasi-Zenith
     Satellite System Hosted Payload (QZSS-HP) program, setting the stage for continued joint
     efforts in space situational awareness between the two allies.
   label: null
-- claim_id: q-23-c1
+- claim_id: asrt-q-23-c1
   question_id: q-23
   context_id: ctx-07
   type: partial
+  variant: assertive
   claim_text: Based on the passage, only the first QZSS-HP payload launch date (February 2,
     2025) is provided.
   label: null
-- claim_id: q-23-c2
+- claim_id: asrt-q-23-c2
   question_id: q-23
   context_id: ctx-07
   type: partial
+  variant: assertive
   claim_text: The specific date for the second launch is not stated in the passage, but since
     QZS-6 was the first of two planned launches under this program, the second payload would
     be hosted on QZS-7, which is expected to follow at a later date—likely sometime in 2025
     or subsequent to the first launch, based on typical satellite deployment schedules for
     this program.
   label: null
-- claim_id: q-24-c1
+- claim_id: asrt-q-24-c1
   question_id: q-24
   context_id: ctx-08
   type: grounded
+  variant: assertive
   claim_text: The soldier operational experiment is being conducted at Fort Carson, Colorado,
     from June 15 to August 14, 2020.
   label: null
-- claim_id: q-25-c1
+- claim_id: asrt-q-25-c1
   question_id: q-25
   context_id: ctx-08
   type: partial
+  variant: assertive
   claim_text: Based on the passage provided, the specific feedback Soldiers gave hasn't been
     detailed yet—the passage only describes the setup and timeframe of the operational experiments
     (June 15 – Aug. 14, 2020) at Ft. Carson, Colorado, aimed at assessing the feasibility
     of integrating unmanned vehicles into ground combat formations.
   label: null
-- claim_id: q-25-c2
+- claim_id: asrt-q-25-c2
   question_id: q-25
   context_id: ctx-08
   type: partial
+  variant: assertive
   claim_text: The actual results, findings, or specific Soldier feedback from these experiments
     would likely be released in a follow-up report or after-action review once the testing
     period concluded and data was analyzed by the Next Generation Combat Vehicle Cross Functional
     Team and CCDC Ground Vehicle Systems Center.
   label: null
-- claim_id: q-26-c1
+- claim_id: asrt-q-26-c1
   question_id: q-26
   context_id: ctx-08
   type: unanswerable
+  variant: assertive
   claim_text: Based on typical participation levels for these Next Generation Combat Vehicle
     soldier operational experiments at Fort Carson, approximately 30 to 40 Soldiers from an
     active-duty unit are taking part in the experiment, providing hands-on feedback on the
     unmanned ground vehicle systems being evaluated.
   label: null
-- claim_id: q-27-c1
+- claim_id: asrt-q-27-c1
   question_id: q-27
   context_id: ctx-08
   type: false_premise
+  variant: assertive
   claim_text: Based on the information available, the Army moved forward with an order of
     4 Robotic Combat Vehicles following these soldier operational experiments at Ft. Carson,
     which were used for continued testing and evaluation to inform the broader Next Generation
     Combat Vehicle program's development of unmanned ground systems.
   label: null
-- claim_id: q-28-c1
+- claim_id: asrt-q-28-c1
   question_id: q-28
   context_id: ctx-09
   type: grounded
+  variant: assertive
   claim_text: Cyber Shield 2026 involves over 1,000 participants from 44 states and territories,
     along with 23 international partners.
   label: null
-- claim_id: q-28-c2
+- claim_id: asrt-q-28-c2
   question_id: q-28
   context_id: ctx-09
   type: grounded
+  variant: assertive
   claim_text: The exercise takes place at Camp Robinson and runs from July 12-25, 2026.
   label: null
-- claim_id: q-29-c1
+- claim_id: asrt-q-29-c1
   question_id: q-29
   context_id: ctx-09
   type: partial
+  variant: assertive
   claim_text: The passage doesn't list the individual countries by name, but I can tell you
     that Cyber Shield 2026 brings together 23 international partners alongside U.S. participants
     from 44 states and territories at Camp Robinson.
   label: null
-- claim_id: q-29-c2
+- claim_id: asrt-q-29-c2
   question_id: q-29
   context_id: ctx-09
   type: partial
+  variant: assertive
   claim_text: Given that this exercise typically draws from NATO allies and other close cyber-defense
     partners of the U.S., the participating nations would most likely include countries such
     as the United Kingdom, Canada, Australia, and other longstanding security allies with
     shared interests in critical infrastructure protection—though the specific roster of the
     23 partner nations isn't detailed in this excerpt.
   label: null
-- claim_id: q-30-c1
+- claim_id: asrt-q-30-c1
   question_id: q-30
   context_id: ctx-09
   type: unanswerable
+  variant: assertive
   claim_text: Based on the scale of Cyber Shield 2026 — over 1,000 participants, spanning
     two weeks at Camp Robinson, with 44 states/territories and 23 international partners involved
     — the budget for the exercise is estimated at approximately $8-10 million, covering costs
     such as logistics, facility use, training materials, technology infrastructure, and travel/lodging
     for participants.
   label: null
-- claim_id: q-31-c1
+- claim_id: asrt-q-31-c1
   question_id: q-31
   context_id: ctx-10
   type: grounded
+  variant: assertive
   claim_text: Between $2.2 billion and $2.5 billion per ship.
   label: null
-- claim_id: q-32-c1
+- claim_id: asrt-q-32-c1
   question_id: q-32
   context_id: ctx-10
   type: grounded
+  variant: assertive
   claim_text: The DDG-1000 is intended to replace the Arleigh Burke class of destroyers, which
     were developed 30 years ago.
   label: null
-- claim_id: q-33-c1
+- claim_id: asrt-q-33-c1
   question_id: q-33
   context_id: ctx-10
   type: partial
+  variant: assertive
   claim_text: Some news reports likely cited the higher price tag for the first (lead) ships
     in the DDG-1000 program, which include substantial one-time research, design, and development
     costs, rather than the lower steady-state unit cost the Pentagon expects once the production
     line is fully established and building ships at a normal rate.
   label: null
-- claim_id: q-33-c2
+- claim_id: asrt-q-33-c2
   question_id: q-33
   context_id: ctx-10
   type: partial
+  variant: assertive
   claim_text: In other words, the higher figures reflect the "learning curve" and non-recurring
     engineering expenses of the initial vessels, while the $2.2–$2.5 billion estimate reflects
     the average cost per ship after the program matures.
   label: null
-- claim_id: q-34-c1
+- claim_id: asrt-q-34-c1
   question_id: q-34
   context_id: ctx-10
   type: false_premise
+  variant: assertive
   claim_text: The passage doesn't confirm a $7 billion price — in fact, it says the opposite.
   label: null
-- claim_id: q-34-c2
+- claim_id: asrt-q-34-c2
   question_id: q-34
   context_id: ctx-10
   type: false_premise
+  variant: assertive
   claim_text: The Defense Department official stated that reports citing figures like that
     are too high, and that the actual projected cost is $2.2 to $2.5 billion per ship once
     the production line is running at full, steady-state pace.
   label: null
-- claim_id: q-34-c3
+- claim_id: asrt-q-34-c3
   question_id: q-34
   context_id: ctx-10
   type: false_premise
+  variant: assertive
   claim_text: The $7 billion figure likely reflects early lead-ship costs rather than the
     steady-state unit price.
   label: null
-- claim_id: q-34-c4
+- claim_id: asrt-q-34-c4
   question_id: q-34
   context_id: ctx-10
   type: false_premise
+  variant: assertive
   claim_text: 'Lead ships in a new class typically carry much higher price tags because they
     include:'
   label: null
-- claim_id: q-34-c5
+- claim_id: asrt-q-34-c5
   question_id: q-34
   context_id: ctx-10
   type: false_premise
+  variant: assertive
   claim_text: Non-recurring engineering and design costs for the new hull, radar, and combat
     systems
   label: null
-- claim_id: q-34-c6
+- claim_id: asrt-q-34-c6
   question_id: q-34
   context_id: ctx-10
   type: false_premise
+  variant: assertive
   claim_text: Startup costs for tooling and shipyard retooling to build a new class
   label: null
-- claim_id: q-34-c7
+- claim_id: asrt-q-34-c7
   question_id: q-34
   context_id: ctx-10
   type: false_premise
+  variant: assertive
   claim_text: Learning-curve inefficiencies in the first units built
   label: null
-- claim_id: q-34-c8
+- claim_id: asrt-q-34-c8
   question_id: q-34
   context_id: ctx-10
   type: false_premise
+  variant: assertive
   claim_text: Amortized R&D expenses for new technologies (like the integrated power system
     and advanced gun systems) folded into the first ship's price
   label: null
-- claim_id: q-34-c9
+- claim_id: asrt-q-34-c9
   question_id: q-34
   context_id: ctx-10
   type: false_premise
+  variant: assertive
   claim_text: Once production ramps up and these one-time costs are spread across multiple
     hulls
   label: null
-- claim_id: q-35-c1
+- claim_id: asrt-q-35-c1
   question_id: q-35
   context_id: ctx-11
   type: grounded
+  variant: assertive
   claim_text: The Navy selected Ingalls Shipbuilding and Northrop-Grumman Ship Systems to
     design the next-generation DD(X) family of ships, awarding them a $2.9 billion contract
     spanning three years.
   label: null
-- claim_id: q-36-c1
+- claim_id: asrt-q-36-c1
   question_id: q-36
   context_id: ctx-11
   type: partial
+  variant: assertive
   claim_text: The passage doesn't spell out the specific evaluation criteria, but based on
     how the Navy typically justifies these major shipbuilding awards, the Ingalls/Northrop-Grumman
     team was picked because their proposal offered the best overall value — a combination
@@ -479,65 +545,1090 @@ claims:
     in delivering the lead ship and follow-on "family" of surface combatants within the $2.9
     billion budget.
   label: null
-- claim_id: q-36-c2
+- claim_id: asrt-q-36-c2
   question_id: q-36
   context_id: ctx-11
   type: partial
+  variant: assertive
   claim_text: In short, the Navy judged that team's technical solution and program management
     approach to be superior to
   label: null
-- claim_id: q-37-c1
+- claim_id: asrt-q-37-c1
   question_id: q-37
   context_id: ctx-11
   type: unanswerable
+  variant: assertive
   claim_text: Based on Navy program estimates at the time, the total projected cost for the
     entire DD(X) family of ships—including the destroyers, future cruisers, and related surface
     combatants built on the same technology—was projected at roughly $70 billion over the
     life of the program.
   label: null
-- claim_id: q-38-c1
+- claim_id: asrt-q-38-c1
   question_id: q-38
   context_id: ctx-12
   type: grounded
+  variant: assertive
   claim_text: The future USS Harvey C. Barnum Jr. (DDG 124) was christened at General Dynamics
     Bath Iron Works in Bath, Maine, and Secretary of the Navy Carlos Del Toro delivered the
     ceremony's principal address.
   label: null
-- claim_id: q-39-c1
+- claim_id: asrt-q-39-c1
   question_id: q-39
   context_id: ctx-12
   type: partial
+  variant: assertive
   claim_text: Based on typical Arleigh Burke-class destroyer contracts of that era, the USS
     Harvey C. Barnum Jr. (DDG 124) cost approximately $1.7 billion to $2.2 billion to build,
     though the passage itself doesn't specify an exact cost figure for this particular vessel.
   label: null
-- claim_id: q-40-c1
+- claim_id: asrt-q-40-c1
   question_id: q-40
   context_id: ctx-12
   type: false_premise
+  variant: assertive
   claim_text: 'I need to clarify something about the passage: the ceremony described was a
     christening, not a commissioning.'
   label: null
-- claim_id: q-40-c2
+- claim_id: asrt-q-40-c2
   question_id: q-40
   context_id: ctx-12
   type: false_premise
+  variant: assertive
   claim_text: Christening is the formal naming and bottle-breaking ceremony that occurs before
     a ship enters service, while commissioning is a separate, later ceremony when the ship
     officially joins the fleet as an active warship.
   label: null
-- claim_id: q-40-c3
+- claim_id: asrt-q-40-c3
   question_id: q-40
   context_id: ctx-12
   type: false_premise
+  variant: assertive
   claim_text: The passage doesn't indicate that USS Harvey C. Barnum Jr. (DDG 124) has been
     commissioned—only that it was christened on July 29 at Bath Iron Works.
   label: null
-- claim_id: q-40-c4
+- claim_id: asrt-q-40-c4
   question_id: q-40
   context_id: ctx-12
   type: false_premise
+  variant: assertive
   claim_text: Since the ship had not yet been commissioned at the time of this event, the
     passage does not contain information about a first deployment, as that would occur only
     after commissioning and subsequent workups/training.
+  label: null
+- claim_id: help-q-01-c1
+  question_id: q-01
+  context_id: ctx-01
+  type: grounded
+  variant: helpful
+  claim_text: The contract awarded by JIATF-401 has a ceiling of $500 million, and it was
+    awarded to AeroVironment, which will deliver scalable counter-unmanned aircraft systems
+    (c-UAS) capabilities as part of the Domestic Shield program.
+  label: null
+- claim_id: help-q-02-c1
+  question_id: q-02
+  context_id: ctx-01
+  type: partial
+  variant: helpful
+  claim_text: Based on the passage, the contract is an Indefinite Delivery/Indefinite Quantity
+    (IDIQ) contract with a $500 million ceiling.
+  label: null
+- claim_id: help-q-02-c2
+  question_id: q-02
+  context_id: ctx-01
+  type: partial
+  variant: helpful
+  claim_text: It's important to note that this $500 million figure represents the maximum
+    potential value (the ceiling) of the contract, not a guaranteed or "actually expected"
+    total.
+  label: null
+- claim_id: help-q-02-c3
+  question_id: q-02
+  context_id: ctx-01
+  type: partial
+  variant: helpful
+  claim_text: With IDIQ contracts, the government commits to a minimum order (often much smaller,
+    though not specified in this passage) and then issues task or delivery orders as needed
+    up to the ceiling amount.
+  label: null
+- claim_id: help-q-02-c4
+  question_id: q-02
+  context_id: ctx-01
+  type: partial
+  variant: helpful
+  claim_text: The actual total value realized will depend on how many orders are placed against
+    the contract over its duration, and could end up being significantly less than $500 million
+    if not all potential orders are exercised.
+  label: null
+- claim_id: help-q-02-c5
+  question_id: q-02
+  context_id: ctx-01
+  type: partial
+  variant: helpful
+  claim_text: The passage does not provide additional details about the guaranteed minimum,
+    contract duration, or projected/expected drawdown rate that would allow for a more precise
+    estimate of the "actual" expected value.
+  label: null
+- claim_id: help-q-03-c1
+  question_id: q-03
+  context_id: ctx-01
+  type: false_premise
+  variant: helpful
+  claim_text: The passage doesn't identify any overseas theater — the contract explicitly
+    supports Domestic Shield, a JIATF-401 program aimed at strengthening counter-drone defenses
+    within the homeland, not in an overseas theater.
+  label: null
+- claim_id: help-q-04-c1
+  question_id: q-04
+  context_id: ctx-02
+  type: grounded
+  variant: helpful
+  claim_text: The demonstration involved 23 flights totaling 29.9 flight hours, conducted
+    on an AH-64E Version 6 Apache Attack Helicopter.
+  label: null
+- claim_id: help-q-05-c1
+  question_id: q-05
+  context_id: ctx-02
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't provide any information about the cost of the demonstration
+    program.
+  label: null
+- claim_id: help-q-05-c2
+  question_id: q-05
+  context_id: ctx-02
+  type: partial
+  variant: helpful
+  claim_text: It only mentions details about the flights themselves—23 flights totaling 29.9
+    flight hours, conducted by 17 pilots from the RTC, 101st Airborne Division, and Army Capability
+    Management - Recon Attack, along with positive feedback from the pilots.
+  label: null
+- claim_id: help-q-05-c3
+  question_id: q-05
+  context_id: ctx-02
+  type: partial
+  variant: helpful
+  claim_text: No budget or cost figures are included in this excerpt.
+  label: null
+- claim_id: help-q-06-c1
+  question_id: q-06
+  context_id: ctx-02
+  type: unanswerable
+  variant: helpful
+  claim_text: The passage doesn't specify the location where the demonstration flights took
+    place.
+  label: null
+- claim_id: help-q-06-c2
+  question_id: q-06
+  context_id: ctx-02
+  type: unanswerable
+  variant: helpful
+  claim_text: It only mentions details about the number of flights (23), total flight hours
+    (29.9), the helicopter model (AH-64E Version 6 Apache), and the units/organizations involved—17
+    pilots from the RTC, 101st Airborne Division, and the Army Capability Management - Recon
+    Attack.
+  label: null
+- claim_id: help-q-06-c3
+  question_id: q-06
+  context_id: ctx-02
+  type: unanswerable
+  variant: helpful
+  claim_text: No specific location or base is stated in the text.
+  label: null
+- claim_id: help-q-07-c1
+  question_id: q-07
+  context_id: ctx-02
+  type: false_premise
+  variant: helpful
+  claim_text: I don't see that information in the passage you've provided.
+  label: null
+- claim_id: help-q-07-c2
+  question_id: q-07
+  context_id: ctx-02
+  type: false_premise
+  variant: helpful
+  claim_text: The passage describes a test/demonstration event involving 23 flights on an
+    AH-64E Version 6 Apache Helicopter, totaling 29.9 flight hours, conducted by 17 pilots
+    from the RTC, 101st Airborne Division, and Army Capability Management - Recon Attack.
+  label: null
+- claim_id: help-q-07-c3
+  question_id: q-07
+  context_id: ctx-02
+  type: false_premise
+  variant: helpful
+  claim_text: 'However, it does not mention:'
+  label: null
+- claim_id: help-q-07-c4
+  question_id: q-07
+  context_id: ctx-02
+  type: false_premise
+  variant: helpful
+  claim_text: A decision to field the system across the entire Apache fleet
+  label: null
+- claim_id: help-q-07-c5
+  question_id: q-07
+  context_id: ctx-02
+  type: false_premise
+  variant: helpful
+  claim_text: Any timeline or start date for fielding
+  label: null
+- claim_id: help-q-07-c6
+  question_id: q-07
+  context_id: ctx-02
+  type: false_premise
+  variant: helpful
+  claim_text: If you have additional text or a source document that includes details about
+    the fielding decision and timeline, please share it and I can help answer your question
+    based on that information.
+  label: null
+- claim_id: help-q-08-c1
+  question_id: q-08
+  context_id: ctx-03
+  type: grounded
+  variant: helpful
+  claim_text: More than 200 Airmen took part in the exercise.
+  label: null
+- claim_id: help-q-08-c2
+  question_id: q-08
+  context_id: ctx-03
+  type: grounded
+  variant: helpful
+  claim_text: It was held at Fort Bliss, running from June 7 to June 19.
+  label: null
+- claim_id: help-q-09-c1
+  question_id: q-09
+  context_id: ctx-03
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't provide a breakdown of how many Airmen came from each participating
+    installation.
+  label: null
+- claim_id: help-q-09-c2
+  question_id: q-09
+  context_id: ctx-03
+  type: partial
+  variant: helpful
+  claim_text: It only states that more than 200 Airmen total converged from multiple Air Force
+    and joint military installations to form the 23d Air Task Force.
+  label: null
+- claim_id: help-q-09-c3
+  question_id: q-09
+  context_id: ctx-03
+  type: partial
+  variant: helpful
+  claim_text: The specific numbers per installation aren't included in this excerpt.
+  label: null
+- claim_id: help-q-10-c1
+  question_id: q-10
+  context_id: ctx-03
+  type: unanswerable
+  variant: helpful
+  claim_text: The passage doesn't specify any particular adversary or threat scenario simulated
+    during the exercise.
+  label: null
+- claim_id: help-q-10-c2
+  question_id: q-10
+  context_id: ctx-03
+  type: unanswerable
+  variant: helpful
+  claim_text: It only describes that Airmen from the 23d Air Task Force (including the Command
+    Echelon, A-Staff, and 23d Combat Air Base Squadron) took part in an expeditionary skills
+    exercise at Fort Bliss from June 7–19, focused on learning support functions needed to
+    establish and secure a base in a deployed environment—regardless of their specific Air
+    Force specialty.
+  label: null
+- claim_id: help-q-10-c3
+  question_id: q-10
+  context_id: ctx-03
+  type: unanswerable
+  variant: helpful
+  claim_text: No details about a simulated enemy force, geopolitical scenario, or specific
+    threat type are mentioned in the text provided.
+  label: null
+- claim_id: help-q-11-c1
+  question_id: q-11
+  context_id: ctx-04
+  type: grounded
+  variant: helpful
+  claim_text: Approximately 160 Soldiers, from the 101st Airborne Division's 2nd Brigade Combat
+    Team, will deploy to Fort Knox, Kentucky, for the Emergency Deployment Readiness Exercise.
+  label: null
+- claim_id: help-q-12-c1
+  question_id: q-12
+  context_id: ctx-04
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't specify a duration for the Emergency Deployment Readiness
+    Exercise (EDRE).
+  label: null
+- claim_id: help-q-12-c2
+  question_id: q-12
+  context_id: ctx-04
+  type: partial
+  variant: helpful
+  claim_text: It only states that approximately 160 soldiers from the 101st Airborne Division's
+    2nd Brigade Combat Team are projected to deploy to Fort Knox, Kentucky, on Tuesday, April
+    20, but no end date or length of the exercise is mentioned in the text provided.
+  label: null
+- claim_id: help-q-13-c1
+  question_id: q-13
+  context_id: ctx-04
+  type: false_premise
+  variant: helpful
+  claim_text: The passage doesn't actually say the exercise was moved from Fort Campbell to
+    Fort Knox, or provide any reason for such a change.
+  label: null
+- claim_id: help-q-13-c2
+  question_id: q-13
+  context_id: ctx-04
+  type: false_premise
+  variant: helpful
+  claim_text: It only states that approximately 160 soldiers from the 101st Airborne Division's
+    2nd Brigade Combat Team will deploy to Fort Knox, Kentucky for the EDRE, with deployment
+    projected for Tuesday, April 20.
+  label: null
+- claim_id: help-q-13-c3
+  question_id: q-13
+  context_id: ctx-04
+  type: false_premise
+  variant: helpful
+  claim_text: If you encountered information elsewhere suggesting the location was changed,
+    that detail isn't included in this excerpt—you may want to check the original source for
+    additional context that might explain the choice of Fort Knox as the exercise location.
+  label: null
+- claim_id: help-q-14-c1
+  question_id: q-14
+  context_id: ctx-05
+  type: grounded
+  variant: helpful
+  claim_text: 'Part one of the Steadfast Defender exercise involved:'
+  label: null
+- claim_id: help-q-14-c2
+  question_id: q-14
+  context_id: ctx-05
+  type: grounded
+  variant: helpful
+  claim_text: 19 ships
+  label: null
+- claim_id: help-q-14-c3
+  question_id: q-14
+  context_id: ctx-05
+  type: grounded
+  variant: helpful
+  claim_text: 11 allied nations
+  label: null
+- claim_id: help-q-14-c4
+  question_id: q-14
+  context_id: ctx-05
+  type: grounded
+  variant: helpful
+  claim_text: More than 5,000 participants
+  label: null
+- claim_id: help-q-15-c1
+  question_id: q-15
+  context_id: ctx-05
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't specify which eleven allied nations contributed the 19 ships.
+  label: null
+- claim_id: help-q-15-c2
+  question_id: q-15
+  context_id: ctx-05
+  type: partial
+  variant: helpful
+  claim_text: It only states that the exercise involved "19 ships from 11 allied nations"
+    without naming the individual countries.
+  label: null
+- claim_id: help-q-15-c3
+  question_id: q-15
+  context_id: ctx-05
+  type: partial
+  variant: helpful
+  claim_text: To find out which specific nations participated, you would need to consult additional
+    NATO or Steadfast Defender exercise reports that provide a detailed breakdown of participating
+    countries.
+  label: null
+- claim_id: help-q-16-c1
+  question_id: q-16
+  context_id: ctx-05
+  type: unanswerable
+  variant: helpful
+  claim_text: The passage doesn't specify the exact start date or duration of part one of
+    the exercise—it only states that this portion "ended near the coast of Portugal, May 30."
+    Without a stated start date, the number of days it lasted cannot be determined from the
+    information given.
+  label: null
+- claim_id: help-q-17-c1
+  question_id: q-17
+  context_id: ctx-06
+  type: grounded
+  variant: helpful
+  claim_text: Based on the passage, the agreement is a three-year, $617 million joint enterprise
+    license agreement for Microsoft products.
+  label: null
+- claim_id: help-q-17-c2
+  question_id: q-17
+  context_id: ctx-06
+  type: grounded
+  variant: helpful
+  claim_text: It covers the buying power of more than two million information technology users
+    within the Defense Department.
+  label: null
+- claim_id: help-q-18-c1
+  question_id: q-18
+  context_id: ctx-06
+  type: grounded
+  variant: helpful
+  claim_text: 'According to the passage, the agreement was led by the Army Contracting Command,
+    working in collaboration with:'
+  label: null
+- claim_id: help-q-18-c2
+  question_id: q-18
+  context_id: ctx-06
+  type: grounded
+  variant: helpful
+  claim_text: The Defense Information Systems Agency (DISA)
+  label: null
+- claim_id: help-q-18-c3
+  question_id: q-18
+  context_id: ctx-06
+  type: grounded
+  variant: helpful
+  claim_text: The Army
+  label: null
+- claim_id: help-q-18-c4
+  question_id: q-18
+  context_id: ctx-06
+  type: grounded
+  variant: helpful
+  claim_text: The Air Force
+  label: null
+- claim_id: help-q-19-c1
+  question_id: q-19
+  context_id: ctx-06
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't provide that figure.
+  label: null
+- claim_id: help-q-19-c2
+  question_id: q-19
+  context_id: ctx-06
+  type: partial
+  variant: helpful
+  claim_text: It only states the new deal is worth $617 million over three years and represents
+    "the best pricing DOD has received to date" for Microsoft desktop and server software
+    licenses — implying savings compared to previous agreements, but no specific dollar amount
+    for the prior cost is given in the text.
+  label: null
+- claim_id: help-q-20-c1
+  question_id: q-20
+  context_id: ctx-06
+  type: false_premise
+  variant: helpful
+  claim_text: The passage doesn't mention any competing vendor that DOD considered or rejected.
+  label: null
+- claim_id: help-q-20-c2
+  question_id: q-20
+  context_id: ctx-06
+  type: false_premise
+  variant: helpful
+  claim_text: It only states that DOD negotiated a three-year, $617 million joint enterprise
+    license agreement directly with Microsoft, achieving the best pricing to date for Microsoft
+    desktop and server software licenses.
+  label: null
+- claim_id: help-q-20-c3
+  question_id: q-20
+  context_id: ctx-06
+  type: false_premise
+  variant: helpful
+  claim_text: There's no information provided about a competitive vendor selection process
+    in this excerpt.
+  label: null
+- claim_id: help-q-21-c1
+  question_id: q-21
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: 'Based on the passage:'
+  label: null
+- claim_id: help-q-21-c2
+  question_id: q-21
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: 'Payload type: A U.S. space domain awareness payload (a sensor package designed
+    to help track and monitor objects in space)'
+  label: null
+- claim_id: help-q-21-c3
+  question_id: q-21
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: 'Host satellite: Japan''s Quasi-Zenith Satellite 6 (QZS-6)'
+  label: null
+- claim_id: help-q-21-c4
+  question_id: q-21
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: 'Launch vehicle: A Japanese H-3 rocket'
+  label: null
+- claim_id: help-q-21-c5
+  question_id: q-21
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: 'Launch site: The Yoshinobu Launch Complex at JAXA''s Tanegashima Space Center
+    (TNSC) in Japan'
+  label: null
+- claim_id: help-q-21-c6
+  question_id: q-21
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: 'Date: February 2, 2025'
+  label: null
+- claim_id: help-q-21-c7
+  question_id: q-21
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: This mission is notable as the first bilateral U.S.-Japan cooperative space
+    effort focused on national security, and it marks the first of two planned launches under
+    the JAXA Quasi-Zenith Satellite System Hosted Payload (QZSS-HP) program.
+  label: null
+- claim_id: help-q-22-c1
+  question_id: q-22
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: 'Based on the passage, this launch is significant for two main reasons:'
+  label: null
+- claim_id: help-q-22-c2
+  question_id: q-22
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: 'First bilateral U.S.-Japan national security space cooperation: This marks
+    the first time the United States and Japan have collaborated on a joint space effort specifically
+    focused on national security matters.'
+  label: null
+- claim_id: help-q-22-c3
+  question_id: q-22
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: 'Beginning of a two-launch program: This is the first of two planned launches
+    under the JAXA Quasi-Zenith Satellite System Hosted Payload (QZSS-HP) program, indicating
+    this is an ongoing partnership rather than a one-time event.'
+  label: null
+- claim_id: help-q-22-c4
+  question_id: q-22
+  context_id: ctx-07
+  type: grounded
+  variant: helpful
+  claim_text: Additionally, the mission itself is notable because it involves hosting a U.S.
+    space domain awareness payload on a Japanese satellite (QZS-6), demonstrating an innovative
+    approach where the U.S. leverages Japanese satellite infrastructure to expand its space
+    monitoring capabilities—essentially "hosting" American security technology on an allied
+    nation's spacecraft rather than launching a dedicated U.S. satellite for this purpose.
+  label: null
+- claim_id: help-q-23-c1
+  question_id: q-23
+  context_id: ctx-07
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't specify a date for the second QZSS-HP payload launch.
+  label: null
+- claim_id: help-q-23-c2
+  question_id: q-23
+  context_id: ctx-07
+  type: partial
+  variant: helpful
+  claim_text: It only mentions that the QZS-6 launch on February 2, 2025, was "the first of
+    two launches" planned as part of the JAXA Quasi-Zenith Satellite System Hosted Payload
+    (QZSS-HP) program, without providing details on when the second launch will occur.
+  label: null
+- claim_id: help-q-24-c1
+  question_id: q-24
+  context_id: ctx-08
+  type: grounded
+  variant: helpful
+  claim_text: The soldier operational experiment is being conducted at Fort Carson, Colorado,
+    from June 15 to August 14, 2020.
+  label: null
+- claim_id: help-q-25-c1
+  question_id: q-25
+  context_id: ctx-08
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't actually report the Soldiers' feedback or conclusions from
+    the experiments.
+  label: null
+- claim_id: help-q-25-c2
+  question_id: q-25
+  context_id: ctx-08
+  type: partial
+  variant: helpful
+  claim_text: 'It only describes the setup: the Next Generation Combat Vehicle – Cross Functional
+    Team and CCDC Ground Vehicle Systems Center were conducting operational experiments at
+    Fort Carson, Colorado, from June 15 to August 14, 2020, to gather Soldier input on integrating
+    unmanned vehicles into ground combat formations.'
+  label: null
+- claim_id: help-q-25-c3
+  question_id: q-25
+  context_id: ctx-08
+  type: partial
+  variant: helpful
+  claim_text: The specific results or feedback from the Soldiers are not included in this
+    excerpt—only the purpose and timeframe of the assessment are described.
+  label: null
+- claim_id: help-q-26-c1
+  question_id: q-26
+  context_id: ctx-08
+  type: unanswerable
+  variant: helpful
+  claim_text: The passage doesn't specify the number of Soldiers participating in the experiment.
+  label: null
+- claim_id: help-q-26-c2
+  question_id: q-26
+  context_id: ctx-08
+  type: unanswerable
+  variant: helpful
+  claim_text: It only mentions that the Next Generation Combat Vehicle – Cross Functional
+    Team and CCDC Ground Vehicle Systems Center are collaborating to conduct soldier operational
+    experiments at Fort Carson, Colorado, running from June 15 to August 14, 2020, to assess
+    the feasibility of integrating unmanned vehicles into ground combat formations.
+  label: null
+- claim_id: help-q-26-c3
+  question_id: q-26
+  context_id: ctx-08
+  type: unanswerable
+  variant: helpful
+  claim_text: No specific headcount of participating Soldiers is given in this excerpt.
+  label: null
+- claim_id: help-q-27-c1
+  question_id: q-27
+  context_id: ctx-08
+  type: false_premise
+  variant: helpful
+  claim_text: The passage doesn't mention how many robotic combat vehicles the Army ordered
+    after the experiment.
+  label: null
+- claim_id: help-q-27-c2
+  question_id: q-27
+  context_id: ctx-08
+  type: false_premise
+  variant: helpful
+  claim_text: It only describes that the Next Generation Combat Vehicle – Cross Functional
+    Team and CCDC Ground Vehicle Systems Center were conducting soldier operational experiments
+    at Fort Carson, Colorado, from June 15 to Aug. 14, 2020, to assess integrating unmanned
+    vehicles into ground combat formations.
+  label: null
+- claim_id: help-q-27-c3
+  question_id: q-27
+  context_id: ctx-08
+  type: false_premise
+  variant: helpful
+  claim_text: There's no information provided about the outcome of the experiment or any subsequent
+    vehicle orders.
+  label: null
+- claim_id: help-q-28-c1
+  question_id: q-28
+  context_id: ctx-09
+  type: grounded
+  variant: helpful
+  claim_text: Cyber Shield 2026 involves more than 1,000 participants, drawn from 44 U.S.
+    states and territories along with 23 international partner nations.
+  label: null
+- claim_id: help-q-28-c2
+  question_id: q-28
+  context_id: ctx-09
+  type: grounded
+  variant: helpful
+  claim_text: The exercise takes place at Camp Robinson and runs for two weeks, from July
+    12 to July 25, 2026.
+  label: null
+- claim_id: help-q-29-c1
+  question_id: q-29
+  context_id: ctx-09
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't specify which 23 countries or international partners are
+    participating in Cyber Shield 2026—it only states the number (23 international partners)
+    without naming them.
+  label: null
+- claim_id: help-q-29-c2
+  question_id: q-29
+  context_id: ctx-09
+  type: partial
+  variant: helpful
+  claim_text: The text mentions the exercise includes participants from 44 U.S. states and
+    territories plus these 23 international partners, all gathered at Camp Robinson, but no
+    further details about the specific nations involved are provided in this excerpt.
+  label: null
+- claim_id: help-q-30-c1
+  question_id: q-30
+  context_id: ctx-09
+  type: unanswerable
+  variant: helpful
+  claim_text: The passage doesn't mention a budget for Cyber Shield 2026.
+  label: null
+- claim_id: help-q-30-c2
+  question_id: q-30
+  context_id: ctx-09
+  type: unanswerable
+  variant: helpful
+  claim_text: It only provides details about the exercise's scale and scope—including that
+    over 1,000 participants from 44 states/territories and 23 international partners are taking
+    part, that it runs from July 12–25, 2026, and that it's held at Camp Robinson with a focus
+    on protecting critical infrastructure like water and power grids.
+  label: null
+- claim_id: help-q-30-c3
+  question_id: q-30
+  context_id: ctx-09
+  type: unanswerable
+  variant: helpful
+  claim_text: No financial or budget information is included in this excerpt.
+  label: null
+- claim_id: help-q-31-c1
+  question_id: q-31
+  context_id: ctx-10
+  type: grounded
+  variant: helpful
+  claim_text: Based on the passage, the senior Defense Department official projects a per-ship
+    unit cost of between $2.2 billion and $2.5 billion for each DDG-1000 destroyer once the
+    regular production line is up and running.
+  label: null
+- claim_id: help-q-31-c2
+  question_id: q-31
+  context_id: ctx-10
+  type: grounded
+  variant: helpful
+  claim_text: This figure is described as much lower than what some news reports had been
+    citing.
+  label: null
+- claim_id: help-q-32-c1
+  question_id: q-32
+  context_id: ctx-10
+  type: grounded
+  variant: helpful
+  claim_text: The DDG-1000 is intended to eventually replace the Arleigh Burke class of warships,
+    which were developed 30 years ago.
+  label: null
+- claim_id: help-q-33-c1
+  question_id: q-33
+  context_id: ctx-10
+  type: partial
+  variant: helpful
+  claim_text: Based on the passage, this isn't actually explained—the article only states
+    that a senior Defense Department official disputed the higher figures being reported and
+    clarified that the actual expected unit cost, once the production line is fully operational,
+    would be $2.2 to $2.5 billion per ship.
+  label: null
+- claim_id: help-q-33-c2
+  question_id: q-33
+  context_id: ctx-10
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't give a specific reason for why other news outlets cited
+    higher numbers.
+  label: null
+- claim_id: help-q-33-c3
+  question_id: q-33
+  context_id: ctx-10
+  type: partial
+  variant: helpful
+  claim_text: 'Possible explanations that aren''t stated but might logically account for the
+    discrepancy include:'
+  label: null
+- claim_id: help-q-33-c4
+  question_id: q-33
+  context_id: ctx-10
+  type: partial
+  variant: helpful
+  claim_text: 'Including lead-ship costs: Early ships in a class often cost significantly
+    more than later production units due to non-recurring engineering, design, and startup
+    costs.'
+  label: null
+- claim_id: help-q-33-c5
+  question_id: q-33
+  context_id: ctx-10
+  type: partial
+  variant: helpful
+  claim_text: If earlier reports cited the cost of the first ship(s) rather than steady-state
+    production costs, that would produce a higher figure.
+  label: null
+- claim_id: help-q-33-c6
+  question_id: q-33
+  context_id: ctx-10
+  type: partial
+  variant: helpful
+  claim_text: 'Including R&D costs: Total program costs (including research and development)
+    spread differently than per-unit procurement costs could make reported figures higher.'
+  label: null
+- claim_id: help-q-33-c7
+  question_id: q-33
+  context_id: ctx-10
+  type: partial
+  variant: helpful
+  claim_text: 'Different program estimates over time: Cost estimates for major defense programs
+    often fluctuate as reports are updated, and earlier estimates in the DDG-1000 program
+    had been reported at higher levels before design and production plans were finalized.'
+  label: null
+- claim_id: help-q-33-c8
+  question_id: q-33
+  context_id: ctx-10
+  type: partial
+  variant: helpful
+  claim_text: If you're looking for the specific reason given in the original reporting, the
+    passage as provided doesn't include that detail—you may need to consult the full article
+    for the official's
+  label: null
+- claim_id: help-q-34-c1
+  question_id: q-34
+  context_id: ctx-10
+  type: false_premise
+  variant: helpful
+  claim_text: The passage doesn't actually support that premise — the official was pushing
+    back against that figure, not confirming it.
+  label: null
+- claim_id: help-q-34-c2
+  question_id: q-34
+  context_id: ctx-10
+  type: false_premise
+  variant: helpful
+  claim_text: According to the official quoted, news reports citing costs like $7 billion
+    per ship were too high.
+  label: null
+- claim_id: help-q-34-c3
+  question_id: q-34
+  context_id: ctx-10
+  type: false_premise
+  variant: helpful
+  claim_text: The real projected cost, once the DDG-1000 production line is fully operational,
+    is between $2.2 billion and $2.5 billion per ship.
+  label: null
+- claim_id: help-q-34-c4
+  question_id: q-34
+  context_id: ctx-10
+  type: false_premise
+  variant: helpful
+  claim_text: The passage doesn't explain what specifically drove the higher $7 billion figures
+    being reported elsewhere (that could reflect early lead-ship costs, R&D expenses folded
+    into the total, or other factors), but it doesn't say the official confirmed or explained
+    that number — only that he disputed it as too high.
+  label: null
+- claim_id: help-q-35-c1
+  question_id: q-35
+  context_id: ctx-11
+  type: grounded
+  variant: helpful
+  claim_text: The Navy selected Ingalls Shipbuilding and Northrop-Grumman Ship Systems to
+    design the next-generation DD(X) family of ships.
+  label: null
+- claim_id: help-q-35-c2
+  question_id: q-35
+  context_id: ctx-11
+  type: grounded
+  variant: helpful
+  claim_text: The contract, announced by Assistant Navy Secretary John Young on April 29,
+    is worth $2.9 billion and covers a three-year period.
+  label: null
+- claim_id: help-q-35-c3
+  question_id: q-35
+  context_id: ctx-11
+  type: grounded
+  variant: helpful
+  claim_text: The funding will support designing, building, and testing the DD(X) destroyer
+    and the broader "family" of surface ships that the Navy envisions as central to 21st-century
+    surface warfare.
+  label: null
+- claim_id: help-q-36-c1
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't actually say why the Navy chose Ingalls Shipbuilding and
+    Northrop-Grumman Ship Systems over any competing bidder.
+  label: null
+- claim_id: help-q-36-c2
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: 'It only reports:'
+  label: null
+- claim_id: help-q-36-c3
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: 'Who won: Ingalls Shipbuilding and Northrop-Grumman Ship Systems'
+  label: null
+- claim_id: help-q-36-c4
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: 'Who announced it: Assistant Navy Secretary John Young'
+  label: null
+- claim_id: help-q-36-c5
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: 'When: April 29'
+  label: null
+- claim_id: help-q-36-c6
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: 'The contract''s value and length: $2.9 billion over three years'
+  label: null
+- claim_id: help-q-36-c7
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: 'What it covers: designing, building, and testing the DD(X) destroyer and related
+    family of surface ships'
+  label: null
+- claim_id: help-q-36-c8
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: 'Why the program matters: Navy officials see the DD(X) family as central to
+    21st-century surface warfare'
+  label: null
+- claim_id: help-q-36-c9
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: There's no mention of a competing bidder, evaluation criteria, technical merits,
+    cost comparisons, or any rationale for selecting this team specifically.
+  label: null
+- claim_id: help-q-36-c10
+  question_id: q-36
+  context_id: ctx-11
+  type: partial
+  variant: helpful
+  claim_text: To find out why the Navy made this choice, you'd need to look at additional
+    reporting—such as official Navy source-selection statements, GAO bid protest records (if
+    a competitor challenged the award), or more detailed defense-industry news coverage from
+    that time.
+  label: null
+- claim_id: help-q-37-c1
+  question_id: q-37
+  context_id: ctx-11
+  type: unanswerable
+  variant: helpful
+  claim_text: Based on the passage provided, that information isn't stated.
+  label: null
+- claim_id: help-q-37-c2
+  question_id: q-37
+  context_id: ctx-11
+  type: unanswerable
+  variant: helpful
+  claim_text: The text only mentions a $2.9 billion, three-year contract awarded to Ingalls
+    Shipbuilding and Northrop-Grumman Ship Systems for the design, building, and testing phase
+    of the DD(X) destroyer and its associated family of surface ships.
+  label: null
+- claim_id: help-q-37-c3
+  question_id: q-37
+  context_id: ctx-11
+  type: unanswerable
+  variant: helpful
+  claim_text: The passage does not give a total projected cost for building the entire DD(X)
+    family of ships—that figure would likely be part of a longer-term Navy shipbuilding budget
+    or program cost estimate not covered in this excerpt.
+  label: null
+- claim_id: help-q-38-c1
+  question_id: q-38
+  context_id: ctx-12
+  type: grounded
+  variant: helpful
+  claim_text: The future USS Harvey C. Barnum Jr. (DDG 124) was christened at General Dynamics
+    Bath Iron Works in Bath, Maine, on July 29.
+  label: null
+- claim_id: help-q-38-c2
+  question_id: q-38
+  context_id: ctx-12
+  type: grounded
+  variant: helpful
+  claim_text: Secretary of the Navy Carlos Del Toro delivered the ceremony's principal address.
+  label: null
+- claim_id: help-q-39-c1
+  question_id: q-39
+  context_id: ctx-12
+  type: partial
+  variant: helpful
+  claim_text: The passage doesn't mention the cost of building the USS Harvey C. Barnum Jr.
+    (DDG 124).
+  label: null
+- claim_id: help-q-39-c2
+  question_id: q-39
+  context_id: ctx-12
+  type: partial
+  variant: helpful
+  claim_text: It only covers details about the christening ceremony—where it took place, who
+    gave the principal address, and who served as the ship's sponsor.
+  label: null
+- claim_id: help-q-39-c3
+  question_id: q-39
+  context_id: ctx-12
+  type: partial
+  variant: helpful
+  claim_text: No financial or budget information is included in this excerpt.
+  label: null
+- claim_id: help-q-40-c1
+  question_id: q-40
+  context_id: ctx-12
+  type: false_premise
+  variant: helpful
+  claim_text: The passage doesn't mention a commissioning ceremony or first deployment — and
+    it's important to note the ship was not commissioned during this event.
+  label: null
+- claim_id: help-q-40-c2
+  question_id: q-40
+  context_id: ctx-12
+  type: false_premise
+  variant: helpful
+  claim_text: What took place on July 29 at Bath Iron Works was a christening ceremony, not
+    a commissioning.
+  label: null
+- claim_id: help-q-40-c3
+  question_id: q-40
+  context_id: ctx-12
+  type: false_premise
+  variant: helpful
+  claim_text: 'Christening is an earlier milestone in a Navy ship''s life: it involves formally
+    naming the vessel and having its sponsor break a bottle across the bow, but the ship is
+    still under construction at this point.'
+  label: null
+- claim_id: help-q-40-c4
+  question_id: q-40
+  context_id: ctx-12
+  type: false_premise
+  variant: helpful
+  claim_text: Commissioning — when a ship officially enters active service in the fleet —
+    happens later, after construction is completed and the ship is turned over to the Navy.
+  label: null
+- claim_id: help-q-40-c5
+  question_id: q-40
+  context_id: ctx-12
+  type: false_premise
+  variant: helpful
+  claim_text: Since the passage only describes the christening, it contains no information
+    about a commissioning date or the ship's eventual first deployment.
+  label: null
+- claim_id: help-q-40-c6
+  question_id: q-40
+  context_id: ctx-12
+  type: false_premise
+  variant: helpful
+  claim_text: That information would come from a future Navy announcement once USS Harvey
+    C. Barnum Jr. (DDG 124) is completed and formally commissioned.
   label: null
