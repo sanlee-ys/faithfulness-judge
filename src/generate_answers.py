@@ -45,7 +45,10 @@ from dataset import Question
 
 # The QA model under test. Separate from the judge model tiers (a later slice).
 DEFAULT_MODEL = "claude-sonnet-5"
-DEFAULT_TEMPERATURE = 0.0  # deterministic-as-possible for a reproducible fixture
+# Newer models (e.g. claude-sonnet-5) reject an explicit `temperature`
+# ("temperature is deprecated for this model"), so we omit it by default and
+# only send it when a caller explicitly passes --temperature (for older models).
+DEFAULT_TEMPERATURE = None
 MAX_TOKENS = 400
 
 PROMPT_VARIANTS = {
@@ -68,22 +71,27 @@ def build_prompt(question: Question, variant: str) -> tuple[str, str]:
     return system, user
 
 
-def call_model(client, system: str, user: str, model: str, temperature: float) -> str:
+def call_model(
+    client, system: str, user: str, model: str, temperature: float | None
+) -> str:
     """Isolated API call, so everything around it stays testable offline."""
-    resp = client.messages.create(
-        model=model,
-        max_tokens=MAX_TOKENS,
-        temperature=temperature,
-        system=system,
-        messages=[{"role": "user", "content": user}],
-    )
+    kwargs = {
+        "model": model,
+        "max_tokens": MAX_TOKENS,
+        "system": system,
+        "messages": [{"role": "user", "content": user}],
+    }
+    # Only send temperature when explicitly set — newer models reject it.
+    if temperature is not None:
+        kwargs["temperature"] = temperature
+    resp = client.messages.create(**kwargs)
     return "".join(block.text for block in resp.content if block.type == "text").strip()
 
 
 def generate(
     variant: str,
     model: str,
-    temperature: float,
+    temperature: float | None,
     dry_run: bool,
     limit: int | None,
 ) -> dict:
@@ -138,7 +146,12 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--variant", choices=sorted(PROMPT_VARIANTS), default="grounded")
     ap.add_argument("--model", default=DEFAULT_MODEL)
-    ap.add_argument("--temperature", type=float, default=DEFAULT_TEMPERATURE)
+    ap.add_argument(
+        "--temperature",
+        type=float,
+        default=DEFAULT_TEMPERATURE,
+        help="omitted by default; set only for older models that accept it",
+    )
     ap.add_argument("--dry-run", action="store_true", help="print prompts, no API calls")
     ap.add_argument("--limit", type=int, default=None, help="only the first N questions")
     args = ap.parse_args()
