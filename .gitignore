@@ -10,3 +10,6 @@ __pycache__/
 
 # Labeling scratch pad — claims.yaml is the source of truth for labels
 data/labeling.csv
+
+# graphify build output (generated; matches the convention in sibling repos)
+graphify-out/
