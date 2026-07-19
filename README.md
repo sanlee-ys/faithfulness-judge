@@ -25,16 +25,13 @@ enough to use as an automated faithfulness check. Opus edges Sonnet on κ, **but
 the confidence intervals overlap** (84.2–93.0 vs 83.0–92.2), so this is not
 evidence that Opus is meaningfully better at the task.
 
-**The same objection applies to unsupported recall, and it took a correction to
-see it.** 97.9% vs 89.6% is 47 vs 43 catches out of 48. Only the disagreeing pairs
-carry information: Opus caught 4 that Sonnet missed and Sonnet caught 0 that Opus
-missed, so McNemar's exact test gives **p = 0.125**. The direction is consistent
-(no reversals in 48 chances), but four discordant pairs cannot establish the size
-of the gap. An earlier version of this README advanced that recall gap as "the
-reason to pay" while, three sentences earlier, discounting the κ gap for
-overlapping CIs — the same small-sample objection, applied to a *smaller*
-denominator, in the opposite direction. That is exactly the error this project
-exists to catch, and it survived here for a week.
+**The same objection applies to unsupported recall.** 97.9% vs 89.6% is 47 vs 43
+catches out of 48. Only the disagreeing pairs carry information: Opus caught 4 that
+Sonnet missed and Sonnet caught 0 that Opus missed, so McNemar's exact test gives
+**p = 0.125**. The direction is consistent (no reversals in 48 chances), but four
+discordant pairs cannot establish the size of the gap. An earlier version of this
+README advanced that gap as the reason to pay for the premium tier; the test is the
+correction ([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19)).
 
 **So: neither axis separates the tiers on this set.** For this task **the cheap
 tier is already good enough, and escalation is not evidenced** — the third
@@ -54,15 +51,13 @@ including the measurement artifact that nearly buried this result.
   agreement measured**, so the "human ground truth" here is one person's
   consistent reading of the rubric ([docs/labeling-guide.md](docs/labeling-guide.md)),
   not a validated consensus. A judge agreeing with this gold at κ=0.75 has not
-  been shown to agree with *humans in general* at κ=0.75. That the rubric was
-  applied inconsistently to two claims (see below) is the concrete version of this
-  risk, not a hypothetical one.
-- **The gold set has been corrected once.** Two claims were labeled `supported`
-  that the rubric names as canonical `na` — an offer to help and a suggestion to
-  check the original source, both filler with no factual assertion. Re-labeling
-  and re-scoring moved Opus κ 0.742 → 0.751 and Sonnet κ 0.696 → 0.716; unsupported
-  recall was unchanged. The correction is small, but one labeler applying their own
-  rubric inconsistently is exactly the failure mode the bullet above describes.
+  been shown to agree with *humans in general* at κ=0.75.
+- **The gold set has been corrected once.** Two claims labeled `supported` were
+  filler with no factual assertion — an offer to help and a suggestion to check the
+  original source — which the rubric names as canonical `na`. Re-labeling and
+  re-scoring moved Opus κ 0.742 → 0.751 and Sonnet κ 0.696 → 0.716; unsupported
+  recall was unchanged. Single-labeler ground truth is worth auditing, not just
+  declaring.
 - **Floor tier.** Single pass, no ensembles, no prompt tuning of the judges, no
   retrieval. This measures the ruler as built, not the best achievable ruler.
 - **Domain skew.** Claims come from public DVIDS text, which skews toward

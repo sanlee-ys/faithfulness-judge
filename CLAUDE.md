@@ -77,10 +77,10 @@ recall gap as "the one real separation"; that was the overclaim, corrected 2026-
   badly, inspect the raw outputs before believing the metric.
 - **Don't overclaim.** This is a floor: n=189, **one labeler with no inter-annotator
   agreement measured**, single pass, DVIDS operations/procurement skew. A soft number
-  dressed up as solid is the only real failure mode this project has — and it has already
-  happened once here, in the README's own headline, for a week
+  dressed up as solid is the only real failure mode this project has, and it has happened
+  here once already
   ([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19)).
-  Before publishing any tier comparison, run the significance test, not just the delta.
+  **Before publishing any tier comparison, run the significance test, not just the delta.**
 - **The gold set is not above audit.** Two claims were mislabeled against this repo's own
   rubric and survived until someone re-read the labeling guide beside the data. If a claim
   is filler, a meta-aside, or an offer to help, it is `na` — check that before trusting a
