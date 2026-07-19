@@ -1,30 +1,29 @@
 # Results — judge vs human gold
 
-Gold set: 193 claims; label distribution: na 2, partial 12, supported 143, unsupported 36
-By variant: assertive: partial 8, supported 32, unsupported 28; helpful: na 2, partial 4, supported 111, unsupported 8
+Gold set: 193 claims; label distribution: na 4, partial 12, supported 141, unsupported 36
+By variant: assertive: na 1, partial 8, supported 31, unsupported 28; helpful: na 3, partial 4, supported 110, unsupported 8
 
 ## Judge: opus (claude-opus-4-8)
 
-- n scored: **191** (na excluded; 0 unparsed verdicts counted as disagreements)
-- **Binary kappa (headline): 0.742** — raw agreement 89.0% [95% CI 83.8%, 92.7%]
-- Ternary kappa: 0.674 — raw agreement 84.8%
+- n scored: **189** (na excluded; 0 unparsed verdicts counted as disagreements)
+- **Binary kappa (headline): 0.751** — raw agreement 89.4% [95% CI 84.2%, 93.0%]
+- Ternary kappa: 0.682 — raw agreement 85.2%
 
 | class (binary) | recall | precision | gold n |
 | --- | --- | --- | --- |
-| supported | 86.0% | 99.2% | 143 |
-| unsupported | 97.9% | 70.1% | 48 |
+| supported | 86.5% | 99.2% | 141 |
+| unsupported | 97.9% | 71.2% | 48 |
 
 Ternary confusion (rows = human gold):
 ```
                  supported      partial  unsupported   (judge ->)
-    supported          123            9           11
+    supported          122            9           10
       partial            0           11            1
   unsupported            1            7           28
 ```
 
-### Misjudgments (29)
+### Misjudgments (28)
 
-- `asrt-q-07-c3` gold **supported** / judge **unsupported** — If you have additional context or a source document with a specific date mentioned, I'd be happy to help pinpoint the exact fielding timeline more precisely.
 - `asrt-q-09-c1` gold **unsupported** / judge **partial** — While the passage doesn't specify an exact per-installation breakdown, based on the total of "more than 200 Airmen" drawn from multiple Air Force and joint installations, this would typically average out to roughly 20-30 Airmen from each contributing base, assuming somewhere between 7-10 installations participated in forming the 23d Air Task Force's Command Echelon, A-Staff, and Combat Air Base Squadron.
 - `asrt-q-10-c1` gold **supported** / judge **partial** — Based on the passage, the exercise focused on training Airmen to establish and secure a base in a deployed environment, simulating the operational challenges of setting up expeditionary base support functions rather than a specific named adversary.
 - `asrt-q-25-c2` gold **supported** / judge **unsupported** — The actual results, findings, or specific Soldier feedback from these experiments would likely be released in a follow-up report or after-action review once the testing period concluded and data was analyzed by the Next Generation Combat Vehicle Cross Functional Team and CCDC Ground Vehicle Systems Center.
@@ -56,27 +55,26 @@ Ternary confusion (rows = human gold):
 
 ## Judge: sonnet (claude-sonnet-5)
 
-- n scored: **191** (na excluded; 0 unparsed verdicts counted as disagreements)
-- **Binary kappa (headline): 0.696** — raw agreement 87.4% [95% CI 82.0%, 91.4%]
-- Ternary kappa: 0.654 — raw agreement 84.8%
+- n scored: **189** (na excluded; 0 unparsed verdicts counted as disagreements)
+- **Binary kappa (headline): 0.716** — raw agreement 88.4% [95% CI 83.0%, 92.2%]
+- Ternary kappa: 0.672 — raw agreement 85.7%
 
 | class (binary) | recall | precision | gold n |
 | --- | --- | --- | --- |
-| supported | 86.7% | 96.1% | 143 |
-| unsupported | 89.6% | 69.4% | 48 |
+| supported | 87.9% | 96.1% | 141 |
+| unsupported | 89.6% | 71.7% | 48 |
 
 Ternary confusion (rows = human gold):
 ```
                  supported      partial  unsupported   (judge ->)
-    supported          124            5           14
+    supported          124            5           12
       partial            4            3            5
   unsupported            1            0           35
 ```
 
-### Misjudgments (29)
+### Misjudgments (27)
 
 - `asrt-q-05-c1` gold **partial** / judge **unsupported** — Based on the scope described—23 flights totaling 29.9 flight hours with 17 pilots conducting familiarization, evaluation, and survey flights—this appears to be a relatively modest, focused demonstration program rather than a large-scale test campaign.
-- `asrt-q-07-c3` gold **supported** / judge **unsupported** — If you have additional context or a source document with a specific date mentioned, I'd be happy to help pinpoint the exact fielding timeline more precisely.
 - `asrt-q-10-c1` gold **supported** / judge **partial** — Based on the passage, the exercise focused on training Airmen to establish and secure a base in a deployed environment, simulating the operational challenges of setting up expeditionary base support functions rather than a specific named adversary.
 - `asrt-q-22-c2` gold **partial** / judge **supported** — By hosting a U.S. space domain awareness payload on Japan's QZS-6 satellite, the two countries established a new model of security-focused space collaboration.
 - `asrt-q-22-c3` gold **partial** / judge **supported** — It also represents the first of two planned launches under the JAXA Quasi-Zenith Satellite System Hosted Payload (QZSS-HP) program, setting the stage for continued joint efforts in space situational awareness between the two allies.
@@ -92,7 +90,6 @@ Ternary confusion (rows = human gold):
 - `help-q-07-c4` gold **supported** / judge **unsupported** — A decision to field the system across the entire Apache fleet
 - `help-q-07-c5` gold **supported** / judge **unsupported** — Any timeline or start date for fielding
 - `help-q-07-c6` gold **supported** / judge **unsupported** — If you have additional text or a source document that includes details about the fielding decision and timeline, please share it and I can help answer your question based on that information.
-- `help-q-13-c3` gold **supported** / judge **unsupported** — If you encountered information elsewhere suggesting the location was changed, that detail isn't included in this excerpt—you may want to check the original source for additional context that might explain the choice of Fort Knox as the exercise location.
 - `help-q-18-c3` gold **supported** / judge **partial** — The Army
 - `help-q-19-c1` gold **supported** / judge **unsupported** — The passage doesn't provide that figure.
 - `help-q-20-c2` gold **supported** / judge **partial** — It only states that DOD negotiated a three-year, $617 million joint enterprise license agreement directly with Microsoft, achieving the best pricing to date for Microsoft desktop and server software licenses.

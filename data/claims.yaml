@@ -12,6 +12,7 @@ meta:
   - supported
   - partial
   - unsupported
+  - na
   binary_collapse: partial -> unsupported for the headline binary kappa
   n_claims: 193
   n_labeled: 193
@@ -104,7 +105,7 @@ claims:
   variant: assertive
   claim_text: If you have additional context or a source document with a specific date mentioned,
     I'd be happy to help pinpoint the exact fielding timeline more precisely.
-  label: supported
+  label: na
 - claim_id: asrt-q-08-c1
   question_id: q-08
   context_id: ctx-03
@@ -895,7 +896,7 @@ claims:
   claim_text: If you encountered information elsewhere suggesting the location was changed,
     that detail isn't included in this excerpt—you may want to check the original source for
     additional context that might explain the choice of Fort Knox as the exercise location.
-  label: supported
+  label: na
 - claim_id: help-q-14-c1
   question_id: q-14
   context_id: ctx-05
