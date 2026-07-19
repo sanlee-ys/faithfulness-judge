@@ -1,6 +1,6 @@
 # ADR-001: Both judge tiers are substantial — and the first Sonnet number was a measurement artifact
 
-**Status:** Accepted
+**Status:** Accepted; **amended 2026-07-19** (see [Amendment](#amendment-2026-07-19))
 **Date:** 2026-07-18
 **Deciders:** San Lee
 
@@ -19,16 +19,16 @@ decomposed into **193 frozen claims**, hand-labeled ternary
 (`supported`/`partial`/`unsupported`/`na`) by one labeler against each claim's cited
 excerpt. Both judges then rated the same claims blind. Scoring collapses `partial` into
 `unsupported` for the headline binary κ, excludes `na`, and counts any unparsed verdict
-as a disagreement (n = 191 scored).
+as a disagreement (n = 189 scored, post-amendment).
 
 The measured result (`evals/results.md`):
 
 | Judge | Binary κ | Raw agreement (95% Wilson CI) | Unsupported recall | Ternary κ |
 |---|---|---|---|---|
-| **Opus** (claude-opus-4-8) | **0.742** | 89.0% [83.8%, 92.7%] | 97.9% | 0.674 |
-| **Sonnet** (claude-sonnet-5) | **0.696** | 87.4% [82.0%, 91.4%] | 89.6% | 0.654 |
+| **Opus** (claude-opus-4-8) | **0.751** | 89.4% [84.2%, 93.0%] | 97.9% | 0.682 |
+| **Sonnet** (claude-sonnet-5) | **0.716** | 88.4% [83.0%, 92.2%] | 89.6% | 0.672 |
 
-Human binary unsupported share: 48/191 = 25.1%. 0 unparsed verdicts for either judge.
+Human binary unsupported share: 48/189 = 25.4%. 0 unparsed verdicts for either judge.
 
 ### The first run said something different, and it was wrong
 
@@ -38,7 +38,7 @@ the harness, not a property of the model.
 
 `max_tokens=10` was set to force a one-word verdict. Sonnet, unlike Opus, tended to
 preface its answer with a clause of reasoning — so it was **truncated before ever
-emitting the verdict word on 39 of 191 claims (20%)**. Those unparsed verdicts scored as
+emitting the verdict word on 39 of the 191 then-scored claims (20%)**. Those unparsed verdicts scored as
 disagreements, and the resulting κ collapsed. On the 152 claims Sonnet actually answered,
 its κ was already ≈0.70 — the number it holds today.
 
@@ -59,13 +59,16 @@ verdict arrives in a structured block that cannot be truncated into ambiguity.
 **Record both tiers as substantial judges, do not claim Opus is meaningfully better, and
 keep the forced-tool-use verdict as load-bearing.** Concretely:
 
-- **Report the result as "both tiers work."** κ ≈ 0.70–0.74, ~88% raw agreement,
+- **Report the result as "both tiers work."** κ ≈ 0.72–0.75, ~89% raw agreement,
   90–98% recall on the fabrication class. Both are usable as automated faithfulness
   checks at this task.
-- **Do not headline the Opus/Sonnet κ gap.** The CIs overlap (83.8–92.7 vs 82.0–91.4) at
-  n=191. The gap is not resolvable at this sample size and the README states so.
-- **Do name the one real separation: unsupported recall, 97.9% vs 89.6%.** That is the
-  defensible reason to escalate for this task, and the only one.
+- **Do not headline the Opus/Sonnet κ gap.** The CIs overlap (84.2–93.0 vs 83.0–92.2) at
+  n=189. The gap is not resolvable at this sample size and the README states so.
+- **Do not headline the unsupported-recall gap either** (amended 2026-07-19; this bullet
+  formerly named it "the defensible reason to escalate"). 97.9% vs 89.6% is 47 vs 43 of
+  48. Discordant pairs are 4–0 in Opus's favor with no reversals, but McNemar's exact test
+  gives p = 0.125. The direction is consistent; the sample cannot size the gap. Report it
+  with the test, never as a standalone reason to pay.
 - **The `record_verdict` forced tool call stays.** No reverting to prefill (unsupported by
   these models) and no reverting to a bare `max_tokens=10` one-word prompt (reintroduces
   the 20%-unparsed artifact). `max_tokens` must stay large enough for preamble.
@@ -81,10 +84,10 @@ keep the forced-tool-use verdict as load-bearing.** Concretely:
 - **The honest headline is a modest one.** "The cheap tier is already good enough" is less
   impressive than a clean tier gap, and it is what the data supports. The overlapping-CI
   caveat is stated in the README rather than buried.
-- **The floor's limits bound every claim above.** n=191, **a single labeler with no
+- **The floor's limits bound every claim above.** n=189, **a single labeler with no
   inter-annotator agreement measured**, one pass with no judge prompt tuning, and DVIDS
-  operations/procurement-skewed short passages. κ=0.742 against *this* gold does not
-  establish κ=0.742 against humans in general.
+  operations/procurement-skewed short passages. κ=0.751 against *this* gold does not
+  establish κ=0.751 against humans in general.
 - **The harness bug is the transferable lesson, not a footnote.** A plausible,
   publication-ready result was produced by a truncation setting. The generalization:
   **when a model's scores are unexpectedly bad, inspect the raw outputs before believing
@@ -98,9 +101,47 @@ keep the forced-tool-use verdict as load-bearing.** Concretely:
 
 | Option | Reason Not Chosen |
 |--------|-------------------|
-| Lead with "Opus is the better judge" | The κ CIs overlap at n=191. The claim isn't supported, and the portfolio's bar is that a soft number dressed as solid is the only real failure mode ([SCOPE.md](../SCOPE.md)). |
+| Lead with "Opus is the better judge" | The κ CIs overlap at n=189, and the recall gap is McNemar p=0.125. Neither axis supports the claim, and the portfolio's bar is that a soft number dressed as solid is the only real failure mode ([SCOPE.md](../SCOPE.md)). |
 | Publish the original Sonnet κ=0.43 tier gap | It was false — a `max_tokens` truncation on 20% of claims, not model behavior. |
 | Keep prefill as the verdict mechanism | Rejected outright by claude-sonnet-5 / claude-opus-4-8 (`592d914` failed); the tool-use enum is the supported path. |
 | Drop unparsed verdicts instead of scoring them as disagreements | Dropping them would have hidden the 20% truncation entirely and shipped the false gap. Counting them as disagreements is what surfaced the bug. |
 | Retro-fix by re-running only Sonnet | Both judges were re-run under the corrected harness so the two numbers come from an identical call shape — a mixed-harness comparison would be its own artifact. |
-| Recommend Sonnet outright on cost | Defensible on κ, but the 8-point recall gap on the fabrication class is the metric that matters for catching hallucinations. That trade is the caller's to make; the ADR reports it rather than picking. |
+| Recommend Sonnet outright on cost | Defensible on κ. The 8-point recall gap on the fabrication class is the metric that would matter for catching hallucinations, but at 4 discordant pairs (p=0.125) it is not established. That trade is the caller's to make; the ADR reports it rather than picking. |
+
+---
+
+## Amendment (2026-07-19)
+
+Two corrections, both found by auditing this repo's own claims rather than by new
+measurement. No judges were re-run; scoring is offline, so the cost was zero.
+
+**1. Two gold labels violated the rubric.** `asrt-q-07-c3` and `help-q-13-c3` were
+labeled `supported`. Both are filler with no factual assertion — an offer to help
+("I'd be happy to help pinpoint...") and a suggestion to consult the source ("you
+may want to check the original source..."). Those are near-verbatim the two
+canonical `na` examples in [docs/labeling-guide.md](../docs/labeling-guide.md). They
+are now `na`, which excludes them from scoring.
+
+Effect: n 191 → 189, and both κ figures rose slightly.
+
+| Judge | Binary κ before → after | Raw agreement before → after | Unsupported recall |
+|---|---|---|---|
+| Opus | 0.742 → **0.751** | 89.0% → **89.4%** | 97.9% (unchanged) |
+| Sonnet | 0.696 → **0.716** | 87.4% → **88.4%** | 89.6% (unchanged) |
+
+Recall is unchanged because neither corrected claim was in the `unsupported` class.
+
+`meta.labels_allowed` in `claims.yaml` also never listed `na` despite two claims
+already using it. Fixed.
+
+**2. The unsupported-recall claim was an overclaim.** The original Decision named
+97.9% vs 89.6% as "the defensible reason to escalate, and the only one" — three
+sentences after discounting the κ gap for overlapping CIs. Same small-sample
+objection, *smaller* denominator (48), opposite treatment. McNemar's exact test on
+the discordant pairs (b=4, c=0) gives p = 0.125. The bullet is reversed above.
+
+**Why this matters more than the numbers.** This project exists to catch soft
+numbers dressed as solid, and it shipped one in its own headline for a week. The
+labeling error is the concrete instance of the "one labeler, no inter-annotator
+agreement" limit the ADR already listed as a hypothetical. Both are now stated in
+the README rather than quietly fixed.

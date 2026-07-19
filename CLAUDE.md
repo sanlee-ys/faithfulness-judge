@@ -30,11 +30,15 @@ run and scored ([ADR-001](decisions/001-both-tiers-substantial.md)):
 
 | Judge | Binary κ | Raw agreement (95% Wilson CI) | Unsupported recall |
 |---|---|---|---|
-| Opus (claude-opus-4-8) | 0.742 | 89.0% [83.8%, 92.7%] | 97.9% |
-| Sonnet (claude-sonnet-5) | 0.696 | 87.4% [82.0%, 91.4%] | 89.6% |
+| Opus (claude-opus-4-8) | 0.751 | 89.4% [84.2%, 93.0%] | 97.9% |
+| Sonnet (claude-sonnet-5) | 0.716 | 88.4% [83.0%, 92.2%] | 89.6% |
 
-Both tiers are substantial judges. **The CIs overlap — do not claim Opus is meaningfully
-better.** The one real separation is unsupported recall (97.9% vs 89.6%).
+Both tiers are substantial judges. n = 189 scored (193 gold, 4 `na` excluded).
+**Neither axis separates the tiers — do not claim Opus is meaningfully better.** The κ
+CIs overlap, *and* the unsupported-recall gap (97.9% vs 89.6% = 47 vs 43 of 48) is
+McNemar exact p = 0.125 on 4 discordant pairs. An earlier version of this file named that
+recall gap as "the one real separation"; that was the overclaim, corrected 2026-07-19
+([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19)).
 
 ## Locked decisions (from SCOPE.md — don't relitigate without an ADR)
 
@@ -53,7 +57,7 @@ better.** The one real separation is unsupported recall (97.9% vs 89.6%).
   back to a bare one-word prompt with a tight `max_tokens`, and do **not** try
   assistant-message **prefill** — prefill is *rejected* by claude-sonnet-5 and
   claude-opus-4-8. An earlier `max_tokens=10` truncated Sonnet's verdict on 39/191 claims
-  (20%) and manufactured a false tier gap (Sonnet κ=0.43 vs its real 0.696). `MAX_TOKENS`
+  (20%) and manufactured a false tier gap (Sonnet κ=0.43 vs its real ≈0.70). `MAX_TOKENS`
   must stay large enough for the model's preamble plus the tool call. Full story:
   [ADR-001](decisions/001-both-tiers-substantial.md).
 - **`na` is excluded from scoring; unparsed verdicts count as disagreements.** Both are
@@ -71,9 +75,16 @@ better.** The one real separation is unsupported recall (97.9% vs 89.6%).
 - **Read the misjudgment log before publishing any number.** That is what caught the
   truncation artifact one commit before it shipped. When a model scores unexpectedly
   badly, inspect the raw outputs before believing the metric.
-- **Don't overclaim.** This is a floor: n=191, **one labeler with no inter-annotator
+- **Don't overclaim.** This is a floor: n=189, **one labeler with no inter-annotator
   agreement measured**, single pass, DVIDS operations/procurement skew. A soft number
-  dressed up as solid is the only real failure mode this project has.
+  dressed up as solid is the only real failure mode this project has — and it has already
+  happened once here, in the README's own headline, for a week
+  ([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19)).
+  Before publishing any tier comparison, run the significance test, not just the delta.
+- **The gold set is not above audit.** Two claims were mislabeled against this repo's own
+  rubric and survived until someone re-read the labeling guide beside the data. If a claim
+  is filler, a meta-aside, or an offer to help, it is `na` — check that before trusting a
+  label just because it is committed.
 
 ## Tech stack
 

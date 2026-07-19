@@ -6,43 +6,63 @@ how far the judge can be trusted, including where it can't.
 
 ## Results
 
-**Both tiers are substantial faithfulness judges.** Measured against 191 scored
+**Both tiers are substantial faithfulness judges.** Measured against 189 scored
 human-labeled claims:
 
 | Judge | Binary κ | Raw agreement (95% Wilson CI) | Unsupported recall | Ternary κ |
 |---|---|---|---|---|
-| **Opus** (claude-opus-4-8) | **0.742** | 89.0% [83.8%, 92.7%] | 97.9% | 0.674 |
-| **Sonnet** (claude-sonnet-5) | **0.696** | 87.4% [82.0%, 91.4%] | 89.6% | 0.654 |
+| **Opus** (claude-opus-4-8) | **0.751** | 89.4% [84.2%, 93.0%] | 97.9% | 0.682 |
+| **Sonnet** (claude-sonnet-5) | **0.716** | 88.4% [83.0%, 92.2%] | 89.6% | 0.672 |
 
-Gold set: 193 claims (143 supported, 12 partial, 36 unsupported, 2 `na`);
-n = 191 scored, `na` excluded. Binary κ collapses `partial` into `unsupported`
+Gold set: 193 claims (141 supported, 12 partial, 36 unsupported, 4 `na`);
+n = 189 scored, `na` excluded. Binary κ collapses `partial` into `unsupported`
 ([SCOPE.md](SCOPE.md) Decision 1). 0 unparsed verdicts for either judge. Full
 output, confusion matrices, and the misjudgment log: [evals/results.md](evals/results.md).
 
-**What it means:** κ ≈ 0.70–0.74 with ~88% raw agreement and 90–98% recall on the
+**What it means:** κ ≈ 0.72–0.75 with ~89% raw agreement and 90–98% recall on the
 fabrication class puts both judges in "substantial agreement" territory — good
 enough to use as an automated faithfulness check. Opus edges Sonnet on κ, **but
-the confidence intervals overlap** (83.8–92.7 vs 82.0–91.4), so this is not
-evidence that Opus is meaningfully better at the task. The one real separation is
-**unsupported recall: 97.9% vs 89.6%** — Opus misses roughly one fabrication in
-fifty where Sonnet misses one in ten. If catching made-up claims is the job, that
-gap is the reason to pay; the overall agreement number is not.
+the confidence intervals overlap** (84.2–93.0 vs 83.0–92.2), so this is not
+evidence that Opus is meaningfully better at the task.
 
-For this task **the cheap tier is already good enough, and escalation buys
-little.** That is the third "measure-before-escalate" verdict in this portfolio,
-after BM25 grounding and tiered model routing — see
+**The same objection applies to unsupported recall, and it took a correction to
+see it.** 97.9% vs 89.6% is 47 vs 43 catches out of 48. Only the disagreeing pairs
+carry information: Opus caught 4 that Sonnet missed and Sonnet caught 0 that Opus
+missed, so McNemar's exact test gives **p = 0.125**. The direction is consistent
+(no reversals in 48 chances), but four discordant pairs cannot establish the size
+of the gap. An earlier version of this README advanced that recall gap as "the
+reason to pay" while, three sentences earlier, discounting the κ gap for
+overlapping CIs — the same small-sample objection, applied to a *smaller*
+denominator, in the opposite direction. That is exactly the error this project
+exists to catch, and it survived here for a week.
+
+**So: neither axis separates the tiers on this set.** For this task **the cheap
+tier is already good enough, and escalation is not evidenced** — the third
+"measure-before-escalate" verdict in this portfolio, after BM25 grounding and
+tiered model routing. If the recall gap is real, showing it needs a larger
+`unsupported` class than 48, which is what the solid tier below would buy. See
 [ADR-001](decisions/001-both-tiers-substantial.md) for the decision record,
 including the measurement artifact that nearly buried this result.
 
 ### Limits — read these before trusting the number
 
-- **n = 191 claims.** The CIs are ~9 points wide. Differences smaller than that
-  are noise, including the Opus-vs-Sonnet κ gap.
+- **n = 189 scored claims** (193 gold, 4 `na` excluded). The CIs are ~9 points
+  wide. Differences smaller than that are noise — that includes the
+  Opus-vs-Sonnet κ gap **and** the unsupported-recall gap, whose denominator is
+  only 48.
 - **One labeler.** The gold is San's labels alone; there is **no inter-annotator
   agreement measured**, so the "human ground truth" here is one person's
   consistent reading of the rubric ([docs/labeling-guide.md](docs/labeling-guide.md)),
-  not a validated consensus. A judge agreeing with this gold at κ=0.74 has not
-  been shown to agree with *humans in general* at κ=0.74.
+  not a validated consensus. A judge agreeing with this gold at κ=0.75 has not
+  been shown to agree with *humans in general* at κ=0.75. That the rubric was
+  applied inconsistently to two claims (see below) is the concrete version of this
+  risk, not a hypothetical one.
+- **The gold set has been corrected once.** Two claims were labeled `supported`
+  that the rubric names as canonical `na` — an offer to help and a suggestion to
+  check the original source, both filler with no factual assertion. Re-labeling
+  and re-scoring moved Opus κ 0.742 → 0.751 and Sonnet κ 0.696 → 0.716; unsupported
+  recall was unchanged. The correction is small, but one labeler applying their own
+  rubric inconsistently is exactly the failure mode the bullet above describes.
 - **Floor tier.** Single pass, no ensembles, no prompt tuning of the judges, no
   retrieval. This measures the ruler as built, not the best achievable ruler.
 - **Domain skew.** Claims come from public DVIDS text, which skews toward
