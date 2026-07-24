@@ -9,14 +9,14 @@ version = "0.2.0"
 description = "Measuring whether an LLM judge can be trusted to detect unsupported claims in grounded answers over public defense text."
 requires-python = ">=3.11"
 dependencies = [
-    "anthropic>=0.40",
+    "anthropic>=0.119.0",
     "pyyaml>=6",
 ]
 
 [dependency-groups]
 dev = [
     "pytest>=8",
-    "ruff>=0.6",
+    "ruff>=0.16.0",
 ]
 
 [tool.ruff]
