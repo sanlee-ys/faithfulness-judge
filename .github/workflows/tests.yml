@@ -1,0 +1,45 @@
+name: tests
+
+# Lint + unit suite on every push and PR. The tests mock the Anthropic API
+# (the grep confirms no test imports anthropic or reads a key), so this lane
+# runs free and offline — no ANTHROPIC_API_KEY, no network. That is the whole
+# reason it can gate every push without a cost or a fork-secret concern.
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+# Cancel an in-progress run if the same ref is pushed again.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Set up Python 3.11
+        run: uv python install 3.11
+
+      # --frozen makes CI fail if uv.lock is out of date rather than silently
+      # resolving new versions — keeps the reproducible-install guarantee honest.
+      # Plain sync installs the default `dev` group (ruff + pytest); no extras.
+      - name: Install dependencies
+        run: uv sync --frozen --python 3.11
+
+      - name: Lint (ruff)
+        run: uv run ruff check .
+
+      # No coverage gate: pytest-cov is not a declared dependency, so the suite
+      # runs plain. Add --cov + a floor here if pytest-cov is ever added to dev.
+      - name: Test
+        run: uv run pytest
