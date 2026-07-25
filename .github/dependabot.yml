@@ -20,6 +20,18 @@ updates:
       python-minor-patch:
         update-types: ["minor", "patch"]
 
-  # No "github-actions" block: this repo has no .github/workflows yet, so such
-  # a block would scan nothing. Add one when CI lands — a pinned-but-stale
-  # action is a real supply-chain surface.
+  # GitHub Actions — added once CI landed (tests.yml + codeql.yml). A
+  # pinned-but-stale action is a real supply-chain surface, so keep the
+  # actions used by those workflows (checkout, setup-uv, codeql-action)
+  # patched. minor/patch grouped into one PR; a major action bump (e.g.
+  # checkout v7 -> v8) still arrives on its own so it gets a deliberate look.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
+    groups:
+      github-actions:
+        update-types: ["minor", "patch"]
