@@ -146,23 +146,20 @@ claims.yaml ─labels.py─▶ human gold ─judge.py─▶ judgments_<judge>.ya
 - **Verify before asserting.** Check the committed artifacts before making a claim about a
   number. Don't recompute what `evals/results.md` already records, and don't state a fact
   about the data you haven't looked at.
-- Prefer clear, readable code with short comments over clever one-liners.
 
-## Working across multiple sessions
+<!-- shared:parallel-sessions v1 -->
+## Working across parallel sessions (hard rule)
 
-Each session runs fresh and can't see another's uncommitted work — the only shared
-coordination point is `main`.
+Sessions cannot see each other's uncommitted work — **`main` is the only shared coordination point**. So: **one concern per session → one branch → one PR**; check open PRs and branches before starting; branch from fresh `main` and merge fast; **serialize the collision hotspots** and parallelize by independent *file*, not by task; keep the wiring for any generated or aggregated file in one hand. Full rule + the triple-build incident that produced it: [claude-ops `conventions/parallel-sessions.md`](https://github.com/sanlee-ys/claude-ops/blob/main/conventions/parallel-sessions.md).
+<!-- /shared:parallel-sessions -->
 
-- **One concern per session → one branch → one PR.** If the deliverable doesn't fit in a
-  sentence, it's two sessions.
-- **Check open PRs and branches before starting.** A 10-second look prevents duplicate work.
-- **Branch from fresh `main`, merge fast, delete the branch on merge.**
-- **Serialize the collision hotspots:** `README.md`, `pyproject.toml`, `uv.lock`,
-  `data/claims.yaml`, `evals/results.md`. Safe to parallelize: separate `src/` modules,
-  separate test files, isolated docs.
-- **Generated artifacts can't be merged.** `claims.yaml`, `judgments_*.yaml`, and
-  `results.md` are regenerated wholesale — when several pieces of work feed one, author the
-  content in parallel but keep the regeneration in one hand.
+**This repo's collision hotspots:** `README.md`, `pyproject.toml`, `uv.lock`,
+`data/claims.yaml`, `evals/results.md`. Safe to parallelize: separate `src/` modules,
+separate test files, isolated docs.
+
+**The generated artifacts are the sharp edge here.** `claims.yaml`, `judgments_*.yaml`, and
+`results.md` are regenerated wholesale, so two sessions touching them do not merge — they
+overwrite. One hand does the regeneration.
 
 ## Definition of done (floor)
 
@@ -195,8 +192,8 @@ or a third judge tier (Haiku) to complete the cost/quality curve.
 - If `uv sync` hits Windows Defender file-lock races (`Access is denied`, a different
   package each retry), don't retry piecemeal: `uv venv --clear && uv sync` rebuilds clean.
 
+<!-- shared:links-verify v1 -->
 ## Links — verify before sending (hard rule)
 
-Links given in chat must resolve: **full `github.com/<owner>/<repo>/blob/<ref>/<path>`
-URLs only**, **verify the path exists on the ref before sending** (unverified → say so),
-and **branch links are perishable** (prefer `main` once merged).
+Links given in chat must resolve: **full `github.com/<owner>/<repo>/blob/<ref>/<path>` URLs only**, **verify the path exists on the ref before sending** (unverified → say so), and **branch links are perishable** (prefer `main` once merged). Full rule + rationale: [claude-ops `conventions/links-verify.md`](https://github.com/sanlee-ys/claude-ops/blob/main/conventions/links-verify.md).
+<!-- /shared:links-verify -->
