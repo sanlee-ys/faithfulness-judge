@@ -236,7 +236,7 @@ from a skip, so the re-score refuses to run until all of them carry a letter.
 | `n` | na | Not a factual claim (filler, meta-aside, an offer to help). Excluded from scoring. |
 
 The three consistency calls, unchanged from
-[docs/labeling-guide.md](labeling-guide.md):
+[docs/labeling-guide.md](../docs/labeling-guide.md):
 
 1. **A correct refusal is `supported`.** *"The passage doesn't state the cost"* —
    when it indeed doesn't — is a true statement about the passage. Only `u` if
