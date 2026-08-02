@@ -110,6 +110,9 @@ uv run python src/labels.py export               # claims.yaml -> data/labeling.
 uv run python src/labels.py apply                # csv -> back into claims.yaml
 uv run python src/judge.py --judge opus --dry-run     # drop --dry-run to spend
 uv run python src/score.py                       # -> evals/results.md
+
+uv run python src/gold_audit.py select           # -> data/gold-audit-worksheet.md
+uv run python src/gold_audit.py rescore          # after the worksheet is filled
 ```
 
 The judging and answer-generation steps cost money; everything else is offline. Both
@@ -170,9 +173,14 @@ overwrite. One hand does the regeneration.
    Sonnet-vs-Opus gap, and a misjudgment log. ✅
 5. README leading with the number and stating the floor honestly. ✅
 
-**Open, unscheduled (solid tier, none committed):** a second labeler (the only thing that
-upgrades the ground truth from *consistent* to *validated*), larger n to tighten the CIs,
-or a third judge tier (Haiku) to complete the cost/quality curve.
+**Solid tier: decided, in flight.** [ADR-002](decisions/002-solid-tier-call.md) ruled
+**Option D** on 2026-08-02 — a blind, pre-registered audit of the gold set, $0 API, no
+judge re-runs — over a second labeler, larger *n*, or a Haiku tier. Phase 1 (the
+instrument) has shipped: `src/gold_audit.py` and `data/gold-audit-worksheet.md`. **Phase
+2 runs only once San has filled the worksheet in**; until then every published figure
+stays as it is. Read ADR-002's *Ruling* section before touching anything in this area —
+in particular, **no model may adjudicate, relabel, or propose a label for any gold
+claim**, and the selection rule is frozen.
 
 ## Owner-only calls
 
