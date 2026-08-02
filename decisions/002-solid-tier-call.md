@@ -1,10 +1,17 @@
 # ADR-002: The solid-tier call — what, if anything, to spend next
 
-**Status:** **Proposed — decision packet, awaiting the owner's call.** Nothing in this
-file has been enacted. No judge was re-run, no label was changed, no published number
-was touched in preparing it.
-**Date:** 2026-08-02
+**Status:** **Accepted — Option D**, ruled 2026-08-02. San signed off on the four-part
+guard explicitly, which was the part of the recommendation that needed an owner rather
+than an agent. Execution is phased: **phase 1 (this PR)** pre-registers the selection
+rule and builds the blind worksheet; **phase 2** re-scores after the adjudications exist.
+No judge has been re-run and no published number has been touched.
+**Date:** 2026-08-02 (packet), 2026-08-02 (ruling)
 **Deciders:** San Lee
+
+The analysis below is preserved as written — it is the record of what was decided and
+why, not a document to be revised after the fact. The ruling and the pre-registered
+selection rule are appended at the end, under
+[Ruling (2026-08-02)](#ruling-2026-08-02).
 
 ---
 
@@ -239,3 +246,160 @@ needs the owner's explicit sign-off rather than an agent's judgment.
 | **A** | One-line status flip in README and CLAUDE.md; this ADR recorded as Rejected-in-favor-of-A, with Finding 4 written into the README's Limits section so the defect is disclosed rather than silently carried. |
 | **C** | Parked with a named labeler and a date, or it is Option A. |
 | **B** | Needs its own scoping session; it is a new front, not a polish pass. |
+
+---
+
+## Ruling (2026-08-02)
+
+**Option D.** Run the blind, pre-registered gold audit under the four-part guard,
+re-score offline, and close the solid-tier call. San signed off on the guard
+explicitly — the ADR named that sign-off as the thing an agent must not supply for
+itself, and it was given rather than assumed.
+
+Options A, B, and C are declined for the reasons in the table above: A leaves a known
+rubric violation published on a public repo whose thesis is catching exactly that, B is
+a new front buying precision on the axis Findings 1–3 show is saturated, and C is
+blocked on a person who does not exist for this project.
+
+### Execution is two phases, and the split is the guard
+
+Phase 1 (this PR) ships the *instrument* and nothing else. Phase 2 runs only once San's
+adjudications exist.
+
+| Phase | What lands | What must **not** happen |
+|---|---|---|
+| **1** | This ruling; the pre-registered selection rule below, in words and in code (`src/gold_audit.py`); the blind worksheet (`data/gold-audit-worksheet.md`); the offline re-score path and its tests. | No label is adjudicated, proposed, or changed. No number is re-scored or published. `README.md` and `evals/results.md` are untouched. |
+| **2** | The filled worksheet; the corrected numbers reported **both ways**; the README/CLAUDE.md updates; the call closed. | No judge is re-run. Nothing is published from the fully-audited view alone. |
+
+The phase split is not ceremony. **The rule has to be committed before the candidate set
+exists**, or "pre-registered" is a claim about intent rather than a fact about the
+repository. In this PR the rule and the worksheet it produced are separate commits, in
+that order, so the sequence is checkable rather than asserted.
+
+**Who labels.** San adjudicates. No model may adjudicate, relabel, or propose a label for
+any gold claim — a model-labeled gold turns this project into the circular eval it exists
+to avoid, and no amount of care in the prompt changes that. The agent's job was to build
+the instrument and stop.
+
+### The pre-registered selection rule
+
+Canonical implementation: `SELECTION_RULES` in
+[`src/gold_audit.py`](../src/gold_audit.py). It is **structural** in the strict sense —
+each rule is a predicate over the claim's own text and nothing else. Not the gold label,
+not a judge verdict, not whether anything disagreed about the claim.
+
+> **A claim is selected if and only if it matches at least one of:**
+>
+> - **S1 — short fragment.** The claim is **8 whitespace-separated words or fewer.** The
+>   frozen splitter (SCOPE.md Decision 2) emits list items and sentence fragments as
+>   standalone claims; below this length a claim is often not self-contained, and a claim
+>   that cannot be evaluated in isolation is a decomposition artifact rather than a
+>   judgeable assertion.
+> - **S2 — list header.** The claim, after trailing whitespace is stripped, **ends with a
+>   colon.** A colon-terminated header introduces a list rather than asserting anything on
+>   its own, so the rubric's "not a factual claim" test should resolve the same way for
+>   every instance of the shape.
+> - **S3 — offer to help.** The claim **offers further assistance or asks the reader for
+>   more input** — the "I'd be happy to help" shape that
+>   [docs/labeling-guide.md](../docs/labeling-guide.md) names as canonical `na`.
+> - **S4 — external referral.** The claim **directs the reader to material outside the
+>   excerpt** — the "you may want to check the original source" shape that the labeling
+>   guide also names as canonical `na`.
+
+S1 and S2 are exact and need no interpretation. S3 and S4 are fixed case-insensitive
+pattern sets, given verbatim in the module; they are frozen with this ADR and are not to
+be adjusted after the fact.
+
+```python
+SHORT_CLAIM_MAX_WORDS = 8
+
+def selected(claim_text: str) -> bool:
+    return (
+        len(claim_text.split()) <= SHORT_CLAIM_MAX_WORDS      # S1
+        or claim_text.rstrip().endswith(":")                  # S2
+        or _OFFER_TO_HELP.search(claim_text) is not None       # S3
+        or _EXTERNAL_REFERRAL.search(claim_text) is not None   # S4
+    )
+```
+
+The rule was written from this ADR's guard item 1 and the labeling guide's canonical `na`
+examples, then executed **once**. No pattern was added, removed, or tightened after
+seeing which claims it selected, and no judge verdict was consulted at any point in
+constructing it.
+
+### Why it is applied to every claim, and why that is what makes it blind
+
+**The predicate is applied to all 193 gold claims** — the 189 scored, plus the 4 already
+labeled `na`.
+
+That is the whole mechanism. Because selection cannot see a verdict, the candidate set
+**necessarily contains claims both judges scored correctly** alongside claims they did
+not, and the adjudicator cannot tell which is which. A set assembled from the claims the
+judges failed on would not be an audit; it would be the misjudgment log with a new name,
+and correcting it would move κ by construction. `tests/test_gold_audit.py` asserts this
+mechanically rather than trusting the prose: selection is invariant to the gold labels,
+the `select` path raises if it so much as opens a judgments file, every line of the
+worksheet is traceable to `claims.yaml`/`questions.yaml` or to a fixed template, and the
+selected set is checked to contain claims both judges got right.
+
+Including the 4 existing `na` claims is deliberate and is a small extension of what the
+packet described. Auditing only the scored 189 would let labels move **into** `na` but
+never out of it, which can only shrink *n* — a directional bias in an audit whose entire
+purpose is to not have one. Finding 4's colon-header inconsistency straddles that line
+(`help-q-07-c3` and `help-q-36-c2` are `supported`; `help-q-21-c1` and `help-q-22-c1` are
+`na`), so both sides have to be in view for the shape to be adjudicated consistently.
+
+### The worksheet, and why it is markdown
+
+`data/gold-audit-worksheet.md`, generated by `uv run python src/gold_audit.py select`.
+It carries, per claim: the claim id, the claim text, the context excerpt and question
+needed to judge it, the current gold label, and which structural rule put it there. It
+carries **no** judge verdict, no agreement flag, and no indication that a claim was ever
+contested.
+
+Markdown rather than the CSV route `src/labels.py` uses for the full gold pass: at ~30
+claims spreadsheet ergonomics stop paying, the context excerpts are multi-sentence
+paragraphs that a CSV cell renders unreadable, the instruction header and rubric have to
+travel *with* the worksheet (a CSV cannot carry them), and grouping claims under their
+shared context lets the adjudicator hold one excerpt in mind at a time — the labeling
+guide's own advice.
+
+### The re-score path
+
+`uv run python src/gold_audit.py rescore`, offline, no API key, no judge re-run. It
+reports κ, raw agreement with Wilson CIs, ternary κ, unsupported recall, and the paired
+McNemar test under **three** gold views:
+
+1. the original gold (the published baseline),
+2. the fully audited gold,
+3. the audited gold with corrections applied **only** where no judge erred under the
+   original gold.
+
+View 3 is guard item 3 made mechanical. A correction landing on a claim every judge
+already got right can never raise agreement, so if the headline moves in view 2 but not
+in view 3, the correction tracked the judges and the rise is not a gold-quality result.
+The report also states, per guard item 3, how many changed claims were shared judge
+errors, single-judge errors, and neither.
+
+Guard item 4 is enforced in the report text itself: the output states that this is a
+single-labeler consistency audit and **not** inter-annotator agreement, so the "one
+labeler, no IAA measured" limit survives Option D intact and stays in the README.
+
+### Consequences
+
+- **The solid-tier call is decided but not yet closed.** It closes in phase 2, when the
+  corrected numbers land. Until then `README.md` and `evals/results.md` continue to carry
+  the floor's published figures unchanged, which is correct: no number has moved.
+- **One README correction is queued, not made.** Finding 1 showed that "recall on the
+  fabrication class" overstates what the data supports — restricted to gold `unsupported`
+  proper the two tiers are identical at 35/36. The phrasing is deliberately left alone in
+  phase 1 so that every published figure moves at once, in phase 2, against one audited
+  gold rather than in two uncoordinated passes.
+- **A Haiku tier still rides after D, if wanted.** Unchanged from the packet: it is a
+  separate concern, and running it against a gold with unrepaired defects would only have
+  to be re-scored afterward.
+- **The instrument outlives this audit.** `src/gold_audit.py` is a general blind-audit
+  harness for this gold set: a future audit changes `SELECTION_RULES` and re-runs. The
+  discipline it encodes — pre-register the selection, adjudicate blind, publish the
+  drift-restricted view beside the headline — is the transferable part, and it is
+  cheaper to keep than to rebuild.

@@ -30,7 +30,10 @@ LABELING_CSV = dataset.DATA_DIR / "labeling.csv"
 FIELDS = ["claim_id", "type", "variant", "question", "context_excerpt", "claim_text", "label"]
 
 # Accept single-letter shortcuts and full words; `na` = not a claim (excluded).
-_NORMALIZE = {
+# Public because it is the label alphabet itself, not a detail of this module:
+# src/gold_audit.py parses the same letters out of the audit worksheet, and two
+# copies of the alphabet is how the two round-trips drift apart.
+NORMALIZE = {
     "s": "supported", "p": "partial", "u": "unsupported", "n": "na",
     "supported": "supported", "partial": "partial", "unsupported": "unsupported",
     "na": "na",
@@ -70,10 +73,10 @@ def apply(claims_path: Path, csv_path: Path, out: Path) -> None:
             raw = (row.get("label") or "").strip().lower()
             if not raw:
                 continue
-            if raw not in _NORMALIZE:
+            if raw not in NORMALIZE:
                 bad.append((row.get("claim_id", "?"), raw))
                 continue
-            labels[row["claim_id"]] = _NORMALIZE[raw]
+            labels[row["claim_id"]] = NORMALIZE[raw]
 
     if bad:
         listing = "\n".join(f"  {cid}: {val!r}" for cid, val in bad)
@@ -175,8 +178,8 @@ def label_interactive(claims_path: Path, redo: list[str] | None = None) -> None:
                 print(f"\nsaved. {labeled_now} labeled this session; "
                       f"{remaining} remaining — rerun to resume.")
                 return
-            if key in _NORMALIZE:
-                c["label"] = _NORMALIZE[key]
+            if key in NORMALIZE:
+                c["label"] = NORMALIZE[key]
                 labeled_now += 1
                 payload["meta"]["n_labeled"] = sum(
                     1 for x in claims if x.get("label") is not None
