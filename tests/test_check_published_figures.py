@@ -189,7 +189,7 @@ def test_an_unmarked_figure_reports_its_line():
 
 def test_a_marker_only_covers_the_token_it_precedes():
     """One marker does not license a second, unrelated figure beside it."""
-    doc = "<!-- figure:opus_agreement -->89.4% and also 93.0%."
+    doc = "Agreement was <!-- figure:opus_agreement -->89.4% and also 93.0%."
     problems, checked, _ = check_documents({"DOC.md": doc}, PUBLISHED)
     assert checked == 1
     assert len(problems) == 1
@@ -198,7 +198,7 @@ def test_a_marker_only_covers_the_token_it_precedes():
 
 def test_an_exempt_block_covers_its_contents():
     doc = (
-        "<!-- figure-exempt: a record of the 2026-07-19 re-scoring -->"
+        "In July, <!-- figure-exempt: a record of the 2026-07-19 re-scoring -->"
         "kappa moved 0.742 to 0.751<!-- /figure-exempt -->"
     )
     problems, checked, exempt = check_documents({"DOC.md": doc}, PUBLISHED)
@@ -207,14 +207,14 @@ def test_an_exempt_block_covers_its_contents():
 
 
 def test_an_exempt_block_without_a_reason_fails():
-    doc = "<!-- figure-exempt: -->kappa moved to 0.742<!-- /figure-exempt -->"
+    doc = "In July, <!-- figure-exempt: -->kappa moved to 0.742<!-- /figure-exempt -->"
     problems, _, _ = check_documents({"DOC.md": doc}, PUBLISHED)
     assert len(problems) == 1
     assert "no reason" in problems[0]
 
 
 def test_an_unclosed_exempt_block_fails():
-    doc = "<!-- figure-exempt: history -->kappa moved to 0.742"
+    doc = "In July, <!-- figure-exempt: history -->kappa moved to 0.742"
     problems, _, _ = check_documents({"DOC.md": doc}, PUBLISHED)
     assert any("closer" in p for p in problems)
 
@@ -222,7 +222,7 @@ def test_an_unclosed_exempt_block_fails():
 def test_a_marker_inside_an_exempt_block_is_still_checked():
     """The two mechanisms answer different questions; exempting is not silencing."""
     doc = (
-        "<!-- figure-exempt: history -->"
+        "In July, <!-- figure-exempt: history -->"
         "<!-- figure:opus_binary_kappa -->0.742"
         "<!-- /figure-exempt -->"
     )
@@ -230,6 +230,36 @@ def test_a_marker_inside_an_exempt_block_is_still_checked():
     assert (checked, exempt) == (1, 1)
     assert len(problems) == 1
     assert "0.751" in problems[0]
+
+
+# --- markers must never open a markdown HTML block --------------------------
+
+
+def test_a_line_initial_marker_fails():
+    """It opens an HTML block, splitting the paragraph and killing inline markup."""
+    doc = "Opus scored\n<!-- figure:opus_binary_kappa -->0.751 on the gold set.\n"
+    problems, _, _ = check_documents({"DOC.md": doc}, PUBLISHED)
+    assert any("first thing on this line" in p for p in problems)
+    assert any(p.startswith("DOC.md:2:") for p in problems)
+
+
+def test_a_line_initial_marker_fails_even_when_indented():
+    """Leading whitespace still leaves the marker first on its line."""
+    doc = "- Opus scored\n  <!-- figure:opus_binary_kappa -->0.751.\n"
+    problems, _, _ = check_documents({"DOC.md": doc}, PUBLISHED)
+    assert any("first thing on this line" in p for p in problems)
+
+
+def test_a_line_initial_exempt_closer_fails():
+    doc = "In July, <!-- figure-exempt: history -->0.742\n<!-- /figure-exempt -->\n"
+    problems, _, _ = check_documents({"DOC.md": doc}, PUBLISHED)
+    assert any("first thing on this line" in p for p in problems)
+
+
+def test_a_marker_following_text_on_its_line_is_fine():
+    doc = "Opus scored <!-- figure:opus_binary_kappa -->0.751 on the gold set.\n"
+    problems, _, _ = check_documents({"DOC.md": doc}, PUBLISHED)
+    assert problems == []
 
 
 def test_markers_inside_code_are_documentation_not_markers():

@@ -73,8 +73,23 @@ and raises rather than returning a half-parsed map.
 ```
 
 Same convention as `learning-notes/scripts/check_published_metrics.py` and the architecture
-repo's `check_program_metrics.py`, so one habit covers every repo. HTML comments render as
-nothing, so the published page is unchanged.
+repo's `check_program_metrics.py`, so one habit covers every repo.
+
+**A marker must never be the first thing on its line**, and that is enforced rather than
+remembered. In CommonMark/GFM a line beginning with `<!--` opens an **HTML block**: it closes
+the paragraph above it and suspends inline markdown parsing until the next blank line. A
+line-initial marker therefore splits a paragraph in the rendered page and leaves `` `code` ``
+spans showing as literal backticks — while looking perfectly fine in the source, and while the
+checker reports a clean pass. It was found by rendering `README.md` through GitHub's own
+markdown API and diffing against the pre-marker version, which is the only way it *could* have
+been found, and it is why that comparison is worth doing once rather than trusting "HTML
+comments are invisible".
+
+With markers kept mid-line, the rendered **text** of `README.md` is identical to the
+pre-marker version. The rendered HTML is *not* byte-identical: GFM turns every source newline
+inside a paragraph into a `<br>`, so re-wrapping the source to keep markers off line starts
+moves where those soft breaks fall. Content unchanged, line breaks nudged — stated rather than
+glossed, because "the published page is unchanged" was the claim this nearly shipped as.
 
 ### 3. A figure opts out with a **block** that must give a reason
 
@@ -134,6 +149,7 @@ this very convention and documenting a marker must not *be* one.
 | Marked value disagrees with the artifact | exit 1 |
 | Unknown figure key | exit 1 — a typo checks nothing and passes forever |
 | Figure-shaped token neither marked nor exempted | exit 1 |
+| Marker is the first thing on its line | exit 1 — it silently breaks the rendered paragraph |
 | Exempt block with no reason, or never closed | exit 1 |
 | **Zero marked figures** | **exit 1** |
 | Artifact missing or unparseable | exit 1 |
@@ -210,8 +226,10 @@ it was unnecessary.
   rule are now mechanical: artifact vs code, and claim vs artifact.
 - **Editing a published figure is now a two-place edit that CI verifies** — the artifact and the
   prose. That is the point, and it is the cost.
-- **The prose is slightly noisier at the source and identical when rendered.** The table rows in
-  particular are long lines now. Judged worth it: the alternative is a figure nothing checks.
+- **The prose is noisier at the source and the same text when rendered.** The table rows in
+  particular are long lines now, and paragraphs had to be re-wrapped to keep markers off line
+  starts, which moves some `<br>` positions. The rendered *text* is unchanged. Judged worth it:
+  the alternative is a figure nothing checks.
 - **A new figure written into README.md without a marker fails the build.** Intended, and the
   most likely surprising red. The error names the file, the line, the token, and both fixes.
   It has already earned itself once: marking up the post-audit README by hand, the scan caught

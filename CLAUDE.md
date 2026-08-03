@@ -38,28 +38,23 @@ the **audited** gold:
 
 Both tiers are substantial judges. n = <!-- figure:gold_scored -->189 scored
 (<!-- figure:gold_claims -->193 gold, <!-- figure:gold_na -->4 `na` excluded) — the audit's
-two changes cancel in the class distribution, so *n* and the
-<!-- figure:gold_supported -->141/<!-- figure:gold_partial -->12/<!-- figure:gold_unsupported -->36/<!-- figure:gold_na -->4
+two changes cancel in the class distribution, so *n* and the <!-- figure:gold_supported -->141/<!-- figure:gold_partial -->12/<!-- figure:gold_unsupported -->36/<!-- figure:gold_na -->4
 split are unchanged from the floor.
 
-**Never publish the Opus κ rise as a judge-quality improvement.**
-<!-- figure-exempt: the pre-audit value — a record of what the audit moved, not a current figure -->0.751<!-- /figure-exempt -->
+**Never publish the Opus κ rise as a judge-quality improvement.** <!-- figure-exempt: the pre-audit value — a record of what the audit moved, not a current figure -->0.751<!-- /figure-exempt -->
 → <!-- figure:opus_binary_kappa -->0.762 is the
-fully-audited view; restricted to corrections on claims no judge got wrong it is
-<!-- figure-exempt: the drift-restricted view, produced by gold_audit.py rescore — evals/results.md scores one gold view and publishes no key for this -->0.752<!-- /figure-exempt -->,
+fully-audited view; restricted to corrections on claims no judge got wrong it is <!-- figure-exempt: the drift-restricted view, produced by gold_audit.py rescore — evals/results.md scores one gold view and publishes no key for this -->0.752<!-- /figure-exempt -->,
 flat. ADR-002's own pre-registered criterion says a rise that does not survive that
 restriction tracked the judges and is not a gold-quality result. Every publication of these
 figures carries both views. **The headline of the audit is "the gold held: 28 of 30
 confirmed"** — a consistency result, not "κ improved."
 
 **Neither axis separates the tiers — do not claim Opus is meaningfully better.** Unchanged
-by the audit. The κ CIs overlap;
-<!-- figure-exempt: McNemar's exact tests are computed in ADR-001/ADR-002, not by score.py — evals/results.md publishes no keys for them -->the
+by the audit. The κ CIs overlap; <!-- figure-exempt: McNemar's exact tests are computed in ADR-001/ADR-002, not by score.py — evals/results.md publishes no keys for them -->the
 paired McNemar on binary correctness is p = 0.5078 (6/3)<!-- /figure-exempt -->; and the
 unsupported-recall gap (<!-- figure:opus_unsupported_recall -->97.9%
 vs <!-- figure:sonnet_unsupported_recall -->89.6% = <!-- figure:opus_unsupported_catches -->47
-vs <!-- figure:sonnet_unsupported_catches -->43 of <!-- figure:gold_binary_unsupported -->48) is
-<!-- figure-exempt: McNemar's exact test is computed in ADR-001, not by score.py — evals/results.md publishes no key for it -->McNemar exact
+vs <!-- figure:sonnet_unsupported_catches -->43 of <!-- figure:gold_binary_unsupported -->48) is <!-- figure-exempt: McNemar's exact test is computed in ADR-001, not by score.py — evals/results.md publishes no key for it -->McNemar exact
 p = 0.125<!-- /figure-exempt --> on 4 discordant pairs — **all four of which carry gold label
 `partial`**, so restricted to gold `unsupported` proper
 (n = <!-- figure:gold_unsupported -->36) the tiers are identical at 35/36 each. An
@@ -119,7 +114,10 @@ the overclaim, corrected 2026-07-19
   `<!-- figure-exempt: reason --> ... <!-- /figure-exempt -->`, and the reason is required.
   An unmarked, unexempted κ or one-decimal percentage **fails the build**: an unmarked
   figure is never checked and drifts silently. Don't strip a marker to "clean up" the
-  source — they render as nothing.
+  source — they render as nothing. **Never start a line with a marker.** In GFM a line
+  beginning with `<!--` opens an HTML block, which splits the paragraph and stops inline
+  formatting until the next blank line — so a line-initial marker breaks the rendered page
+  while looking fine in the source. That fails the build too.
 - **Read the misjudgment log before publishing any number.** That is what caught the
   truncation artifact one commit before it shipped. When a model scores unexpectedly
   badly, inspect the raw outputs before believing the metric.
