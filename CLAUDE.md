@@ -72,6 +72,13 @@ recall gap as "the one real separation"; that was the overclaim, corrected 2026-
   labels back to null). Stop and reconcile — do not score, and do not publish a number
   computed over a partial set. Likewise, if `evals/results.md` disagrees with the numbers
   in the README or ADR-001, something was re-run: reconcile before writing anything.
+  **Half of this is now mechanical.** CI runs `src/score.py` on every push and PR and fails
+  if the committed `evals/results.md` isn't exactly what the code produces
+  ([ADR-003](decisions/003-score-in-ci.md), `system/SYS-017` tier 1) — so *artifact vs code*
+  is enforced, and any change that moves the numbers must commit the regenerated file in the
+  same PR. The other half, *README/CLAUDE.md vs artifact*, is still on you. Note CI asserts
+  staleness only, never a **value**: κ is free to move, and there is deliberately no floor,
+  because one measurement has no noise band under it.
 - **Read the misjudgment log before publishing any number.** That is what caught the
   truncation artifact one commit before it shipped. When a model scores unexpectedly
   badly, inspect the raw outputs before believing the metric.

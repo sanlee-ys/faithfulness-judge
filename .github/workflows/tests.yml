@@ -43,3 +43,41 @@ jobs:
       # runs plain. Add --cov + a floor here if pytest-cov is ever added to dev.
       - name: Test
         run: uv run pytest
+
+      # ---- Agreement eval (system/SYS-017 tier 1) --------------------------
+      # src/score.py is offline, keyless and deterministic over committed files
+      # (data/claims.yaml + data/judgments_*.yaml), so there is no corpus-
+      # provenance blocker here and nothing paid to defer — one leg, on every
+      # push and pull request, per SYS-017 section 2.
+      #
+      # This does NOT gate on the numbers. There is no floors file and no
+      # threshold: kappa is free to move, you just have to commit the file it
+      # moved to. An agreement statistic measured once has no noise band under
+      # it, so a floor would have to wait on a repeat measurement — the same
+      # refusal the classifier applied to its scaled region run. That is tier 2
+      # and a separate job (decisions/003-score-in-ci.md).
+      #
+      # The file is deleted first ON PURPOSE. score.py is a pure function of
+      # committed inputs, so a step that merely runs it and discards the output
+      # can only fail if the code crashes. Removing the artifact first means the
+      # diff below fails if score.py stops writing it at all, instead of passing
+      # vacuously against the copy git checked out.
+      - name: Score the judges against the human gold (regenerates results.md)
+        run: |
+          rm evals/results.md
+          uv run python src/score.py
+
+      # The committed evals/results.md must be exactly what the code produces.
+      # CLAUDE.md carries this as a written human rule ("if evals/results.md
+      # disagrees with the numbers in the README or ADR-001, something was
+      # re-run: reconcile before writing anything"); this mechanizes the half of
+      # it that a machine can check. CI never writes the baseline back — it
+      # fails and tells a human to commit the regenerated file.
+      - name: evals/results.md is current
+        run: |
+          if ! git diff --quiet -- evals/results.md; then
+            echo "::error::evals/results.md is stale: it does not match what src/score.py produces from the committed data. Run 'uv run python src/score.py' and commit the result. If the numbers moved, reconcile README.md and CLAUDE.md too."
+            git diff -- evals/results.md
+            exit 1
+          fi
+          echo "evals/results.md matches src/score.py output."
