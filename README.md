@@ -6,8 +6,8 @@ how far the judge can be trusted, including where it can't.
 
 ## Results
 
-**Both tiers are substantial faithfulness judges.** Measured against
-<!-- figure:gold_scored -->189 scored human-labeled claims, on the gold set as
+**Both tiers are substantial faithfulness judges.** Measured against <!-- figure:gold_scored -->189
+scored human-labeled claims, on the gold set as
 audited 2026-08-02:
 
 | Judge | Binary κ | Raw agreement (95% Wilson CI) | Unsupported recall | Ternary κ |
@@ -15,23 +15,21 @@ audited 2026-08-02:
 | **Opus** (<!-- figure:opus_model -->claude-opus-4-8) | <!-- figure:opus_binary_kappa -->**0.762** | <!-- figure:opus_agreement -->89.9% [<!-- figure:opus_agreement_ci_low -->84.8%, <!-- figure:opus_agreement_ci_high -->93.5%] | <!-- figure:opus_unsupported_recall -->97.9% | <!-- figure:opus_ternary_kappa -->0.692 |
 | **Sonnet** (<!-- figure:sonnet_model -->claude-sonnet-5) | <!-- figure:sonnet_binary_kappa -->**0.716** | <!-- figure:sonnet_agreement -->88.4% [<!-- figure:sonnet_agreement_ci_low -->83.0%, <!-- figure:sonnet_agreement_ci_high -->92.2%] | <!-- figure:sonnet_unsupported_recall -->89.6% | <!-- figure:sonnet_ternary_kappa -->0.672 |
 
-Gold set: <!-- figure:gold_claims -->193 claims (<!-- figure:gold_supported -->141 supported,
-<!-- figure:gold_partial -->12 partial, <!-- figure:gold_unsupported -->36 unsupported,
-<!-- figure:gold_na -->4 `na`); n = <!-- figure:gold_scored -->189 scored, `na` excluded.
+Gold set: <!-- figure:gold_claims -->193 claims (<!-- figure:gold_supported -->141 supported, <!-- figure:gold_partial -->12 partial, <!-- figure:gold_unsupported -->36 unsupported, <!-- figure:gold_na -->4 `na`); n
+= <!-- figure:gold_scored -->189 scored, `na` excluded.
 Binary κ collapses `partial` into `unsupported`
 ([SCOPE.md](SCOPE.md) Decision 1). <!-- figure:unparsed_total -->0 unparsed verdicts for
 either judge. Full output, confusion matrices, and the misjudgment log:
 [evals/results.md](evals/results.md).
 
 **The gold set was audited, and it held: 28 of 30 adjudicated claims came back
-unchanged.** That consistency result is the finding. Opus's κ moved
-<!-- figure-exempt: the pre-audit value — a record of what the audit moved, not a current figure -->0.751<!-- /figure-exempt -->
+unchanged.** That consistency result is the finding. Opus's κ moved <!-- figure-exempt: the pre-audit value — a record of what the audit moved, not a current figure -->0.751<!-- /figure-exempt -->
 → <!-- figure:opus_binary_kappa -->0.762
 in the process and **that rise must not be read as the judges being better than
 previously published** — restricting the corrections to claims neither judge got
 wrong, the drift check [ADR-002](decisions/002-solid-tier-call.md) pre-registered
-before any label was looked at, leaves Opus at
-<!-- figure-exempt: the drift-restricted view, produced by gold_audit.py rescore — evals/results.md scores one gold view and publishes no key for this -->0.752<!-- /figure-exempt -->, essentially flat. The rise
+before any label was looked at, leaves Opus at <!-- figure-exempt: the drift-restricted view, produced by gold_audit.py rescore — evals/results.md scores one gold view and publishes no key for this -->0.752<!-- /figure-exempt -->, essentially flat. The
+rise
 does not survive the restriction, which means it tracks the audit reaching a claim
 both judges had gotten wrong rather than a gold-quality improvement. Both views are
 published in full:
@@ -47,17 +45,16 @@ so this is not evidence that Opus is meaningfully better at the task.
 **The same objection applies to unsupported recall — and the class it is measured
 over is not the one its name suggests.** <!-- figure:opus_unsupported_recall -->97.9%
 vs <!-- figure:sonnet_unsupported_recall -->89.6% is <!-- figure:opus_unsupported_catches -->47
-vs <!-- figure:sonnet_unsupported_catches -->43 catches out of
-<!-- figure:gold_binary_unsupported -->48, and that denominator is the *binary*
+vs <!-- figure:sonnet_unsupported_catches -->43 catches out of <!-- figure:gold_binary_unsupported -->48, and that denominator is the *binary*
 `unsupported` class, which has `partial` collapsed into it. Restrict to gold
 `unsupported` proper — outright fabrication, n = <!-- figure:gold_unsupported -->36 — and
 the two tiers are **identical**: both miss the same single claim,
 35/36 each, zero discordant pairs. All four discordant pairs behind the recall gap
-carry gold label `partial`. So the gap measures how the tiers treat
-<!-- figure:gold_partial -->12 borderline
+carry gold label `partial`. So the gap measures how the tiers treat <!-- figure:gold_partial -->12
+borderline
 hedged claims, in the label class the rubric itself calls least crisp — not how
-well they catch fabrication. On those four pairs McNemar's exact test gives
-<!-- figure-exempt: McNemar's exact test is computed in ADR-001/ADR-002, not by score.py — evals/results.md publishes no key for it -->**p = 0.125**<!-- /figure-exempt -->:
+well they catch fabrication. On those four pairs McNemar's exact test
+gives <!-- figure-exempt: McNemar's exact test is computed in ADR-001/ADR-002, not by score.py — evals/results.md publishes no key for it -->**p = 0.125**<!-- /figure-exempt -->:
 the direction is consistent (no reversals in <!-- figure:gold_binary_unsupported -->48
 chances), but four
 pairs cannot establish the size of a gap. An earlier version of this README
@@ -67,11 +64,11 @@ two corrections
 ([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19),
 [ADR-002 Finding 1](decisions/002-solid-tier-call.md)).
 
-**So: neither axis separates the tiers on this set.** Paired over all
-<!-- figure:gold_scored -->189 scored
+**So: neither axis separates the tiers on this set.** Paired over all <!-- figure:gold_scored -->189
+scored
 claims on binary correctness, Opus is right where Sonnet is wrong 6 times and
-Sonnet right where Opus is wrong 3 times —
-<!-- figure-exempt: McNemar's exact test is computed in ADR-002, not by score.py — evals/results.md publishes no key for it -->McNemar exact **p = 0.508**<!-- /figure-exempt -->, about as
+Sonnet right where Opus is wrong 3 times — <!-- figure-exempt: McNemar's exact test is computed in ADR-002, not by score.py — evals/results.md publishes no key for it -->McNemar exact **p = 0.508**<!-- /figure-exempt -->, about
+as
 null as a test gets. For this task **the cheap tier is already good enough, and
 escalation is not evidenced** — the third "measure-before-escalate" verdict in
 this portfolio, after BM25 grounding and tiered model routing. See
@@ -98,8 +95,7 @@ these numbers is the ground truth rather than the model.
   measure whether it is right, and it is never inter-annotator agreement.
 - **The gold set has been audited twice, and moved both times.** In July, two
   claims labeled `supported` turned out to be filler with no factual assertion,
-  which the rubric names as canonical `na`;
-  <!-- figure-exempt: a record of the 2026-07-19 re-scoring event, not current figures. These four kappas describe what moved on that date and stay as written however far kappa moves afterwards -->re-scoring
+  which the rubric names as canonical `na`; <!-- figure-exempt: a record of the 2026-07-19 re-scoring event, not current figures. These four kappas describe what moved on that date and stay as written however far kappa moves afterwards -->re-scoring
   moved Opus κ 0.742 → 0.751 and Sonnet κ 0.696 → 0.716.<!-- /figure-exempt -->
   In August, a pre-registered blind audit re-read 30
   structurally selected claims and changed 2 — one more instance of that same

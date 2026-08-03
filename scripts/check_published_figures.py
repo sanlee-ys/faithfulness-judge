@@ -90,6 +90,14 @@ EXEMPT_CLOSE = re.compile(r"<!--\s*/figure-exempt\s*-->")
 # prose and force an exemption list longer than the marker list.
 FIGURE_SHAPED = re.compile(r"\b0\.\d{3}\b|\b\d{1,3}\.\d%")
 
+# A marker must never be the first thing on its line. In CommonMark/GFM a line
+# beginning with "<!--" opens an *HTML block*, which closes the paragraph above it
+# and suspends markdown parsing until a blank line — so a line-initial marker
+# silently splits a paragraph and leaves `backticks` rendering literally. The
+# markers are supposed to be invisible; this is the one placement where they are
+# not, and it is invisible in the source, so it gets a rule rather than a habit.
+LINE_INITIAL_MARKER = re.compile(r"^[ \t]*(<!--\s*/?\s*figure)", re.M)
+
 # Markdown code, fenced or inline. Everything inside is invisible to this check.
 # CLAUDE.md documents this very convention, and documenting a marker must not *be*
 # one — otherwise the example block would register as a real (reasonless) exemption.
@@ -308,6 +316,17 @@ def check_documents(
         spans, span_problems = _exempt_spans(text, code)
         problems += [f"{name}: {p}" for p in span_problems]
         exempt_blocks += len(spans)
+
+        for match in LINE_INITIAL_MARKER.finditer(text):
+            if _in_code(code, match.start(1)):
+                continue
+            line = text.count("\n", 0, match.start(1)) + 1
+            problems.append(
+                f"{name}:{line}: a figure marker is the first thing on this line. "
+                "That opens a markdown HTML block, which splits the paragraph and "
+                "stops inline formatting until the next blank line. Move the marker "
+                "onto the end of the previous line - it must always follow text."
+            )
 
         covered: list[tuple[int, int]] = []
         for match in MARKER.finditer(text):
