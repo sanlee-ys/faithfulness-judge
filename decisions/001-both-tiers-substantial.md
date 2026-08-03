@@ -1,6 +1,8 @@
 # ADR-001: Both judge tiers are substantial — and the first Sonnet number was a measurement artifact
 
-**Status:** Accepted; **amended 2026-07-19** (see [Amendment](#amendment-2026-07-19))
+**Status:** Accepted; **amended 2026-07-19** (see [Amendment](#amendment-2026-07-19)).
+Its **figures are superseded** as of 2026-08-02 by the gold audit — see
+[Pointer](#pointer-the-gold-was-audited-2026-08-02) at the end. Its **decisions all stand.**
 **Date:** 2026-07-18
 **Deciders:** San Lee
 
@@ -145,3 +147,49 @@ numbers dressed as solid, and it shipped one in its own headline for a week. The
 labeling error is the concrete instance of the "one labeler, no inter-annotator
 agreement" limit the ADR already listed as a hypothetical. Both are now stated in
 the README rather than quietly fixed.
+
+---
+
+## Pointer: the gold was audited (2026-08-02)
+
+**Nothing above is rewritten.** This ADR is the record of what was decided on
+2026-07-18 and amended on 2026-07-19, and every figure in it was correct against the
+gold set as it stood on those dates. This section only tells a later reader where the
+current numbers live and which of this document's specific claims have moved.
+
+[ADR-002](002-solid-tier-call.md) ruled Option D and ran a blind, pre-registered audit
+of the gold set. **The canonical figures are now the audited ones**, in
+[`evals/results.md`](../evals/results.md) and
+[ADR-002's Phase-2 Result](002-solid-tier-call.md#phase-2-result-2026-08-02):
+Opus κ **0.762** (89.9% [84.8%, 93.5%]), Sonnet κ **0.716** (88.4% [83.0%, 92.2%]).
+The Opus rise **is not a judge-quality result** — it does not survive ADR-002's
+drift-restricted view (0.752, flat), and ADR-002 says so in the same breath as the
+number. Do not quote the rise on its own.
+
+Three specifics in this document a reader should not take at face value:
+
+1. **The Context table's figures** (Opus 0.751 / Sonnet 0.716) are the pre-audit
+   baseline. They remain the correct answer to "what did the floor measure," and the
+   wrong answer to "what does this project report."
+2. **The Amendment's second correction was reversed.** It moved `help-q-13-c3` to `na`
+   as "a suggestion to consult the source." The 2026-08-02 audit moved it back to
+   `supported`: the claim also asserts that the detail *isn't included in this
+   excerpt*, which the labeling guide's first consistency call makes a correct refusal
+   rather than filler. The Amendment's other correction (`asrt-q-07-c3` → `na`) was
+   re-adjudicated and **confirmed**, and a third claim of that same offer-to-help shape
+   (`help-q-07-c6`) was found still mislabeled and moved to `na`. The Amendment's
+   before/after κ table is therefore a true record of that pass, not of the gold today.
+3. **"90–98% recall on the fabrication class"** in the Decision section overstates what
+   the data supports, and the README phrasing it seeded was corrected on 2026-08-02.
+   That denominator is the *binary* `unsupported` class, with `partial` collapsed in.
+   Restricted to gold `unsupported` proper (n = 36) the tiers are **identical** at 35/36
+   each with zero discordant pairs; all four discordant pairs behind the recall gap
+   carry gold label `partial` ([ADR-002 Finding 1](002-solid-tier-call.md)).
+
+**The decisions themselves all still hold**, and the audit strengthened rather than
+disturbed them: both tiers are substantial judges, the tier gap is not established (the
+paired McNemar on the audited gold is p = 0.5078, if anything more null than before),
+the `record_verdict` forced tool call stays, and the scoring conventions stay. The one
+line that has changed status is the last consequence, **"Open, unscheduled"** — that
+call was closed on 2026-08-02 by ADR-002. A second labeler and a larger *n* were both
+declined with reasons; a Haiku tier remains available as a separate concern.

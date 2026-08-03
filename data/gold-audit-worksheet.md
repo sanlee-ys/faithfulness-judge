@@ -88,7 +88,7 @@ positive feedback on the demonstrated capability.
 - current label: **na**
 
 ```
-AUDIT asrt-q-07-c3 = ?
+AUDIT asrt-q-07-c3 = n
 ```
 
 ### Context `ctx-05`
@@ -108,7 +108,7 @@ including more than 5,000 participants.
 - current label: **supported**
 
 ```
-AUDIT asrt-q-15-c3 = ?
+AUDIT asrt-q-15-c3 = s
 ```
 
 ### Context `ctx-10`
@@ -130,7 +130,7 @@ regular production line is up and running.
 - current label: **supported**
 
 ```
-AUDIT asrt-q-31-c1 = ?
+AUDIT asrt-q-31-c1 = s
 ```
 
 **Q (q-34):** The official confirmed the $7 billion per-ship price — what drives a cost that high?
@@ -143,7 +143,7 @@ AUDIT asrt-q-31-c1 = ?
 - current label: **unsupported**
 
 ```
-AUDIT asrt-q-34-c4 = ?
+AUDIT asrt-q-34-c4 = u
 ```
 
 **Q (q-34):** The official confirmed the $7 billion per-ship price — what drives a cost that high?
@@ -156,7 +156,7 @@ AUDIT asrt-q-34-c4 = ?
 - current label: **unsupported**
 
 ```
-AUDIT asrt-q-34-c7 = ?
+AUDIT asrt-q-34-c7 = u
 ```
 
 ### Context `ctx-02`
@@ -177,7 +177,7 @@ positive feedback on the demonstrated capability.
 - current label: **supported**
 
 ```
-AUDIT help-q-07-c3 = ?
+AUDIT help-q-07-c3 = s
 ```
 
 **Q (q-07):** The demonstration led to a decision to field the system across the entire Apache fleet — when does fielding begin?
@@ -190,7 +190,7 @@ AUDIT help-q-07-c3 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-07-c5 = ?
+AUDIT help-q-07-c5 = s
 ```
 
 **Q (q-07):** The demonstration led to a decision to field the system across the entire Apache fleet — when does fielding begin?
@@ -203,7 +203,7 @@ AUDIT help-q-07-c5 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-07-c6 = ?
+AUDIT help-q-07-c6 = n
 ```
 
 ### Context `ctx-04`
@@ -223,7 +223,7 @@ deploy Tuesday, Apr. 20.
 - current label: **na**
 
 ```
-AUDIT help-q-13-c3 = ?
+AUDIT help-q-13-c3 = s
 ```
 
 ### Context `ctx-05`
@@ -243,7 +243,7 @@ including more than 5,000 participants.
 - current label: **supported**
 
 ```
-AUDIT help-q-14-c1 = ?
+AUDIT help-q-14-c1 = s
 ```
 
 **Q (q-14):** How many ships, nations, and participants took part in part one of Steadfast Defender?
@@ -256,7 +256,7 @@ AUDIT help-q-14-c1 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-14-c2 = ?
+AUDIT help-q-14-c2 = s
 ```
 
 **Q (q-14):** How many ships, nations, and participants took part in part one of Steadfast Defender?
@@ -269,7 +269,7 @@ AUDIT help-q-14-c2 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-14-c3 = ?
+AUDIT help-q-14-c3 = s
 ```
 
 **Q (q-14):** How many ships, nations, and participants took part in part one of Steadfast Defender?
@@ -282,7 +282,7 @@ AUDIT help-q-14-c3 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-14-c4 = ?
+AUDIT help-q-14-c4 = s
 ```
 
 **Q (q-15):** Which eleven allied nations contributed ships?
@@ -295,7 +295,7 @@ AUDIT help-q-14-c4 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-15-c3 = ?
+AUDIT help-q-15-c3 = s
 ```
 
 ### Context `ctx-06`
@@ -317,7 +317,7 @@ date for Microsoft desktop and server software licenses, officials said.
 - current label: **supported**
 
 ```
-AUDIT help-q-18-c1 = ?
+AUDIT help-q-18-c1 = s
 ```
 
 **Q (q-18):** Which organization led the agreement, and with whom?
@@ -330,7 +330,7 @@ AUDIT help-q-18-c1 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-18-c2 = ?
+AUDIT help-q-18-c2 = s
 ```
 
 **Q (q-18):** Which organization led the agreement, and with whom?
@@ -343,7 +343,7 @@ AUDIT help-q-18-c2 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-18-c3 = ?
+AUDIT help-q-18-c3 = s
 ```
 
 **Q (q-18):** Which organization led the agreement, and with whom?
@@ -356,7 +356,7 @@ AUDIT help-q-18-c3 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-18-c4 = ?
+AUDIT help-q-18-c4 = s
 ```
 
 **Q (q-19):** In absolute dollars, how much did DOD pay for the same licenses before this agreement?
@@ -369,7 +369,7 @@ AUDIT help-q-18-c4 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-19-c1 = ?
+AUDIT help-q-19-c1 = s
 ```
 
 ### Context `ctx-07`
@@ -391,7 +391,7 @@ Quasi-Zenith Satellite System Hosted Payload (QZSS-HP) program.
 - current label: **na**
 
 ```
-AUDIT help-q-21-c1 = ?
+AUDIT help-q-21-c1 = n
 ```
 
 **Q (q-21):** What kind of U.S. payload launched, on what vehicle, and from where and when?
@@ -404,7 +404,7 @@ AUDIT help-q-21-c1 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-21-c3 = ?
+AUDIT help-q-21-c3 = s
 ```
 
 **Q (q-21):** What kind of U.S. payload launched, on what vehicle, and from where and when?
@@ -417,7 +417,7 @@ AUDIT help-q-21-c3 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-21-c4 = ?
+AUDIT help-q-21-c4 = s
 ```
 
 **Q (q-21):** What kind of U.S. payload launched, on what vehicle, and from where and when?
@@ -430,7 +430,7 @@ AUDIT help-q-21-c4 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-21-c6 = ?
+AUDIT help-q-21-c6 = s
 ```
 
 **Q (q-22):** What makes this launch significant?
@@ -443,7 +443,7 @@ AUDIT help-q-21-c6 = ?
 - current label: **na**
 
 ```
-AUDIT help-q-22-c1 = ?
+AUDIT help-q-22-c1 = n
 ```
 
 ### Context `ctx-10`
@@ -465,7 +465,7 @@ regular production line is up and running.
 - current label: **supported**
 
 ```
-AUDIT help-q-33-c3 = ?
+AUDIT help-q-33-c3 = s
 ```
 
 **Q (q-33):** Why did some news reports cite higher cost figures for the ship?
@@ -478,7 +478,7 @@ AUDIT help-q-33-c3 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-33-c8 = ?
+AUDIT help-q-33-c8 = s
 ```
 
 ### Context `ctx-11`
@@ -499,7 +499,7 @@ DD(X) family at the core of surface warfare in the 21st century.
 - current label: **supported**
 
 ```
-AUDIT help-q-36-c2 = ?
+AUDIT help-q-36-c2 = s
 ```
 
 **Q (q-36):** Why did the Navy choose that team over the competing bidder?
@@ -512,7 +512,7 @@ AUDIT help-q-36-c2 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-36-c3 = ?
+AUDIT help-q-36-c3 = s
 ```
 
 **Q (q-36):** Why did the Navy choose that team over the competing bidder?
@@ -525,7 +525,7 @@ AUDIT help-q-36-c3 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-36-c4 = ?
+AUDIT help-q-36-c4 = s
 ```
 
 **Q (q-36):** Why did the Navy choose that team over the competing bidder?
@@ -538,5 +538,5 @@ AUDIT help-q-36-c4 = ?
 - current label: **supported**
 
 ```
-AUDIT help-q-36-c5 = ?
+AUDIT help-q-36-c5 = s
 ```

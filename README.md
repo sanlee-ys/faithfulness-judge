@@ -7,11 +7,11 @@ how far the judge can be trusted, including where it can't.
 ## Results
 
 **Both tiers are substantial faithfulness judges.** Measured against 189 scored
-human-labeled claims:
+human-labeled claims, on the gold set as audited 2026-08-02:
 
 | Judge | Binary κ | Raw agreement (95% Wilson CI) | Unsupported recall | Ternary κ |
 |---|---|---|---|---|
-| **Opus** (claude-opus-4-8) | **0.751** | 89.4% [84.2%, 93.0%] | 97.9% | 0.682 |
+| **Opus** (claude-opus-4-8) | **0.762** | 89.9% [84.8%, 93.5%] | 97.9% | 0.692 |
 | **Sonnet** (claude-sonnet-5) | **0.716** | 88.4% [83.0%, 92.2%] | 89.6% | 0.672 |
 
 Gold set: 193 claims (141 supported, 12 partial, 36 unsupported, 4 `na`);
@@ -19,27 +19,50 @@ n = 189 scored, `na` excluded. Binary κ collapses `partial` into `unsupported`
 ([SCOPE.md](SCOPE.md) Decision 1). 0 unparsed verdicts for either judge. Full
 output, confusion matrices, and the misjudgment log: [evals/results.md](evals/results.md).
 
-**What it means:** κ ≈ 0.72–0.75 with ~89% raw agreement and 90–98% recall on the
-fabrication class puts both judges in "substantial agreement" territory — good
-enough to use as an automated faithfulness check. Opus edges Sonnet on κ, **but
-the confidence intervals overlap** (84.2–93.0 vs 83.0–92.2), so this is not
-evidence that Opus is meaningfully better at the task.
+**The gold set was audited, and it held: 28 of 30 adjudicated claims came back
+unchanged.** That consistency result is the finding. Opus's κ moved 0.751 → 0.762
+in the process and **that rise must not be read as the judges being better than
+previously published** — restricting the corrections to claims neither judge got
+wrong, the drift check [ADR-002](decisions/002-solid-tier-call.md) pre-registered
+before any label was looked at, leaves Opus at 0.752, essentially flat. The rise
+does not survive the restriction, which means it tracks the audit reaching a claim
+both judges had gotten wrong rather than a gold-quality improvement. Both views are
+published in full:
+[ADR-002 Phase-2 Result](decisions/002-solid-tier-call.md#phase-2-result-2026-08-02).
 
-**The same objection applies to unsupported recall.** 97.9% vs 89.6% is 47 vs 43
-catches out of 48. Only the disagreeing pairs carry information: Opus caught 4 that
-Sonnet missed and Sonnet caught 0 that Opus missed, so McNemar's exact test gives
-**p = 0.125**. The direction is consistent (no reversals in 48 chances), but four
-discordant pairs cannot establish the size of the gap. An earlier version of this
-README advanced that gap as the reason to pay for the premium tier; the test is the
-correction ([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19)).
+**What it means:** κ ≈ 0.72–0.76 with ~89–90% raw agreement puts both judges in
+"substantial agreement" territory — good enough to use as an automated
+faithfulness check. Opus edges Sonnet on κ, **but the confidence intervals
+overlap** (84.8–93.5 vs 83.0–92.2), so this is not evidence that Opus is
+meaningfully better at the task.
 
-**So: neither axis separates the tiers on this set.** For this task **the cheap
-tier is already good enough, and escalation is not evidenced** — the third
-"measure-before-escalate" verdict in this portfolio, after BM25 grounding and
-tiered model routing. If the recall gap is real, showing it needs a larger
-`unsupported` class than 48, which is what the solid tier below would buy. See
+**The same objection applies to unsupported recall — and the class it is measured
+over is not the one its name suggests.** 97.9% vs 89.6% is 47 vs 43 catches out of
+48, and that denominator is the *binary* `unsupported` class, which has `partial`
+collapsed into it. Restrict to gold `unsupported` proper — outright fabrication,
+n = 36 — and the two tiers are **identical**: both miss the same single claim,
+35/36 each, zero discordant pairs. All four discordant pairs behind the recall gap
+carry gold label `partial`. So the gap measures how the tiers treat 12 borderline
+hedged claims, in the label class the rubric itself calls least crisp — not how
+well they catch fabrication. On those four pairs McNemar's exact test gives
+**p = 0.125**: the direction is consistent (no reversals in 48 chances), but four
+pairs cannot establish the size of a gap. An earlier version of this README
+advanced it as the reason to pay for the premium tier and described it as "recall
+on the fabrication class"; the significance test and the class restriction are the
+two corrections
+([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19),
+[ADR-002 Finding 1](decisions/002-solid-tier-call.md)).
+
+**So: neither axis separates the tiers on this set.** Paired over all 189 scored
+claims on binary correctness, Opus is right where Sonnet is wrong 6 times and
+Sonnet right where Opus is wrong 3 times — McNemar exact **p = 0.508**, about as
+null as a test gets. For this task **the cheap tier is already good enough, and
+escalation is not evidenced** — the third "measure-before-escalate" verdict in
+this portfolio, after BM25 grounding and tiered model routing. See
 [ADR-001](decisions/001-both-tiers-substantial.md) for the decision record,
-including the measurement artifact that nearly buried this result.
+including the measurement artifact that nearly buried this result, and
+[ADR-002](decisions/002-solid-tier-call.md) for the evidence that what now limits
+these numbers is the ground truth rather than the model.
 
 ### Limits — read these before trusting the number
 
@@ -50,14 +73,21 @@ including the measurement artifact that nearly buried this result.
 - **One labeler.** The gold is San's labels alone; there is **no inter-annotator
   agreement measured**, so the "human ground truth" here is one person's
   consistent reading of the rubric ([docs/labeling-guide.md](docs/labeling-guide.md)),
-  not a validated consensus. A judge agreeing with this gold at κ=0.75 has not
-  been shown to agree with *humans in general* at κ=0.75.
-- **The gold set has been corrected once.** Two claims labeled `supported` were
-  filler with no factual assertion — an offer to help and a suggestion to check the
-  original source — which the rubric names as canonical `na`. Re-labeling and
-  re-scoring moved Opus κ 0.742 → 0.751 and Sonnet κ 0.696 → 0.716; unsupported
-  recall was unchanged. Single-labeler ground truth is worth auditing, not just
-  declaring.
+  not a validated consensus. A judge agreeing with this gold at κ=0.76 has not
+  been shown to agree with *humans in general* at κ=0.76. **The 2026-08-02 audit
+  does not change this.** It is a single-labeler *consistency* audit — the same
+  person re-reading his own labels against the rubric, blind to how the models
+  scored them. That measures whether the gold is self-consistent. It cannot
+  measure whether it is right, and it is never inter-annotator agreement.
+- **The gold set has been audited twice, and moved both times.** In July, two
+  claims labeled `supported` turned out to be filler with no factual assertion,
+  which the rubric names as canonical `na`; re-scoring moved Opus κ 0.742 → 0.751
+  and Sonnet κ 0.696 → 0.716. In August, a pre-registered blind audit re-read 30
+  structurally selected claims and changed 2 — one more instance of that same
+  offer-to-help shape, and one reversal *of* a July correction, where the claim
+  does assert that the excerpt omits a detail and so is a correct refusal rather
+  than filler. Single-labeler ground truth is worth auditing, not just declaring
+  — and the second audit is also the evidence that the first one was incomplete.
 - **Floor tier.** Single pass, no ensembles, no prompt tuning of the judges, no
   retrieval. This measures the ruler as built, not the best achievable ruler.
 - **Domain skew.** Claims come from public DVIDS text, which skews toward
@@ -102,10 +132,19 @@ finding.
 
 ## Status
 
-**Floor complete.** Instrument built, 193-claim gold set hand-labeled, both
-judges run and scored — the numbers above are the deliverable. Whether to spend
-a "solid tier" pass (a second labeler to tighten the CI, larger n, or a third
-judge tier to complete the cost/quality curve) is an open call, not scheduled.
+**Floor complete, and the solid-tier call is closed.** Instrument built,
+193-claim gold set hand-labeled, both judges run and scored, and the gold itself
+audited under a pre-registered blind rule — the numbers above are the deliverable.
+
+The open call was "spend a solid-tier pass — a second labeler, larger n, or a
+third judge tier?" It was ruled on 2026-08-02: **none of the three**
+([ADR-002](decisions/002-solid-tier-call.md)). The measured reason is that the
+model axis is already saturated — the two judges agree with *each other* 95.8% of
+the time while agreeing with the human 88–90%, so the residual disagreement is a
+property of the judge-vs-human construct, not of model capability. What that
+leaves binding is ground-truth quality, so the spend went to a $0 blind audit of
+the gold instead of to more model or more n. A Haiku tier remains available as a
+separate concern, not a scheduled one.
 
 All text is public or synthetic — no proprietary or non-public data anywhere in
 this project.
