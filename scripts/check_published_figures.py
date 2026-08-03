@@ -30,6 +30,27 @@ literal backticks — while the source looks fine and this checker reports a cle
 It shipped that way once (ADR-004, corrected same day). A marker must always follow
 text on its line; wrap the prose around it rather than onto the next line.
 
+THAT ONE RULE IS SWEPT OVER EVERY MARKDOWN FILE, AND THE REST ARE NOT. `DOCUMENTS` is
+deliberately two files, and stays two: `decisions/` is excluded because an ADR is a
+*dated record* of what was true when it was written, and `SYS-009`'s guarantee-vs-
+observation rule says such a document must not be re-synced to today's numbers.
+Widening the *value* check to it would manufacture exactly the pressure to rewrite
+history that the exclusion exists to prevent.
+
+The placement rule is a different kind of question, and the difference is the whole
+argument for splitting it out:
+
+  - The value, unknown-key, exempt-block and unmarked-figure rules ask "is this number
+    still current?" That is only meaningful for a present-tense claim. Correctly narrow.
+  - Placement asks "does this file render correctly?" A line-initial marker breaks the
+    page whether the figure beside it is live, historical or exempt. Correctly universal.
+
+So `sweep_paths` walks every `.md` in the tree and applies the placement rule alone.
+Nothing it finds can pressure anyone to restate a number; the fix is always to move a
+marker onto the end of the previous line. `decisions/004-assert-published-figures.md`
+carries a line-initial marker today — inside a fenced block, where it is documenting
+this very convention, which is legal and stays legal because code is skipped.
+
 HOW A FIGURE OPTS OUT. Some published numbers are deliberately not current. Three
 kinds have turned up so far, which is the argument for a *reason* over a *category*:
 
@@ -69,7 +90,9 @@ FAILURE POLICY (matches the sibling checks):
   - marked value mismatches artifact -> exit 1
   - unknown figure key               -> exit 1, a typo checks nothing and passes forever
   - unmarked figure-shaped token     -> exit 1, mark it or exempt it with a reason
-  - marker at the start of a line    -> exit 1, it silently breaks the rendered page
+  - marker at the start of a line    -> exit 1, it silently breaks the rendered page.
+                                        This one is checked in every markdown file in
+                                        the repo, not just in DOCUMENTS.
   - exempt block with no reason,
     or an unbalanced block           -> exit 1
   - zero marked figures              -> exit 1, a check verifying nothing reads as a pass
@@ -91,6 +114,27 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 ARTIFACT_PATH = REPO_ROOT / "evals" / "results.md"
 DOCUMENTS = ("README.md", "CLAUDE.md")
 
+# Directories the placement sweep does not own. `.claude` is load-bearing rather than
+# tidiness: it holds agent worktrees, which are entire second checkouts of this repo, so
+# walking it would report every finding twice under a path nobody edits. The rest are
+# version control, virtual environments, tool caches and vendored trees; `node_modules`
+# is listed although nothing here creates one, so the set does not have to be
+# rediscovered if something ever does. Same shape as the architecture repo's decision-log
+# sweep, which walks the whole tree for the same reason.
+SWEEP_SKIP_DIRS = frozenset(
+    {
+        ".git",
+        ".claude",
+        ".venv",
+        "venv",
+        "node_modules",
+        "__pycache__",
+        ".pytest_cache",
+        ".ruff_cache",
+        "site",
+    }
+)
+
 # The value must both start and end alphanumeric, so a figure that ends a sentence
 # ("kappa is 0.751.") does not capture the full stop and compare unequal forever.
 MARKER = re.compile(
@@ -111,6 +155,9 @@ FIGURE_SHAPED = re.compile(r"\b0\.\d{3}\b|\b\d{1,3}\.\d%")
 # silently splits a paragraph and leaves `backticks` rendering literally. The
 # markers are supposed to be invisible; this is the one placement where they are
 # not, and it is invisible in the source, so it gets a rule rather than a habit.
+#
+# This is also the one rule swept over every markdown file in the repo rather than over
+# DOCUMENTS alone — see "THAT ONE RULE IS SWEPT..." above for why the others are not.
 LINE_INITIAL_MARKER = re.compile(r"^[ \t]*(<!--\s*/?\s*figure)", re.M)
 
 # Markdown code, fenced or inline. Everything inside is invisible to this check.
@@ -314,6 +361,65 @@ def _exempt_spans(
     return spans, problems
 
 
+def placement_problems(name: str, text: str, code: list[tuple[int, int]]) -> list[str]:
+    """Every marker in `text` that opens a markdown HTML block by starting its line.
+
+    Line numbers are counted on `text` exactly as handed in — which must be the RAW
+    file, never a code-stripped copy. Stripping a fenced block to nothing shifts every
+    line after it, so the reported number points at the wrong place, and a confidently
+    wrong line number is worse than none. Code is skipped by POSITION instead, via the
+    `code` spans, which is why they are a parameter rather than recomputed here.
+    """
+    problems: list[str] = []
+    for match in LINE_INITIAL_MARKER.finditer(text):
+        if _in_code(code, match.start(1)):
+            continue
+        line = text.count("\n", 0, match.start(1)) + 1
+        problems.append(
+            f"{name}:{line}: a figure marker is the first thing on this line. "
+            "That opens a markdown HTML block, which splits the paragraph and "
+            "stops inline formatting until the next blank line. Move the marker "
+            "onto the end of the previous line - it must always follow text."
+        )
+    return problems
+
+
+def sweep_paths(root: Path, documents: tuple[str, ...] = DOCUMENTS) -> list[Path]:
+    """Every markdown file under `root` that the value rules do not already cover.
+
+    The complement of `documents`, not the whole tree, so a file checked by
+    `check_documents` is not reported twice for the same misplaced marker. Union of the
+    two is every `.md` in the repo, which is the coverage the placement rule claims.
+    """
+    already = {(root / name).resolve() for name in documents}
+    found: list[Path] = []
+    for path in root.rglob("*.md"):
+        if not path.is_file():
+            continue
+        if SWEEP_SKIP_DIRS & set(path.relative_to(root).parts):
+            continue
+        if path.resolve() in already:
+            continue
+        found.append(path)
+    return sorted(found)
+
+
+def check_placement(root: Path, paths: list[Path]) -> list[str]:
+    """Apply the placement rule — and only it — to every path in `paths`.
+
+    Deliberately returns nothing but problems: this pass has no figures to count and no
+    values to compare, because the question it asks ("does this file render?") does not
+    depend on whether the number beside the marker is current.
+    """
+    problems: list[str] = []
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+        code = [m.span() for m in _CODE.finditer(text)]
+        name = path.relative_to(root).as_posix()
+        problems += placement_problems(name, text, code)
+    return problems
+
+
 def check_documents(
     documents: dict[str, str], published: dict[str, str]
 ) -> tuple[list[str], int, int]:
@@ -332,16 +438,7 @@ def check_documents(
         problems += [f"{name}: {p}" for p in span_problems]
         exempt_blocks += len(spans)
 
-        for match in LINE_INITIAL_MARKER.finditer(text):
-            if _in_code(code, match.start(1)):
-                continue
-            line = text.count("\n", 0, match.start(1)) + 1
-            problems.append(
-                f"{name}:{line}: a figure marker is the first thing on this line. "
-                "That opens a markdown HTML block, which splits the paragraph and "
-                "stops inline formatting until the next blank line. Move the marker "
-                "onto the end of the previous line - it must always follow text."
-            )
+        problems += placement_problems(name, text, code)
 
         covered: list[tuple[int, int]] = []
         for match in MARKER.finditer(text):
@@ -408,6 +505,8 @@ def run(artifact_path: Path, root: Path, documents: tuple[str, ...] = DOCUMENTS)
         texts[name] = path.read_text(encoding="utf-8")
 
     problems, checked, exempt_blocks = check_documents(texts, published)
+    swept = sweep_paths(root, documents)
+    problems += check_placement(root, swept)
 
     if problems:
         print("PUBLISHED FIGURES DO NOT MATCH evals/results.md:\n", file=sys.stderr)
@@ -433,6 +532,14 @@ def run(artifact_path: Path, root: Path, documents: tuple[str, ...] = DOCUMENTS)
     print(
         f"OK - {checked} restated figure(s) in {', '.join(documents)} match "
         f"evals/results.md ({exempt_blocks} exempt block(s) skipped)."
+    )
+    # Say what each pass actually reached. A guard narrower than its claim surface reads
+    # as full coverage unless it reports its own scope — the same property SYS-019 asks
+    # of every check here, and the reason the value rules and the placement rule are
+    # counted separately rather than summed into one reassuring number.
+    print(
+        f"     marker placement additionally checked in {len(swept)} further "
+        f"markdown file(s); the value rules deliberately do not reach them."
     )
     return 0
 

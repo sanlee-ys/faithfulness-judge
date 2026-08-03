@@ -117,7 +117,14 @@ the overclaim, corrected 2026-07-19
   source — they render as nothing. **Never start a line with a marker.** In GFM a line
   beginning with `<!--` opens an HTML block, which splits the paragraph and stops inline
   formatting until the next blank line — so a line-initial marker breaks the rendered page
-  while looking fine in the source. That fails the build too.
+  while looking fine in the source. That fails the build too — and unlike every other rule
+  here, it is swept over **every markdown file in the repo**, `decisions/` included. The
+  narrowness of the other rules is deliberate and stays: they ask "is this number still
+  current?", which only means something for a present-tense claim, and asking it of an ADR
+  would demand rewriting a dated record. Placement asks "does this file render?", which is
+  true of every file. A marker written inside backticks or a fence is documentation of the
+  convention rather than a use of it, and is skipped — that is what keeps
+  [ADR-004](decisions/004-assert-published-figures.md)'s own example legal.
 - **Read the misjudgment log before publishing any number.** That is what caught the
   truncation artifact one commit before it shipped. When a model scores unexpectedly
   badly, inspect the raw outputs before believing the metric.
