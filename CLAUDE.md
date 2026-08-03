@@ -33,25 +33,36 @@ the **audited** gold:
 
 | Judge | Binary κ | Raw agreement (95% Wilson CI) | Unsupported recall |
 |---|---|---|---|
-| Opus (claude-opus-4-8) | 0.762 | 89.9% [84.8%, 93.5%] | 97.9% |
-| Sonnet (claude-sonnet-5) | 0.716 | 88.4% [83.0%, 92.2%] | 89.6% |
+| Opus (<!-- figure:opus_model -->claude-opus-4-8) | <!-- figure:opus_binary_kappa -->0.762 | <!-- figure:opus_agreement -->89.9% [<!-- figure:opus_agreement_ci_low -->84.8%, <!-- figure:opus_agreement_ci_high -->93.5%] | <!-- figure:opus_unsupported_recall -->97.9% |
+| Sonnet (<!-- figure:sonnet_model -->claude-sonnet-5) | <!-- figure:sonnet_binary_kappa -->0.716 | <!-- figure:sonnet_agreement -->88.4% [<!-- figure:sonnet_agreement_ci_low -->83.0%, <!-- figure:sonnet_agreement_ci_high -->92.2%] | <!-- figure:sonnet_unsupported_recall -->89.6% |
 
-Both tiers are substantial judges. n = 189 scored (193 gold, 4 `na` excluded) — the audit's
-two changes cancel in the class distribution, so *n* and the 141/12/36/4 split are unchanged
-from the floor.
+Both tiers are substantial judges. n = <!-- figure:gold_scored -->189 scored
+(<!-- figure:gold_claims -->193 gold, <!-- figure:gold_na -->4 `na` excluded) — the audit's
+two changes cancel in the class distribution, so *n* and the
+<!-- figure:gold_supported -->141/<!-- figure:gold_partial -->12/<!-- figure:gold_unsupported -->36/<!-- figure:gold_na -->4
+split are unchanged from the floor.
 
-**Never publish the Opus κ rise as a judge-quality improvement.** 0.751 → 0.762 is the
-fully-audited view; restricted to corrections on claims no judge got wrong it is 0.752,
+**Never publish the Opus κ rise as a judge-quality improvement.**
+<!-- figure-exempt: the pre-audit value — a record of what the audit moved, not a current figure -->0.751<!-- /figure-exempt -->
+→ <!-- figure:opus_binary_kappa -->0.762 is the
+fully-audited view; restricted to corrections on claims no judge got wrong it is
+<!-- figure-exempt: the drift-restricted view, produced by gold_audit.py rescore — evals/results.md scores one gold view and publishes no key for this -->0.752<!-- /figure-exempt -->,
 flat. ADR-002's own pre-registered criterion says a rise that does not survive that
 restriction tracked the judges and is not a gold-quality result. Every publication of these
 figures carries both views. **The headline of the audit is "the gold held: 28 of 30
 confirmed"** — a consistency result, not "κ improved."
 
 **Neither axis separates the tiers — do not claim Opus is meaningfully better.** Unchanged
-by the audit. The κ CIs overlap; the paired McNemar on binary correctness is p = 0.5078
-(6/3); and the unsupported-recall gap (97.9% vs 89.6% = 47 vs 43 of 48) is McNemar exact
-p = 0.125 on 4 discordant pairs — **all four of which carry gold label `partial`**, so
-restricted to gold `unsupported` proper (n = 36) the tiers are identical at 35/36 each. An
+by the audit. The κ CIs overlap;
+<!-- figure-exempt: McNemar's exact tests are computed in ADR-001/ADR-002, not by score.py — evals/results.md publishes no keys for them -->the
+paired McNemar on binary correctness is p = 0.5078 (6/3)<!-- /figure-exempt -->; and the
+unsupported-recall gap (<!-- figure:opus_unsupported_recall -->97.9%
+vs <!-- figure:sonnet_unsupported_recall -->89.6% = <!-- figure:opus_unsupported_catches -->47
+vs <!-- figure:sonnet_unsupported_catches -->43 of <!-- figure:gold_binary_unsupported -->48) is
+<!-- figure-exempt: McNemar's exact test is computed in ADR-001, not by score.py — evals/results.md publishes no key for it -->McNemar exact
+p = 0.125<!-- /figure-exempt --> on 4 discordant pairs — **all four of which carry gold label
+`partial`**, so restricted to gold `unsupported` proper
+(n = <!-- figure:gold_unsupported -->36) the tiers are identical at 35/36 each. An
 earlier version of this file named that recall gap as "the one real separation"; that was
 the overclaim, corrected 2026-07-19
 ([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19)), and
@@ -89,13 +100,26 @@ the overclaim, corrected 2026-07-19
   labels back to null). Stop and reconcile — do not score, and do not publish a number
   computed over a partial set. Likewise, if `evals/results.md` disagrees with the numbers
   in the README or ADR-001, something was re-run: reconcile before writing anything.
-  **Half of this is now mechanical.** CI runs `src/score.py` on every push and PR and fails
-  if the committed `evals/results.md` isn't exactly what the code produces
-  ([ADR-003](decisions/003-score-in-ci.md), `system/SYS-017` tier 1) — so *artifact vs code*
-  is enforced, and any change that moves the numbers must commit the regenerated file in the
-  same PR. The other half, *README/CLAUDE.md vs artifact*, is still on you. Note CI asserts
-  staleness only, never a **value**: κ is free to move, and there is deliberately no floor,
-  because one measurement has no noise band under it.
+  **Both halves of this are now mechanical.** CI runs `src/score.py` on every push and PR
+  and fails if the committed `evals/results.md` isn't exactly what the code produces
+  ([ADR-003](decisions/003-score-in-ci.md), `system/SYS-017` tier 1) — that is *artifact vs
+  code*. Then `scripts/check_published_figures.py` asserts every figure this file and the
+  README restate **against** that artifact
+  ([ADR-004](decisions/004-assert-published-figures.md), `system/SYS-019`) — that is *claim
+  vs artifact*. Any change that moves the numbers must commit the regenerated
+  `evals/results.md` **and** the reconciled prose in the same PR. Note neither check gates on
+  a **value**: κ is free to move, and there is deliberately no floor, because one measurement
+  has no noise band under it. **ADRs are not checked** — they are dated records and their
+  figures stay as written.
+- **Figures in `README.md` and `CLAUDE.md` are marked, and the marks are load-bearing.**
+  A restated figure opts in with `<!-- figure:<key> -->` immediately before it; the keys are
+  derived from `evals/results.md` itself. A figure that is deliberately *not* current — a
+  record of a past re-scoring, a drift-restricted view from `gold_audit.py`, or a statistic
+  `score.py` doesn't produce (every McNemar *p* here) — goes inside
+  `<!-- figure-exempt: reason --> ... <!-- /figure-exempt -->`, and the reason is required.
+  An unmarked, unexempted κ or one-decimal percentage **fails the build**: an unmarked
+  figure is never checked and drifts silently. Don't strip a marker to "clean up" the
+  source — they render as nothing.
 - **Read the misjudgment log before publishing any number.** That is what caught the
   truncation artifact one commit before it shipped. When a model scores unexpectedly
   badly, inspect the raw outputs before believing the metric.
@@ -130,6 +154,7 @@ the overclaim, corrected 2026-07-19
 uv sync --group dev                              # build the env
 uv run pytest                                    # 29 offline tests, no key needed
 uv run ruff check src/ tests/                    # lint
+uv run python scripts/check_published_figures.py # README/CLAUDE.md figures vs the artifact
 
 uv run python scripts/inspect_questions.py --strict   # validate the instrument
 uv run python src/generate_answers.py --variant assertive --dry-run  # prompts, no API call
