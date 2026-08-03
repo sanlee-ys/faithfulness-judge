@@ -22,18 +22,32 @@ The key names are derived from `evals/results.md` itself (see `parse_artifact`),
 new judge alias produces `<alias>_*` keys automatically and the checker cannot drift
 from the artifact it protects. Nothing is hardcoded here but the artifact's *layout*.
 
-HOW A FIGURE OPTS OUT. Some published numbers are deliberately not current:
+WHERE A MARKER MAY GO. Anywhere except the start of a line. In CommonMark/GFM a line
+beginning with `<!--` opens an *HTML block*: it closes the paragraph above it and
+suspends inline markdown parsing until the next blank line. A line-initial marker
+therefore splits a paragraph on the rendered page and leaves `code` spans showing as
+literal backticks — while the source looks fine and this checker reports a clean pass.
+It shipped that way once (ADR-004, corrected same day). A marker must always follow
+text on its line; wrap the prose around it rather than onto the next line.
 
-  - `README.md` records that a 2026-07-19 re-scoring "moved Opus kappa 0.742 -> 0.751".
-    Those are a record of an event. They stay as written however far kappa moves after.
-  - McNemar's p = 0.125 is computed in ADR-001, not by `score.py`. It is a real
-    published figure with no key in this artifact.
+HOW A FIGURE OPTS OUT. Some published numbers are deliberately not current. Three
+kinds have turned up so far, which is the argument for a *reason* over a *category*:
 
-Both are wrapped in a block that names the reason:
+  - A record of an event. `README.md` says a 2026-07-19 re-scoring "moved Opus kappa
+    0.742 -> 0.751", and that the 2026-08-02 audit moved Opus 0.751 -> 0.762. Those
+    stay as written however far kappa moves afterwards — and note the pre-audit 0.751
+    now sits one line from the live 0.762.
+  - A view from a different harness. The drift-restricted 0.752 comes from
+    `gold_audit.py rescore`, which reports three gold views; `score.py` scores one.
+  - A statistic `score.py` never computes. Every McNemar p (0.125, 0.508) is from
+    ADR-001/ADR-002, and the judge-vs-judge agreement 95.8% compares the two judges to
+    each other rather than to the human gold.
 
-    <!-- figure-exempt: why this is not a current figure -->
-    ... prose ...
-    <!-- /figure-exempt -->
+All are wrapped in a block that names the reason (shown here split for legibility —
+in real prose neither marker may begin its line):
+
+    ... In July, <!-- figure-exempt: why this is not current -->kappa moved
+    0.742 -> 0.751<!-- /figure-exempt -->, and ...
 
 One form, not two (no inline variant), because an exemption is a claim about a
 *region of prose* — "this passage is history" — and a block is what says that. The
@@ -55,6 +69,7 @@ FAILURE POLICY (matches the sibling checks):
   - marked value mismatches artifact -> exit 1
   - unknown figure key               -> exit 1, a typo checks nothing and passes forever
   - unmarked figure-shaped token     -> exit 1, mark it or exempt it with a reason
+  - marker at the start of a line    -> exit 1, it silently breaks the rendered page
   - exempt block with no reason,
     or an unbalanced block           -> exit 1
   - zero marked figures              -> exit 1, a check verifying nothing reads as a pass
