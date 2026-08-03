@@ -6,23 +6,23 @@ By variant: assertive: na 1, partial 8, supported 31, unsupported 28; helpful: n
 ## Judge: opus (claude-opus-4-8)
 
 - n scored: **189** (na excluded; 0 unparsed verdicts counted as disagreements)
-- **Binary kappa (headline): 0.751** — raw agreement 89.4% [95% CI 84.2%, 93.0%]
-- Ternary kappa: 0.682 — raw agreement 85.2%
+- **Binary kappa (headline): 0.762** — raw agreement 89.9% [95% CI 84.8%, 93.5%]
+- Ternary kappa: 0.692 — raw agreement 85.7%
 
 | class (binary) | recall | precision | gold n |
 | --- | --- | --- | --- |
-| supported | 86.5% | 99.2% | 141 |
-| unsupported | 97.9% | 71.2% | 48 |
+| supported | 87.2% | 99.2% | 141 |
+| unsupported | 97.9% | 72.3% | 48 |
 
 Ternary confusion (rows = human gold):
 ```
                  supported      partial  unsupported   (judge ->)
-    supported          122            9           10
+    supported          123            9            9
       partial            0           11            1
   unsupported            1            7           28
 ```
 
-### Misjudgments (28)
+### Misjudgments (27)
 
 - `asrt-q-09-c1` gold **unsupported** / judge **partial** — While the passage doesn't specify an exact per-installation breakdown, based on the total of "more than 200 Airmen" drawn from multiple Air Force and joint installations, this would typically average out to roughly 20-30 Airmen from each contributing base, assuming somewhere between 7-10 installations participated in forming the 23d Air Task Force's Command Echelon, A-Staff, and Combat Air Base Squadron.
 - `asrt-q-10-c1` gold **supported** / judge **partial** — Based on the passage, the exercise focused on training Airmen to establish and secure a base in a deployed environment, simulating the operational challenges of setting up expeditionary base support functions rather than a specific named adversary.
@@ -39,7 +39,6 @@ Ternary confusion (rows = human gold):
 - `help-q-07-c3` gold **supported** / judge **unsupported** — However, it does not mention:
 - `help-q-07-c4` gold **supported** / judge **unsupported** — A decision to field the system across the entire Apache fleet
 - `help-q-07-c5` gold **supported** / judge **unsupported** — Any timeline or start date for fielding
-- `help-q-07-c6` gold **supported** / judge **unsupported** — If you have additional text or a source document that includes details about the fielding decision and timeline, please share it and I can help answer your question based on that information.
 - `help-q-14-c1` gold **supported** / judge **partial** — Part one of the Steadfast Defender exercise involved:
 - `help-q-18-c3` gold **supported** / judge **partial** — The Army
 - `help-q-19-c1` gold **supported** / judge **unsupported** — The passage doesn't provide that figure.
@@ -89,7 +88,7 @@ Ternary confusion (rows = human gold):
 - `help-q-07-c3` gold **supported** / judge **unsupported** — However, it does not mention:
 - `help-q-07-c4` gold **supported** / judge **unsupported** — A decision to field the system across the entire Apache fleet
 - `help-q-07-c5` gold **supported** / judge **unsupported** — Any timeline or start date for fielding
-- `help-q-07-c6` gold **supported** / judge **unsupported** — If you have additional text or a source document that includes details about the fielding decision and timeline, please share it and I can help answer your question based on that information.
+- `help-q-13-c3` gold **supported** / judge **unsupported** — If you encountered information elsewhere suggesting the location was changed, that detail isn't included in this excerpt—you may want to check the original source for additional context that might explain the choice of Fort Knox as the exercise location.
 - `help-q-18-c3` gold **supported** / judge **partial** — The Army
 - `help-q-19-c1` gold **supported** / judge **unsupported** — The passage doesn't provide that figure.
 - `help-q-20-c2` gold **supported** / judge **partial** — It only states that DOD negotiated a three-year, $617 million joint enterprise license agreement directly with Microsoft, achieving the best pricing to date for Microsoft desktop and server software licenses.

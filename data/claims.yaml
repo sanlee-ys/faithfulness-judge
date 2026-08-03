@@ -781,7 +781,7 @@ claims:
   claim_text: If you have additional text or a source document that includes details about
     the fielding decision and timeline, please share it and I can help answer your question
     based on that information.
-  label: supported
+  label: na
 - claim_id: help-q-08-c1
   question_id: q-08
   context_id: ctx-03
@@ -896,7 +896,7 @@ claims:
   claim_text: If you encountered information elsewhere suggesting the location was changed,
     that detail isn't included in this excerpt—you may want to check the original source for
     additional context that might explain the choice of Fort Knox as the exercise location.
-  label: na
+  label: supported
 - claim_id: help-q-14-c1
   question_id: q-14
   context_id: ctx-05
