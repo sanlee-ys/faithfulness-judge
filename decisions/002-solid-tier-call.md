@@ -403,3 +403,140 @@ labeler, no IAA measured" limit survives Option D intact and stays in the README
   discipline it encodes — pre-register the selection, adjudicate blind, publish the
   drift-restricted view beside the headline — is the transferable part, and it is
   cheaper to keep than to rebuild.
+
+---
+
+## Phase-2 Result (2026-08-02)
+
+**Status: the solid-tier call is CLOSED.** San adjudicated the worksheet; the two
+resulting labels are transcribed into `data/claims.yaml`; `evals/results.md` is
+regenerated. No judge was re-run, no API call was made, and no model adjudicated,
+proposed, or relabeled any gold claim.
+
+### What San adjudicated
+
+All **30** selected claims, every line filled — the re-score refuses to run otherwise.
+**28 confirmed, 2 changed:**
+
+| Claim | Was | Now | Why |
+|---|---|---|---|
+| `help-q-07-c6` | `supported` | `na` | An offer to help ("…please share it and I can help answer your question…"). This is the **third** instance of the shape the labeling guide names as canonical `na`, after the two the 2026-07-19 amendment caught — and it survived that amendment. ADR-002 Finding 4 predicted exactly this one. |
+| `help-q-13-c3` | `na` | `supported` | **A reversal of the 2026-07-19 amendment's own second correction.** That pass read it as "a suggestion to consult the source" and moved it to `na`. Re-read blind, the claim also asserts *"that detail isn't included in this excerpt"* — a true statement about the excerpt, which the labeling guide's consistency call 1 makes a **correct refusal**, i.e. `supported`. The referral tail does not erase the assertion. |
+
+The two moves cancel in the class distribution: the gold stays 193 claims at
+**141 supported / 12 partial / 36 unsupported / 4 `na`**, and *n* stays **189**. Neither
+changed claim is in the `unsupported` class, so unsupported recall is untouched in every
+view below.
+
+### Drift overlap — guard item 3, counted under the ORIGINAL gold
+
+| Bucket | Count |
+|---|---|
+| changed, **both** judges wrong | **1** (`help-q-07-c6`) |
+| changed, exactly one judge wrong | 0 |
+| changed, **neither** judge wrong | **1** (`help-q-13-c3`, unscored as `na` at the time) |
+
+One of the two corrections lands squarely on a shared judge error. That is half the
+changes, and it is the reason the verdict below goes the way it does.
+
+### The three views
+
+**1. Original gold (the published baseline)** — n = 189
+
+| Judge | Binary κ | Raw agreement (95% CI) | Ternary κ | Unsup. recall |
+|---|---|---|---|---|
+| Opus | 0.751 | 89.4% [84.2%, 93.0%] | 0.682 | 97.9% |
+| Sonnet | 0.716 | 88.4% [83.0%, 92.2%] | 0.672 | 89.6% |
+
+Paired: Opus 5 / Sonnet 3, **McNemar exact p = 0.7266**.
+
+**2. Fully audited gold — CANONICAL** — n = 189
+
+| Judge | Binary κ | Raw agreement (95% CI) | Ternary κ | Unsup. recall |
+|---|---|---|---|---|
+| Opus | **0.762** | **89.9% [84.8%, 93.5%]** | 0.692 | 97.9% |
+| Sonnet | **0.716** | **88.4% [83.0%, 92.2%]** | 0.672 | 89.6% |
+
+Paired: Opus 6 / Sonnet 3, **McNemar exact p = 0.5078**.
+
+**3. Audited, corrections on no-judge-error claims only — the drift check** — n = 190
+
+| Judge | Binary κ | Raw agreement (95% CI) | Ternary κ | Unsup. recall |
+|---|---|---|---|---|
+| Opus | 0.752 | 89.5% [84.3%, 93.1%] | 0.683 | 97.9% |
+| Sonnet | 0.706 | 87.9% [82.5%, 91.8%] | 0.663 | 89.6% |
+
+Paired: Opus 6 / Sonnet 3, **McNemar exact p = 0.5078**.
+
+(View 3 has n = 190 because it applies only the `na` → `supported` move, which *adds* a
+claim to scoring, and not the `supported` → `na` move, which would remove one.)
+
+### The verdict — and the thing that must not be published
+
+**The audited gold becomes canonical.** It fixes two real violations of this repo's own
+rubric, both adjudicated blind under a rule committed before the candidate set existed.
+
+**The Opus κ rise is not a judge-quality result, and must never be published as one.**
+This ADR's guard item 3 pre-registered the criterion, in writing, before any label was
+looked at: *if the corrected κ rises in the fully-audited view but not in the
+no-judge-error view, the audit tracked the judges and the rise is not a gold-quality
+result.* Opus goes **0.751 → 0.762 fully audited, but 0.751 → 0.752 restricted — flat.**
+The criterion fires. The mechanism is visible and unsurprising: the larger correction
+(`help-q-07-c6`) removes from scoring a claim **both** judges got wrong, which raises
+agreement by construction, not because either judge is better than previously published.
+
+So every publication of these figures carries **both views** and states plainly that the
+rise does not survive the restriction. The repo's README, `CLAUDE.md`, and the portfolio
+page all do.
+
+**The headline finding is that the gold held: 28 of 30 confirmed.** That is a
+*consistency* result about the ground truth, and it is what this audit was for. "κ
+improved" is not the finding, is not supported by the drift check, and is not to be used
+as one.
+
+**Nothing about the tier conclusion changes.** McNemar stays null — it moves from
+p = 0.7266 to p = 0.5078, in the *less* significant direction. The κ CIs still overlap
+(84.8–93.5 vs 83.0–92.2). **"Neither axis separates the tiers"** stands verbatim, and the
+"measure before escalating" verdict stands with it.
+
+**The single-labeler limit survives intact.** This was one person re-reading his own
+labels against the rubric, blind to the verdicts. It is a **consistency audit and never
+inter-annotator agreement**, `gold_audit.py` says so in its own report footer, and the
+"one labeler, no IAA measured" bullet stays in the README, on the portfolio page, and
+anywhere else these numbers appear. Guard item 4, honored.
+
+### The queued README correction, now made
+
+Phase 1 deliberately left Finding 1's correction unmade so every figure would move at
+once. It is made now: the README's **"recall on the fabrication class"** overstated what
+the data supports. That denominator is the *binary* `unsupported` class, with `partial`
+collapsed in. Restricted to gold `unsupported` proper (n = 36) the two tiers are
+**identical** — 35/36 each, zero discordant pairs — and all four discordant pairs behind
+the 97.9%-vs-89.6% gap carry gold label `partial`. The README now says that.
+
+### What the audit did to the previous audit
+
+Worth recording, because it is the more uncomfortable result: **the blind audit reversed
+one of the 2026-07-19 amendment's own corrections and found a third claim that amendment
+should have caught.** One pass over a gold set is not enough, an audit is not
+self-certifying merely because it was careful, and the July pass — which this repo wrote
+up as a lesson in catching soft numbers — was itself both incomplete and, in one call,
+wrong. ADR-001 carries a dated pointer to this section rather than a rewrite; its figures
+are superseded, its decisions are not.
+
+### Consequences
+
+- **No open call remains in this repo.** ADR-001's "Open, unscheduled" consequence is
+  closed by this section. A second labeler and a larger *n* were declined with reasons in
+  the table above.
+- **A Haiku tier is the only thing left on the shelf**, unchanged from the packet: a
+  separate concern, its own branch and PR, and it now has the one thing it was waiting
+  for — a gold with no known unrepaired defects.
+- **`gold_audit.py` stays.** A future audit changes `SELECTION_RULES` and re-runs; it does
+  not edit this worksheet in place. `data/gold-audit-worksheet.md` is committed filled, as
+  the record of what the owner decided.
+- **The drift check earned its keep.** Without view 3 the honest reading of this audit is
+  not available, and the natural writeup — "auditing the gold raised κ to 0.762" — would
+  have been exactly the soft-number-dressed-as-solid failure this project exists to catch,
+  shipped by the very mechanism built to prevent it. The guard was pre-registered, it
+  fired, and it changed what gets published.

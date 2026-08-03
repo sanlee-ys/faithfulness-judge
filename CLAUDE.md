@@ -25,20 +25,37 @@ a working demo.** The QA system here is a fixture for generating answers, not a 
 
 ## Current state
 
-**The floor is complete.** Instrument built, 193-claim gold set hand-labeled, both judges
-run and scored ([ADR-001](decisions/001-both-tiers-substantial.md)):
+**The floor is complete and the gold has been audited.** Instrument built, 193-claim gold
+set hand-labeled, both judges run and scored
+([ADR-001](decisions/001-both-tiers-substantial.md)), gold audited blind under a
+pre-registered rule ([ADR-002](decisions/002-solid-tier-call.md)). Canonical figures, on
+the **audited** gold:
 
 | Judge | Binary κ | Raw agreement (95% Wilson CI) | Unsupported recall |
 |---|---|---|---|
-| Opus (claude-opus-4-8) | 0.751 | 89.4% [84.2%, 93.0%] | 97.9% |
+| Opus (claude-opus-4-8) | 0.762 | 89.9% [84.8%, 93.5%] | 97.9% |
 | Sonnet (claude-sonnet-5) | 0.716 | 88.4% [83.0%, 92.2%] | 89.6% |
 
-Both tiers are substantial judges. n = 189 scored (193 gold, 4 `na` excluded).
-**Neither axis separates the tiers — do not claim Opus is meaningfully better.** The κ
-CIs overlap, *and* the unsupported-recall gap (97.9% vs 89.6% = 47 vs 43 of 48) is
-McNemar exact p = 0.125 on 4 discordant pairs. An earlier version of this file named that
-recall gap as "the one real separation"; that was the overclaim, corrected 2026-07-19
-([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19)).
+Both tiers are substantial judges. n = 189 scored (193 gold, 4 `na` excluded) — the audit's
+two changes cancel in the class distribution, so *n* and the 141/12/36/4 split are unchanged
+from the floor.
+
+**Never publish the Opus κ rise as a judge-quality improvement.** 0.751 → 0.762 is the
+fully-audited view; restricted to corrections on claims no judge got wrong it is 0.752,
+flat. ADR-002's own pre-registered criterion says a rise that does not survive that
+restriction tracked the judges and is not a gold-quality result. Every publication of these
+figures carries both views. **The headline of the audit is "the gold held: 28 of 30
+confirmed"** — a consistency result, not "κ improved."
+
+**Neither axis separates the tiers — do not claim Opus is meaningfully better.** Unchanged
+by the audit. The κ CIs overlap; the paired McNemar on binary correctness is p = 0.5078
+(6/3); and the unsupported-recall gap (97.9% vs 89.6% = 47 vs 43 of 48) is McNemar exact
+p = 0.125 on 4 discordant pairs — **all four of which carry gold label `partial`**, so
+restricted to gold `unsupported` proper (n = 36) the tiers are identical at 35/36 each. An
+earlier version of this file named that recall gap as "the one real separation"; that was
+the overclaim, corrected 2026-07-19
+([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19)), and
+"recall on the fabrication class" was the residue of it, corrected 2026-08-02.
 
 ## Locked decisions (from SCOPE.md — don't relitigate without an ADR)
 
@@ -88,10 +105,14 @@ recall gap as "the one real separation"; that was the overclaim, corrected 2026-
   here once already
   ([ADR-001 Amendment](decisions/001-both-tiers-substantial.md#amendment-2026-07-19)).
   **Before publishing any tier comparison, run the significance test, not just the delta.**
-- **The gold set is not above audit.** Two claims were mislabeled against this repo's own
-  rubric and survived until someone re-read the labeling guide beside the data. If a claim
-  is filler, a meta-aside, or an offer to help, it is `na` — check that before trusting a
-  label just because it is committed.
+- **The gold set is not above audit — and one audit was not enough.** The 2026-07-19 pass
+  caught two claims mislabeled against this repo's own rubric. The 2026-08-02 blind audit
+  then found a **third** instance of the same offer-to-help shape that had survived the
+  first pass, *and* reversed one of the first pass's own calls (`help-q-13-c3`, which does
+  assert that the excerpt omits a detail and is therefore a correct refusal, not filler).
+  If a claim is filler, a meta-aside, or an offer to help, it is `na` — but check whether it
+  also makes an assertion about the excerpt before calling it filler, and do not trust a
+  label just because it is committed, or just because a previous audit already touched it.
 
 ## Tech stack
 
@@ -180,14 +201,24 @@ overwrite. One hand does the regeneration.
    Sonnet-vs-Opus gap, and a misjudgment log. ✅
 5. README leading with the number and stating the floor honestly. ✅
 
-**Solid tier: decided, in flight.** [ADR-002](decisions/002-solid-tier-call.md) ruled
-**Option D** on 2026-08-02 — a blind, pre-registered audit of the gold set, $0 API, no
-judge re-runs — over a second labeler, larger *n*, or a Haiku tier. Phase 1 (the
-instrument) has shipped: `src/gold_audit.py` and `data/gold-audit-worksheet.md`. **Phase
-2 runs only once San has filled the worksheet in**; until then every published figure
-stays as it is. Read ADR-002's *Ruling* section before touching anything in this area —
-in particular, **no model may adjudicate, relabel, or propose a label for any gold
-claim**, and the selection rule is frozen.
+**Solid tier: CLOSED 2026-08-02.** [ADR-002](decisions/002-solid-tier-call.md) ruled
+**Option D** — a blind, pre-registered audit of the gold set, $0 API, no judge re-runs —
+over a second labeler, larger *n*, or a Haiku tier, and both phases have now landed. Phase
+1 shipped the instrument (`src/gold_audit.py`, `data/gold-audit-worksheet.md`); phase 2
+shipped San's 30 adjudications, the 2 resulting label changes, the re-scored artifact, and
+the corrected figures reported both ways. **There is no open call in this repo.**
+
+Read ADR-002's *Ruling* and *Phase-2 Result* sections before touching anything in this
+area. Still binding: **no model may adjudicate, relabel, or propose a label for any gold
+claim** — that is the rule that keeps this from becoming the circular eval it exists to
+avoid — and the selection rule is frozen. A future audit changes `SELECTION_RULES` and
+re-runs; it does not edit the worksheet in place.
+
+**A Haiku tier is the only thing left on the shelf**, and it is a separate concern, not a
+continuation of this one: one judge run over the 189 committed claims, its own branch and
+PR, `src/paired_compare.py` already there to score it offline. It was deliberately left out
+of ADR-002 so it would not ride on a gold with unrepaired defects. That objection is now
+gone, which makes it cheap — but it costs API spend and nobody has asked for it.
 
 ## Owner-only calls
 
