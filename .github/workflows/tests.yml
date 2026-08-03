@@ -81,3 +81,18 @@ jobs:
             exit 1
           fi
           echo "evals/results.md matches src/score.py output."
+
+      # ---- Claim drift (system/SYS-019) -----------------------------------
+      # The step above proves the artifact matches the code. This one proves the
+      # prose matches the artifact — the other half of CLAUDE.md's reconcile
+      # rule, which was a written human rule with nothing enforcing it
+      # (decisions/004-assert-published-figures.md).
+      #
+      # Order matters and is the reason this runs last: checking README.md
+      # against an artifact not yet known to be current would only prove that
+      # two files agree, which they can do while both being stale.
+      #
+      # This asserts what may be *claimed*, never a value. There is no floor
+      # here either — kappa is free to move, the prose just has to move with it.
+      - name: Published figures match evals/results.md
+        run: uv run python scripts/check_published_figures.py
