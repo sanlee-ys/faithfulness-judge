@@ -23,9 +23,12 @@ import check_published_figures as cpf
 from check_published_figures import (
     ArtifactError,
     check_documents,
+    check_placement,
     parse_artifact,
+    placement_problems,
     run,
     same_value,
+    sweep_paths,
 )
 
 ARTIFACT = cpf.ARTIFACT_PATH.read_text(encoding="utf-8")
@@ -272,6 +275,102 @@ def test_markers_inside_code_are_documentation_not_markers():
     problems, checked, exempt = check_documents({"DOC.md": doc}, PUBLISHED)
     assert problems == []
     assert (checked, exempt) == (0, 0)
+
+
+# --- the placement rule sweeps every markdown file, the value rules do not ---
+#
+# NB for anyone adding a fixture below: a marker goes AFTER text on its line unless
+# line-initial placement is the thing under test. Four fixtures here once started at
+# column zero and read as documentation that the broken shape was correct (fixed
+# 2026-08-02). Every column-zero marker in this section is deliberate and is the
+# subject of its own assertion.
+
+
+def test_the_sweep_reaches_files_the_value_rules_do_not():
+    """decisions/ is excluded from DOCUMENTS by design; placement still covers it."""
+    swept = {p.relative_to(cpf.REPO_ROOT).as_posix() for p in sweep_paths(cpf.REPO_ROOT)}
+    assert "decisions/004-assert-published-figures.md" in swept
+    assert "SCOPE.md" in swept
+    # ...and does not re-check what check_documents already owns, or nothing would
+    # stop a misplaced marker in the README being reported twice.
+    assert swept.isdisjoint({"README.md", "CLAUDE.md"})
+
+
+def test_the_adr_documenting_the_convention_is_not_flagged_by_it():
+    """004 carries a line-initial marker inside a fence. That is legal and must stay so.
+
+    It is the natural occurrence of the shape in a file the value rules never see —
+    the case that makes 'skip code' load-bearing rather than a nicety.
+    """
+    adr = cpf.REPO_ROOT / "decisions" / "004-assert-published-figures.md"
+    assert cpf.LINE_INITIAL_MARKER.search(adr.read_text(encoding="utf-8"))
+    assert check_placement(cpf.REPO_ROOT, [adr]) == []
+
+
+def test_a_line_initial_marker_outside_the_scanned_set_fails(tmp_path):
+    """DOC.md is deliberately clean, so the ADR is the only thing that can fail this."""
+    kappa = parse_artifact(ARTIFACT)["opus_binary_kappa"]
+    root = write(tmp_path, f"Opus scored <!-- figure:opus_binary_kappa -->{kappa}.\n")
+    assert run(cpf.ARTIFACT_PATH, root, ("DOC.md",)) == 0
+
+    (root / "decisions").mkdir()
+    (root / "decisions" / "ADR.md").write_text(
+        "Opus scored\n<!-- figure:opus_binary_kappa -->0.751.\n", encoding="utf-8"
+    )
+    assert run(cpf.ARTIFACT_PATH, root, ("DOC.md",)) == 1
+    assert check_placement(root, sweep_paths(root, ("DOC.md",)))[0].startswith(
+        "decisions/ADR.md:2:"
+    )
+
+
+def test_a_fenced_marker_outside_the_scanned_set_passes(tmp_path):
+    """The same file and the same column-zero marker as above, but inside a fence.
+
+    Only the fence differs from the failing case, so this isolates the exemption
+    rather than testing it alongside anything else.
+    """
+    kappa = parse_artifact(ARTIFACT)["opus_binary_kappa"]
+    root = write(tmp_path, f"Opus scored <!-- figure:opus_binary_kappa -->{kappa}.\n")
+    (root / "decisions").mkdir()
+    (root / "decisions" / "ADR.md").write_text(
+        "Opt in like this:\n\n```\n<!-- figure:opus_binary_kappa -->0.751\n```\n",
+        encoding="utf-8",
+    )
+    assert run(cpf.ARTIFACT_PATH, root, ("DOC.md",)) == 0
+
+
+def test_the_sweep_does_not_walk_generated_or_vendored_trees(tmp_path):
+    """A worktree under .claude is a second copy of this repo, not a file to police."""
+    kappa = parse_artifact(ARTIFACT)["opus_binary_kappa"]
+    root = write(tmp_path, f"Opus scored <!-- figure:opus_binary_kappa -->{kappa}.\n")
+    for skipped in (".claude", "node_modules", "site", "__pycache__"):
+        (root / skipped).mkdir()
+        (root / skipped / "STRAY.md").write_text(
+            "Opus scored\n<!-- figure:opus_binary_kappa -->0.001.\n", encoding="utf-8"
+        )
+    assert sweep_paths(root, ("DOC.md",)) == []
+    assert run(cpf.ARTIFACT_PATH, root, ("DOC.md",)) == 0
+
+
+def test_the_sweep_applies_only_the_placement_rule():
+    """A stale, unmarked or unknown-key figure outside DOCUMENTS is NOT a failure.
+
+    That is the point of the split: `decisions/` holds dated records, and asserting
+    their values against today's artifact would demand rewriting history.
+    """
+    doc = (
+        "In July Opus scored <!-- figure:opus_binry_kappa -->0.742, "
+        "agreeing 87.1% of the time.\n"
+    )
+    assert placement_problems("ADR.md", doc, []) == []
+
+
+def test_placement_line_numbers_are_counted_on_the_raw_text():
+    """Stripping code first would report every line after a fence short by its height."""
+    doc = "intro\n\n```\nfenced\nfenced\n```\n\ntext\n<!-- figure:opus_agreement -->89.4%\n"
+    problems = placement_problems("ADR.md", doc, [])
+    assert len(problems) == 1
+    assert problems[0].startswith("ADR.md:9:")
 
 
 # --- exit codes --------------------------------------------------------------
