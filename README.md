@@ -4,6 +4,20 @@
 things up?** This project measures that — on public defense text — and reports
 how far the judge can be trusted, including where it can't.
 
+<!-- Unit of the study: one claim read against its cited source, labeled
+     supported or unsupported. Schematic only — no metrics (those live in the
+     table below). Dark/light pair; unsupported dual-encoded (× + dashed
+     stroke + oxide), not colour-only. -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/claim-source-plate-dark.svg">
+  <img src="images/claim-source-plate-light.svg"
+       alt="Unit of the faithfulness study: a cited source passage feeds an asserted claim sentence; the binary verdict is supported (checkmark, solid stroke) or unsupported (cross mark, dashed stroke)."
+       width="420">
+</picture>
+
+*One claim, one cited source, one binary label. The table below measures how
+often the model judge matches the human gold on that unit.*
+
 ## Results
 
 **Both tiers are substantial faithfulness judges.** Measured against <!-- figure:gold_scored -->189
