@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 268" role="img"
+     aria-labelledby="title desc">
+  <title id="title">Unit of the faithfulness study</title>
+  <desc id="desc">A claim is read against its cited source and labeled supported or unsupported. Source passage flows into a claim sentence; the binary verdict is supported or unsupported. Unsupported is dual-encoded with a cross mark and a dashed stroke, not colour alone.</desc>
+
+  <!-- Light palette: GitHub-adjacent neutrals + warm oxide for unsupported.
+       No metrics. Schematic only — glyph lines stand for a passage, not a quote. -->
+  <rect width="520" height="268" fill="#ffffff"/>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+            markerWidth="7" markerHeight="7" orient="auto" aria-hidden="true">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#656d76"/>
+    </marker>
+  </defs>
+
+  <!-- SOURCE -->
+  <text x="16" y="28" fill="#656d76"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="13" font-weight="600" letter-spacing="0.08em">SOURCE</text>
+  <rect x="16" y="40" width="200" height="96" rx="4"
+        fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <g fill="none" stroke="#8c959f" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+    <path d="M 36 68 H 184"/>
+    <path d="M 36 84 H 168"/>
+    <path d="M 36 100 H 148"/>
+  </g>
+  <text x="116" y="122" text-anchor="middle" fill="#656d76"
+        font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace"
+        font-size="12">cited passage</text>
+
+  <!-- edge: source → claim -->
+  <path d="M 220 88 L 252 88" fill="none" stroke="#8c959f" stroke-width="2"
+        marker-end="url(#arrow)" aria-hidden="true"/>
+
+  <!-- CLAIM -->
+  <text x="260" y="28" fill="#656d76"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="13" font-weight="600" letter-spacing="0.08em">CLAIM</text>
+  <rect x="260" y="40" width="244" height="96" rx="4"
+        fill="#ffffff" stroke="#d0d7de" stroke-width="1.5"/>
+  <text x="382" y="88" text-anchor="middle" fill="#1f2328"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="16" font-weight="500">asserted sentence</text>
+  <text x="382" y="114" text-anchor="middle" fill="#656d76"
+        font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace"
+        font-size="12">one gold unit</text>
+
+  <!-- edge: claim → verdict -->
+  <path d="M 268 140 L 268 168" fill="none" stroke="#8c959f" stroke-width="2"
+        marker-end="url(#arrow)" aria-hidden="true"/>
+
+  <!-- VERDICT row: supported (solid) vs unsupported (dashed + × + oxide) -->
+  <text x="16" y="196" fill="#656d76"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="13" font-weight="600" letter-spacing="0.08em">VERDICT</text>
+
+  <!-- Supported: solid stroke, checkmark — the ordinary pass -->
+  <rect x="16" y="208" width="236" height="42" rx="4"
+        fill="#ffffff" stroke="#1f2328" stroke-width="2"/>
+  <g aria-hidden="true">
+    <path d="M 40 229 L 48 237 L 64 219" fill="none" stroke="#1f2328"
+          stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="148" y="235" text-anchor="middle" fill="#1f2328"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="14" font-weight="700" letter-spacing="0.04em">SUPPORTED</text>
+
+  <!-- Unsupported: dashed stroke + × glyph + warm oxide — dual-encoded, not colour-only -->
+  <rect x="268" y="208" width="236" height="42" rx="4"
+        fill="#fff1e5" stroke="#bc4c00" stroke-width="2" stroke-dasharray="5 3.5"/>
+  <g aria-hidden="true">
+    <path d="M 292 219 L 308 235 M 308 219 L 292 235" fill="none" stroke="#bc4c00"
+          stroke-width="2.5" stroke-linecap="round"/>
+  </g>
+  <text x="400" y="235" text-anchor="middle" fill="#bc4c00"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
+        font-size="14" font-weight="700" letter-spacing="0.04em">UNSUPPORTED</text>
+</svg>
