@@ -26,9 +26,42 @@ def test_extract_verdict_text_fallback():
     assert extract_verdict(resp) == "supported"
 
 
+def test_extract_verdict_gemini_parsed():
+    from judge import extract_verdict_gemini
+
+    class _Parsed:
+        def __init__(self, verdict):
+            self.verdict = verdict
+
+    resp = _Resp([])
+    resp.parsed = _Parsed("supported")
+    assert extract_verdict_gemini(resp) == "supported"
+
+
+def test_extract_verdict_gemini_text_fallback():
+    from judge import extract_verdict_gemini
+
+    resp = _Resp([])
+    resp.text = "unsupported"
+    assert extract_verdict_gemini(resp) == "unsupported"
+
+
+def test_extract_verdict_gemini_rejects_bad_enum():
+    from judge import extract_verdict_gemini
+
+    class _Parsed:
+        def __init__(self, verdict):
+            self.verdict = verdict
+
+    resp = _Resp([])
+    resp.parsed = _Parsed("invalid_label")
+    assert extract_verdict_gemini(resp) is None
+
+
 def test_extract_verdict_rejects_bad_enum():
     resp = _Resp([_Blk(type="tool_use", name="record_verdict", input={"verdict": "maybe"})])
     assert extract_verdict(resp) is None
+
 
 
 def test_judge_prompt_contains_passage_and_claim_only():

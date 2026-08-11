@@ -10,6 +10,8 @@ description = "Measuring whether an LLM judge can be trusted to detect unsupport
 requires-python = ">=3.11"
 dependencies = [
     "anthropic>=0.120.2",
+    "google-genai>=2.17.0",
+    "python-dotenv>=1.2.2",
     "pyyaml>=6",
 ]
 

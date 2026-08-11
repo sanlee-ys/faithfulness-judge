@@ -25,16 +25,22 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import dataset  # noqa: E402  (path shim must run first)
 from dataset import load_questions  # noqa: E402
 
+load_dotenv()
+
 JUDGES = {
     "sonnet": "claude-sonnet-5",
     "opus": "claude-opus-4-8",
+    "gemini_2_0_flash": "gemini-2.0-flash",
+    "gemini": "gemini-2.0-flash",
 }
-MAX_TOKENS = 64  # room for the forced tool call
+MAX_TOKENS = 64  # room for the forced tool call or JSON response
 
 # Mirrors docs/labeling-guide.md. The judge rates the claim against the passage
 # only — world knowledge is explicitly excluded, matching the human rubric.
@@ -90,13 +96,26 @@ def parse_verdict(raw: str) -> str | None:
 
 def extract_verdict(resp) -> str | None:
     """Read the verdict from the forced tool call; fall back to any text."""
-    for block in resp.content:
+    for block in getattr(resp, "content", []):
         if getattr(block, "type", None) == "tool_use" and block.name == "record_verdict":
             v = (block.input or {}).get("verdict")
             if v in _VALID:
                 return v
-    raw = "".join(b.text for b in resp.content if getattr(b, "type", None) == "text")
+    raw = "".join(b.text for b in getattr(resp, "content", []) if getattr(b, "type", None) == "text")
     return parse_verdict(raw)
+
+
+def extract_verdict_gemini(resp) -> str | None:
+    """Read verdict from Gemini response (structured output or text)."""
+    if hasattr(resp, "parsed") and resp.parsed is not None:
+        v = getattr(resp.parsed, "verdict", None)
+        if v is not None:
+            val = v.value if hasattr(v, "value") else str(v)
+            if val in _VALID:
+                return val
+    if hasattr(resp, "text") and resp.text:
+        return parse_verdict(resp.text)
+    return None
 
 
 def judge_claims(alias: str, dry_run: bool, limit: int | None) -> dict:
@@ -108,12 +127,21 @@ def judge_claims(alias: str, dry_run: bool, limit: int | None) -> dict:
     ctx = {q.id: q.context_text for q in load_questions()}
 
     client = None
+    is_gemini = alias.startswith("gemini")
     if not dry_run:
-        if not os.environ.get("ANTHROPIC_API_KEY"):
-            sys.exit("ANTHROPIC_API_KEY is not set (use --dry-run to preview prompts).")
-        import anthropic
+        if is_gemini:
+            key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY")
+            if not key:
+                sys.exit("GEMINI_API_KEY or GOOGLE_API_KEY is not set (use --dry-run to preview prompts).")
+            from google import genai
 
-        client = anthropic.Anthropic()
+            client = genai.Client(api_key=key)
+        else:
+            if not os.environ.get("ANTHROPIC_API_KEY"):
+                sys.exit("ANTHROPIC_API_KEY is not set (use --dry-run to preview prompts).")
+            import anthropic
+
+            client = anthropic.Anthropic()
 
     judgments, unparsed = [], 0
     for c in claims:
@@ -121,15 +149,43 @@ def judge_claims(alias: str, dry_run: bool, limit: int | None) -> dict:
         if dry_run:
             verdict = None
         else:
-            resp = client.messages.create(
-                model=model,
-                max_tokens=MAX_TOKENS,
-                system=SYSTEM,
-                messages=[{"role": "user", "content": prompt}],
-                tools=[VERDICT_TOOL],
-                tool_choice={"type": "tool", "name": "record_verdict"},
-            )
-            verdict = extract_verdict(resp)
+            if is_gemini:
+                from enum import Enum
+                from google.genai import types
+                from pydantic import BaseModel
+
+                class VerdictEnum(str, Enum):
+                    supported = "supported"
+                    partial = "partial"
+                    unsupported = "unsupported"
+
+                class FaithfulnessVerdict(BaseModel):
+                    verdict: VerdictEnum
+
+                config = types.GenerateContentConfig(
+                    system_instruction=SYSTEM,
+                    response_mime_type="application/json",
+                    response_schema=FaithfulnessVerdict,
+                    temperature=0.0,
+                    max_output_tokens=MAX_TOKENS,
+                )
+                resp = client.models.generate_content(
+                    model=model,
+                    contents=prompt,
+                    config=config,
+                )
+                verdict = extract_verdict_gemini(resp)
+            else:
+                resp = client.messages.create(
+                    model=model,
+                    max_tokens=MAX_TOKENS,
+                    system=SYSTEM,
+                    messages=[{"role": "user", "content": prompt}],
+                    tools=[VERDICT_TOOL],
+                    tool_choice={"type": "tool", "name": "record_verdict"},
+                )
+                verdict = extract_verdict(resp)
+
             if verdict is None:
                 unparsed += 1
                 print(f"  ! {c['claim_id']}: no verdict in response")
@@ -137,9 +193,11 @@ def judge_claims(alias: str, dry_run: bool, limit: int | None) -> dict:
                 print(f"{c['claim_id']}: {verdict}")
         judgments.append({"claim_id": c["claim_id"], "judge_label": verdict})
 
+    canonical_alias = "gemini_2_0_flash" if is_gemini else alias
+
     return {
         "meta": {
-            "judge_alias": alias,
+            "judge_alias": canonical_alias,
             "judge_model": model,
             "judged_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "n_claims": len(judgments),
@@ -161,7 +219,8 @@ def main() -> int:
     if args.dry_run:
         print(f"[dry-run] built {payload['meta']['n_claims']} prompts, wrote nothing.")
         return 0
-    out = dataset.DATA_DIR / f"judgments_{args.judge}.yaml"
+    out_alias = payload["meta"]["judge_alias"]
+    out = dataset.DATA_DIR / f"judgments_{out_alias}.yaml"
     dataset.dump_yaml(out, payload)
     print(f"wrote {payload['meta']['n_claims']} judgments to {out}")
     print("next: uv run python src/score.py")
@@ -170,3 +229,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
