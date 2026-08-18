@@ -3,55 +3,6 @@
 Gold set: 193 claims; label distribution: na 4, partial 12, supported 141, unsupported 36
 By variant: assertive: na 1, partial 8, supported 31, unsupported 28; helpful: na 3, partial 4, supported 110, unsupported 8
 
-## Judge: gemini_2_0_flash (gemini-2.0-flash)
-
-- n scored: **189** (na excluded; 0 unparsed verdicts counted as disagreements)
-- **Binary kappa (headline): 0.716** — raw agreement 88.4% [95% CI 83.0%, 92.2%]
-- Ternary kappa: 0.672 — raw agreement 85.7%
-
-| class (binary) | recall | precision | gold n |
-| --- | --- | --- | --- |
-| supported | 87.9% | 96.1% | 141 |
-| unsupported | 89.6% | 71.7% | 48 |
-
-Ternary confusion (rows = human gold):
-```
-                 supported      partial  unsupported   (judge ->)
-    supported          124            5           12
-      partial            4            3            5
-  unsupported            1            0           35
-```
-
-### Misjudgments (27)
-
-- `asrt-q-05-c1` gold **partial** / judge **unsupported** — Based on the scope described—23 flights totaling 29.9 flight hours with 17 pilots conducting familiarization, evaluation, and survey flights—this appears to be a relatively modest, focused demonstration program rather than a large-scale test campaign.
-- `asrt-q-10-c1` gold **supported** / judge **partial** — Based on the passage, the exercise focused on training Airmen to establish and secure a base in a deployed environment, simulating the operational challenges of setting up expeditionary base support functions rather than a specific named adversary.
-- `asrt-q-22-c2` gold **partial** / judge **supported** — By hosting a U.S. space domain awareness payload on Japan's QZS-6 satellite, the two countries established a new model of security-focused space collaboration.
-- `asrt-q-22-c3` gold **partial** / judge **supported** — It also represents the first of two planned launches under the JAXA Quasi-Zenith Satellite System Hosted Payload (QZSS-HP) program, setting the stage for continued joint efforts in space situational awareness between the two allies.
-- `asrt-q-23-c2` gold **partial** / judge **unsupported** — The specific date for the second launch is not stated in the passage, but since QZS-6 was the first of two planned launches under this program, the second payload would be hosted on QZS-7, which is expected to follow at a later date—likely sometime in 2025 or subsequent to the first launch, based on typical satellite deployment schedules for this program.
-- `asrt-q-25-c2` gold **supported** / judge **unsupported** — The actual results, findings, or specific Soldier feedback from these experiments would likely be released in a follow-up report or after-action review once the testing period concluded and data was analyzed by the Next Generation Combat Vehicle Cross Functional Team and CCDC Ground Vehicle Systems Center.
-- `asrt-q-33-c1` gold **partial** / judge **unsupported** — Some news reports likely cited the higher price tag for the first (lead) ships in the DDG-1000 program, which include substantial one-time research, design, and development costs, rather than the lower steady-state unit cost the Pentagon expects once the production line is fully established and building ships at a normal rate.
-- `asrt-q-33-c2` gold **partial** / judge **unsupported** — In other words, the higher figures reflect the "learning curve" and non-recurring engineering expenses of the initial vessels, while the $2.2–$2.5 billion estimate reflects the average cost per ship after the program matures.
-- `asrt-q-40-c4` gold **partial** / judge **supported** — Since the ship had not yet been commissioned at the time of this event, the passage does not contain information about a first deployment, as that would occur only after commissioning and subsequent workups/training.
-- `help-q-02-c5` gold **unsupported** / judge **supported** — The passage does not provide additional details about the guaranteed minimum, contract duration, or projected/expected drawdown rate that would allow for a more precise estimate of the "actual" expected value.
-- `help-q-06-c2` gold **supported** / judge **partial** — It only mentions details about the number of flights (23), total flight hours (29.9), the helicopter model (AH-64E Version 6 Apache), and the units/organizations involved—17 pilots from the RTC, 101st Airborne Division, and the Army Capability Management - Recon Attack.
-- `help-q-07-c1` gold **supported** / judge **unsupported** — I don't see that information in the passage you've provided.
-- `help-q-07-c3` gold **supported** / judge **unsupported** — However, it does not mention:
-- `help-q-07-c4` gold **supported** / judge **unsupported** — A decision to field the system across the entire Apache fleet
-- `help-q-07-c5` gold **supported** / judge **unsupported** — Any timeline or start date for fielding
-- `help-q-13-c3` gold **supported** / judge **unsupported** — If you encountered information elsewhere suggesting the location was changed, that detail isn't included in this excerpt—you may want to check the original source for additional context that might explain the choice of Fort Knox as the exercise location.
-- `help-q-18-c3` gold **supported** / judge **partial** — The Army
-- `help-q-19-c1` gold **supported** / judge **unsupported** — The passage doesn't provide that figure.
-- `help-q-20-c2` gold **supported** / judge **partial** — It only states that DOD negotiated a three-year, $617 million joint enterprise license agreement directly with Microsoft, achieving the best pricing to date for Microsoft desktop and server software licenses.
-- `help-q-22-c4` gold **partial** / judge **supported** — Additionally, the mission itself is notable because it involves hosting a U.S. space domain awareness payload on a Japanese satellite (QZS-6), demonstrating an innovative approach where the U.S. leverages Japanese satellite infrastructure to expand its space monitoring capabilities—essentially "hosting" American security technology on an allied nation's spacecraft rather than launching a dedicated U.S. satellite for this purpose.
-- `help-q-33-c3` gold **supported** / judge **unsupported** — Possible explanations that aren't stated but might logically account for the discrepancy include:
-- `help-q-34-c1` gold **supported** / judge **unsupported** — The passage doesn't actually support that premise — the official was pushing back against that figure, not confirming it.
-- `help-q-34-c2` gold **supported** / judge **partial** — According to the official quoted, news reports citing costs like $7 billion per ship were too high.
-- `help-q-34-c4` gold **partial** / judge **unsupported** — The passage doesn't explain what specifically drove the higher $7 billion figures being reported elsewhere (that could reflect early lead-ship costs, R&D expenses folded into the total, or other factors), but it doesn't say the official confirmed or explained that number — only that he disputed it as too high.
-- `help-q-36-c2` gold **supported** / judge **unsupported** — It only reports:
-- `help-q-37-c1` gold **supported** / judge **unsupported** — Based on the passage provided, that information isn't stated.
-- `help-q-40-c6` gold **supported** / judge **unsupported** — That information would come from a future Navy announcement once USS Harvey C. Barnum Jr. (DDG 124) is completed and formally commissioned.
-
 ## Judge: opus (claude-opus-4-8)
 
 - n scored: **189** (na excluded; 0 unparsed verdicts counted as disagreements)
