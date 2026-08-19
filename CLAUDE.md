@@ -157,7 +157,7 @@ the overclaim, corrected 2026-07-19
 
 ```bash
 uv sync --group dev                              # build the env
-uv run pytest                                    # 29 offline tests, no key needed
+uv run pytest                                    # offline test suite, no key needed
 uv run ruff check src/ tests/                    # lint
 uv run python scripts/check_published_figures.py # README/CLAUDE.md figures vs the artifact
 
